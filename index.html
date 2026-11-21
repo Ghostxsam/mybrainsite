@@ -11,25 +11,25 @@
     .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
     button { cursor: pointer; background: #2ea043; border: none; font-weight: 600; }
     button.secondary { background: #333; }
-    #status { font-size: 0.85rem; color: #8b949e; margin-left: auto; }
+    #status { font-size: 0.85rem; color: #9da7b3; margin-left: auto; }
   </style>
 </head>
 <body>
 
-  <!-- Login Bar (Shows if no token saved in browser) -->
   <div id="auth-box" class="row" style="margin-bottom: 1rem;">
     <input id="owner" placeholder="GitHub Username" />
-    <input id="repo" placeholder="Repo Name (e.g. my-notes-vault)" />
+    <input id="repo" placeholder="Notes Repo Name" />
+    <input id="branch" value="main" placeholder="Branch (main)" style="width: 90px;" />
     <input id="token" type="password" placeholder="Fine-Grained PAT" />
     <button onclick="saveConfig()">Connect Vault</button>
   </div>
 
-  <!-- Editor UI -->
   <div id="app" style="display:none;">
     <div class="row">
       <select id="file-list" onchange="loadNote(this.value)"></select>
       <button class="secondary" onclick="createNewNote()">+ New</button>
       <button onclick="saveNote()">Save (Ctrl+S)</button>
+      <button class="secondary" onclick="logout()">Change Key / Repo</button>
       <span id="status">Ready</span>
     </div>
     <textarea id="editor" placeholder="Write in Markdown..."></textarea>
@@ -39,7 +39,6 @@
     let cfg = JSON.parse(localStorage.getItem('gh_vault') || 'null');
     let currentSha = null;
 
-    // UTF-8 safe Base64 helpers
     const toBase64 = str => btoa(unescape(encodeURIComponent(str)));
     const fromBase64 = b64 => decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
 
@@ -49,10 +48,23 @@
       cfg = {
         owner: document.getElementById('owner').value.trim(),
         repo: document.getElementById('repo').value.trim(),
+        branch: (document.getElementById('branch').value || 'main').trim(),
         token: document.getElementById('token').value.trim()
       };
+      if (!cfg.owner || !cfg.repo || !cfg.token) {
+        alert('Please fill in Username, Repo Name, and Token.');
+        return;
+      }
       localStorage.setItem('gh_vault', JSON.stringify(cfg));
       initApp();
+    }
+
+    function logout() {
+      localStorage.removeItem('gh_vault');
+      cfg = null;
+      currentSha = null;
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('auth-box').style.display = 'flex';
     }
 
     async function ghFetch(endpoint, options = {}) {
@@ -65,8 +77,11 @@
           ...(options.headers || {})
         }
       });
-      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-      return res.json();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${data.message || 'Request failed'}`);
+      }
+      return data;
     }
 
     async function initApp() {
@@ -77,23 +92,38 @@
 
     async function refreshFileList() {
       setStatus('Syncing list...');
-      const data = await ghFetch('git/trees/main?recursive=1');
-      const mdFiles = data.tree.filter(f => f.type === 'blob' && f.path.endsWith('.md'));
-      const select = document.getElementById('file-list');
-      select.innerHTML = mdFiles.map(f => `<option value="${f.path}">${f.path}</option>`).join('');
-      if (mdFiles.length) loadNote(mdFiles[0].path);
+      try {
+        const data = await ghFetch(`git/trees/${cfg.branch}?recursive=1`);
+        const mdFiles = (data.tree || []).filter(f => f.type === 'blob' && f.path.endsWith('.md'));
+        const select = document.getElementById('file-list');
+        select.innerHTML = mdFiles.map(f => `<option value="${f.path}">${f.path}</option>`).join('');
+        if (mdFiles.length) {
+          await loadNote(mdFiles[0].path);
+        } else {
+          document.getElementById('editor').value = '';
+          setStatus('No .md files yet — click + New');
+        }
+      } catch (err) {
+        setStatus(`Error: ${err.message}`);
+      }
     }
 
     async function loadNote(path) {
+      if (!path) return;
       setStatus('Loading...');
-      const data = await ghFetch(`contents/${path}?t=${Date.now()}`); // bypass cache
-      currentSha = data.sha;
-      document.getElementById('editor').value = fromBase64(data.content);
-      setStatus(`Loaded ${path}`);
+      try {
+        const data = await ghFetch(`contents/${path}?ref=${cfg.branch}&t=${Date.now()}`);
+        currentSha = data.sha;
+        document.getElementById('editor').value = fromBase64(data.content);
+        setStatus(`Loaded ${path}`);
+      } catch (err) {
+        setStatus(`Load error: ${err.message}`);
+      }
     }
 
     async function saveNote() {
       const path = document.getElementById('file-list').value;
+      if (!path) return alert('Create a note first with + New');
       const content = document.getElementById('editor').value;
       setStatus('Saving to GitHub...');
       try {
@@ -102,32 +132,41 @@
           body: JSON.stringify({
             message: `Update ${path}`,
             content: toBase64(content),
-            sha: currentSha
+            sha: currentSha,
+            branch: cfg.branch
           })
         });
         currentSha = res.content.sha;
         setStatus('Saved ✓');
-      } catch (e) {
-        setStatus('Conflict or error! Reload note.');
+      } catch (err) {
+        setStatus(`Save error: ${err.message}`);
       }
     }
 
     async function createNewNote() {
       const name = prompt('File path (e.g. ideas/project.md):');
       if (!name) return;
-      const path = name.endsWith('.md') ? name : `${name}.md`;
-      await ghFetch(`contents/${path}`, {
-        method: 'PUT',
-        body: JSON.stringify({ message: `Create ${path}`, content: toBase64(`# ${path}\n`) })
-      });
-      await refreshFileList();
-      document.getElementById('file-list').value = path;
-      await loadNote(path);
+      const path = name.trim().endsWith('.md') ? name.trim() : `${name.trim()}.md`;
+      setStatus('Creating note...');
+      try {
+        await ghFetch(`contents/${path}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            message: `Create ${path}`,
+            content: toBase64(`# ${path}\n`),
+            branch: cfg.branch
+          })
+        });
+        await refreshFileList();
+        document.getElementById('file-list').value = path;
+        await loadNote(path);
+      } catch (err) {
+        setStatus(`Create error: ${err.message}`);
+      }
     }
 
     function setStatus(msg) { document.getElementById('status').textContent = msg; }
 
-    // Ctrl+S shortcut
     document.addEventListener('keydown', e => {
       if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveNote(); }
     });
