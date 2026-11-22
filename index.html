@@ -5,15 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cozy Brain</title>
 
-  <!-- =====================================================================
-       1. SITE FAVICON (Inline SVG Browser Tab Icon)
-       ===================================================================== -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%2393b59c' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
+  <!-- Site Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%238ab89a' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
 
   <style>
-    /* =====================================================================
-       2. THEME VARIABLES & NEUTRAL DARK / LIGHT PALETTES
-       ===================================================================== */
     :root {
       --bg: #111214;
       --surface: #18191c;
@@ -44,9 +39,6 @@
       --border: rgba(20, 22, 25, 0.1);
     }
 
-    /* =====================================================================
-       3. COZY ACCENT COLOR SWATCHES (8 Colors x Dark & Light)
-       ===================================================================== */
     body[data-palette="terracotta"] { --accent: #e08e6d; --accent-soft: rgba(224, 142, 109, 0.18); }
     body.light[data-palette="terracotta"] { --accent: #c96d49; --accent-soft: rgba(201, 109, 73, 0.15); }
 
@@ -71,9 +63,6 @@
     body[data-palette="bubblegum"] { --accent: #ff77b7; --accent-soft: rgba(255, 119, 183, 0.2); }
     body.light[data-palette="bubblegum"] { --accent: #d4438a; --accent-soft: rgba(212, 67, 138, 0.15); }
 
-    /* =====================================================================
-       4. GLOBAL LAYOUT, HEADER & NAVIGATION TABS
-       ===================================================================== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -85,11 +74,7 @@
       transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .container {
-      width: 100%;
-      max-width: 1320px;
-      margin: 0 auto;
-    }
+    .container { width: 100%; max-width: 1320px; margin: 0 auto; }
 
     header {
       display: flex;
@@ -100,29 +85,11 @@
       margin-bottom: 18px;
     }
 
-    .brand h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
+    .brand h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    .status-line { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+    .header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 
-    .status-line {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .header-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    button, input, select, textarea {
-      font-family: inherit;
-      color: var(--text);
-    }
+    button, input, select, textarea { font-family: inherit; color: var(--text); }
 
     .btn {
       background: var(--surface-2);
@@ -132,11 +99,13 @@
       font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
-      transition: transform 0.12s ease, background 0.15s ease;
     }
-
     .btn:hover { background: var(--surface-3); }
-    .btn:active { transform: scale(0.98); }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 0.76rem;
+    }
 
     .btn-accent {
       background: var(--accent);
@@ -144,8 +113,7 @@
       border-color: transparent;
       font-weight: 600;
     }
-
-    .btn-accent:hover { opacity: 0.92; background: var(--accent); }
+    .btn-accent:hover { opacity: 0.92; }
 
     .btn-danger {
       background: rgba(224, 108, 117, 0.14);
@@ -181,11 +149,7 @@
       cursor: pointer;
       color: var(--muted);
     }
-
-    .tab.active {
-      background: var(--accent);
-      color: var(--accent-contrast);
-    }
+    .tab.active { background: var(--accent); color: var(--accent-contrast); }
 
     .palette-bar {
       display: flex;
@@ -205,17 +169,10 @@
       border-radius: 50%;
       border: 2px solid transparent;
       cursor: pointer;
-      transition: transform 0.14s ease;
     }
+    .swatch.active { border-color: var(--text); transform: scale(1.15); }
 
-    .swatch.active {
-      border-color: var(--text);
-      transform: scale(1.18);
-    }
-
-    /* =====================================================================
-       5. DASHBOARD CARDS, TASKS & PINNED NOTES STYLES
-       ===================================================================== */
+    /* Dashboard */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -231,37 +188,91 @@
       margin-bottom: 18px;
     }
 
-    .stat-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
+    .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px; }
+    .stat-value { font-size: 1.8rem; font-weight: 700; }
 
     .add-form {
       display: grid;
-      grid-template-columns: 2fr 1.2fr 1fr auto;
+      grid-template-columns: 2fr 1.15fr 0.95fr 0.95fr auto;
       gap: 10px;
       margin-top: 12px;
+      align-items: center;
     }
 
     .field {
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 10px 14px;
-      font-size: 0.92rem;
+      padding: 10px 12px;
+      font-size: 0.9rem;
       outline: none;
       width: 100%;
     }
-
     .field:focus { border-color: var(--accent); }
+
+    .dash-top-widgets {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .clock-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      height: 100%;
+    }
+
+    .clock-time {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+    }
+
+    .clock-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .mini-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .mini-dow {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .mini-day {
+      text-align: center;
+      padding: 6px 2px;
+      border-radius: 9px;
+      font-size: 0.78rem;
+      background: var(--surface-2);
+      border: 1px solid transparent;
+      position: relative;
+    }
+
+    .mini-day.empty { background: transparent; }
+    .mini-day.today { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
+    .mini-day.has-task::after {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin: 2px auto 0;
+    }
 
     .dash-split {
       display: grid;
@@ -270,17 +281,8 @@
       align-items: start;
     }
 
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-size: 1.05rem;
-      font-weight: 650;
-    }
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .section-title { font-size: 1.05rem; font-weight: 650; }
 
     .pill {
       font-size: 0.76rem;
@@ -291,11 +293,7 @@
       border: 1px solid var(--border);
     }
 
-    .task-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .task-list { display: flex; flex-direction: column; gap: 10px; }
 
     .task-item {
       display: flex;
@@ -308,12 +306,8 @@
       padding: 13px 15px;
     }
 
-    .task-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
+    .task-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .task-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
     .check-btn {
       width: 22px;
@@ -328,28 +322,12 @@
       font-size: 0.78rem;
       color: var(--accent-contrast);
     }
+    .check-btn.done { background: var(--sage); border-color: var(--sage); }
 
-    .check-btn.done {
-      background: var(--sage);
-      border-color: var(--sage);
-    }
+    .task-title { font-weight: 600; font-size: 0.95rem; }
+    .task-title.done { text-decoration: line-through; color: var(--muted); }
 
-    .task-title {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .task-title.done {
-      text-decoration: line-through;
-      color: var(--muted);
-    }
-
-    .task-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 5px;
-    }
+    .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
 
     .badge-cat {
       font-size: 0.74rem;
@@ -376,23 +354,7 @@
       color: var(--warn);
       font-weight: 600;
     }
-
-    .badge-due.soon {
-      background: rgba(224, 108, 117, 0.18);
-      color: var(--urgent);
-    }
-
-    .icon-x {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 1.05rem;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 8px;
-    }
-
-    .icon-x:hover { background: var(--surface-3); color: var(--text); }
+    .badge-due.soon { background: rgba(224, 108, 117, 0.18); color: var(--urgent); }
 
     .pinned-grid {
       display: grid;
@@ -406,14 +368,10 @@
       border-radius: var(--radius-md);
       padding: 13px 15px;
       cursor: pointer;
-      transition: border-color 0.15s ease;
     }
-
     .pinned-card:hover { border-color: var(--accent); }
 
-    /* =====================================================================
-       6. CALENDAR GRID & INLINE TASK CHIP STYLES
-       ===================================================================== */
+    /* Calendar Tab */
     .cal-header {
       display: flex;
       align-items: center;
@@ -444,29 +402,12 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      cursor: pointer;
-      transition: border-color 0.15s ease, background 0.15s ease;
     }
 
-    .cal-cell:not(.empty):hover {
-      border-color: var(--accent);
-    }
+    .cal-cell.empty { background: transparent; border-color: transparent; }
+    .cal-cell.today { border-color: var(--accent); background: var(--accent-soft); }
 
-    .cal-cell.empty {
-      background: transparent;
-      border-color: transparent;
-      cursor: default;
-    }
-
-    .cal-cell.today {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .cal-day-num {
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
+    .cal-day-num { font-size: 0.82rem; font-weight: 700; }
 
     .cal-chip {
       font-size: 0.72rem;
@@ -478,21 +419,11 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .cal-chip.done { opacity: 0.55; text-decoration: line-through; }
 
-    .cal-chip.done {
-      opacity: 0.55;
-      text-decoration: line-through;
-    }
+    .cal-more { font-size: 0.7rem; color: var(--muted); padding-left: 4px; }
 
-    .cal-more {
-      font-size: 0.7rem;
-      color: var(--muted);
-      padding-left: 4px;
-    }
-
-    /* =====================================================================
-       7. NOTES GRID, EDITOR & COLLAPSIBLE CHECKLIST STYLES
-       ===================================================================== */
+    /* Notes Tab */
     .notes-top {
       display: flex;
       flex-wrap: wrap;
@@ -518,22 +449,11 @@
       justify-content: space-between;
       gap: 12px;
       cursor: pointer;
-      transition: border-color 0.15s ease;
     }
-
     .note-card:hover { border-color: var(--accent); }
 
-    .note-card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .note-card-title {
-      font-weight: 700;
-      font-size: 1rem;
-    }
+    .note-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .note-card-title { font-weight: 700; font-size: 1rem; }
 
     .pin-btn {
       background: transparent;
@@ -544,21 +464,9 @@
       color: var(--muted);
       cursor: pointer;
     }
+    .pin-btn.pinned { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
 
-    .pin-btn.pinned {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .note-preview {
-      font-size: 0.85rem;
-      color: var(--muted);
-      white-space: pre-line;
-      line-height: 1.45;
-      margin-top: 8px;
-    }
+    .note-preview { font-size: 0.85rem; color: var(--muted); white-space: pre-line; line-height: 1.45; margin-top: 8px; }
 
     .note-card-foot {
       display: flex;
@@ -569,19 +477,8 @@
       border-top: 1px solid var(--border);
     }
 
-    .editor-box {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .editor-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
+    .editor-box { display: flex; flex-direction: column; gap: 12px; }
+    .editor-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
 
     .note-title-input {
       font-size: 1.15rem;
@@ -592,15 +489,9 @@
       padding: 10px 14px;
       width: 100%;
     }
-
     .note-title-input:focus { border-color: var(--accent); outline: none; }
 
-    textarea.note-area {
-      min-height: 260px;
-      resize: vertical;
-      line-height: 1.55;
-      font-size: 0.94rem;
-    }
+    textarea.note-area { min-height: 280px; resize: vertical; line-height: 1.55; font-size: 0.94rem; }
 
     .checklist-panel {
       background: var(--surface-2);
@@ -611,24 +502,12 @@
       flex-direction: column;
       gap: 8px;
     }
+    .checklist-panel.open { display: flex; }
 
-    .checklist-panel.visible { display: flex; }
+    .check-row { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; }
+    .check-row.checked span { text-decoration: line-through; color: var(--muted); }
 
-    .check-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.88rem;
-    }
-
-    .check-row.checked span {
-      text-decoration: line-through;
-      color: var(--muted);
-    }
-
-    /* =====================================================================
-       8. MODALS & RESPONSIVE BREAKPOINTS
-       ===================================================================== */
+    /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -638,7 +517,6 @@
       padding: 16px;
       z-index: 50;
     }
-
     .modal-backdrop.open { display: grid; }
 
     .modal {
@@ -655,6 +533,11 @@
 
     .hidden { display: none !important; }
 
+    @media (max-width: 960px) {
+      .add-form { grid-template-columns: 1fr 1fr; }
+      .dash-top-widgets { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 860px) {
       .stats-grid { grid-template-columns: 1fr; }
       .add-form { grid-template-columns: 1fr; }
@@ -666,10 +549,6 @@
 </head>
 <body>
   <div class="container">
-
-    <!-- =====================================================================
-         SECTION A: HEADER & TOP TOOLBAR (Theme Toggle, Sync, Vault, Swatches)
-         ===================================================================== -->
     <header>
       <div class="brand">
         <h1>Cozy Brain</h1>
@@ -702,9 +581,7 @@
       </div>
     </div>
 
-    <!-- =====================================================================
-         SECTION B: DASHBOARD VIEW (Stats, Add Work, Pinned Notes, Task Lists)
-         ===================================================================== -->
+    <!-- DASHBOARD -->
     <section id="view-dashboard">
       <div class="stats-grid">
         <div class="card" style="margin-bottom:0">
@@ -725,18 +602,46 @@
         <div class="section-title">Add Work</div>
         <form id="task-form" class="add-form">
           <input id="task-title" class="field" type="text" placeholder="What needs to be done?" required />
-          <input id="task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (e.g. Exam, Study, Project)" />
+          <input id="task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (e.g. Exam, Study)" />
           <datalist id="cat-suggestions">
             <option value="Exam"></option>
             <option value="Study"></option>
             <option value="Project"></option>
             <option value="Personal"></option>
           </datalist>
+          <select id="task-quick-date" class="field" title="Quick date selector">
+            <option value="">Quick date...</option>
+            <option value="0">Today</option>
+            <option value="1">Tomorrow</option>
+            <option value="2">In 2 Days</option>
+            <option value="3">In 3 Days</option>
+            <option value="7">In 1 Week</option>
+          </select>
           <input id="task-date" class="field" type="date" />
           <button type="submit" class="btn btn-accent">Add</button>
         </form>
       </div>
 
+      <!-- Mini Calendar + Mini Clock -->
+      <div class="dash-top-widgets">
+        <div class="card" style="margin-bottom:0">
+          <div class="section-head" style="margin-bottom:6px;">
+            <div class="section-title">Mini Calendar</div>
+            <span id="mini-cal-label" class="pill"></span>
+          </div>
+          <div id="mini-cal-grid" class="mini-cal-grid"></div>
+        </div>
+
+        <div class="card" style="margin-bottom:0">
+          <div class="clock-box">
+            <div class="stat-label">Live Clock (IST)</div>
+            <div id="mini-clock-time" class="clock-time">--:--:--</div>
+            <div id="mini-clock-date" class="clock-sub">--/--/----</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pinned Notes -->
       <div id="dash-pinned-card" class="card hidden">
         <div class="section-head">
           <div class="section-title">Pinned Notes</div>
@@ -764,9 +669,7 @@
       </div>
     </section>
 
-    <!-- =====================================================================
-         SECTION C: CALENDAR VIEW (Monthly Grid + Click Date to Add Task)
-         ===================================================================== -->
+    <!-- CALENDAR -->
     <section id="view-calendar" class="hidden">
       <div class="card">
         <div class="cal-header">
@@ -778,9 +681,7 @@
       </div>
     </section>
 
-    <!-- =====================================================================
-         SECTION D: NOTES VIEW (Google Keep Cards + Markdown Editor)
-         ===================================================================== -->
+    <!-- NOTES -->
     <section id="view-notes" class="hidden">
       <div id="notes-grid-view" class="card">
         <div class="notes-top">
@@ -798,23 +699,43 @@
           <div class="editor-bar">
             <button id="back-to-notes-btn" class="btn">← All Notes</button>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button id="toggle-checklist-btn" class="btn">Hide Checklist</button>
+              <button id="toggle-checklist-btn" class="btn hidden">Show Checkboxes</button>
               <button id="editor-pin-btn" class="btn">Pin</button>
               <button id="editor-delete-btn" class="btn btn-danger">Delete</button>
               <button id="save-note-btn" class="btn btn-accent">Save</button>
             </div>
           </div>
           <input id="note-title-input" class="note-title-input" type="text" placeholder="Note title..." />
-          <textarea id="note-editor" class="field note-area" placeholder="Write your note... Use '- [ ] ' for checkboxes"></textarea>
+          <textarea id="note-editor" class="field note-area" placeholder="Write your note..."></textarea>
           <div id="checklist-panel" class="checklist-panel"></div>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- =====================================================================
-       SECTION E: MODALS (GitHub Vault Config & Calendar Date Quick-Add)
-       ===================================================================== -->
+  <!-- EDIT TASK MODAL -->
+  <div id="edit-task-modal" class="modal-backdrop">
+    <div class="modal">
+      <div class="section-title">Edit Task</div>
+      <input id="edit-task-title" class="field" type="text" placeholder="Task name" />
+      <input id="edit-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category" />
+      <select id="edit-task-quick-date" class="field">
+        <option value="">Quick date...</option>
+        <option value="0">Today</option>
+        <option value="1">Tomorrow</option>
+        <option value="2">In 2 Days</option>
+        <option value="3">In 3 Days</option>
+        <option value="7">In 1 Week</option>
+      </select>
+      <input id="edit-task-date" class="field" type="date" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
+        <button id="cancel-edit-task-btn" class="btn">Cancel</button>
+        <button id="save-edit-task-btn" class="btn btn-accent">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIG MODAL -->
   <div id="config-modal" class="modal-backdrop">
     <div class="modal">
       <div class="section-title">GitHub Vault Settings</div>
@@ -832,23 +753,7 @@
     </div>
   </div>
 
-  <div id="cal-add-modal" class="modal-backdrop">
-    <div class="modal">
-      <div id="cal-modal-date-title" class="section-title">Add Task</div>
-      <input id="cal-task-title" class="field" type="text" placeholder="What needs to be done on this date?" />
-      <input id="cal-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (e.g. Exam, Study, Project)" />
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
-        <button id="cal-cancel-btn" class="btn">Cancel</button>
-        <button id="cal-save-btn" class="btn btn-accent">Add to Date</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    /* =====================================================================
-       JS SECTION 1: STATE, STORAGE KEYS & HELPER UTILITIES
-       - Manages localStorage keys, date normalization, HTML escaping
-       ===================================================================== */
     const CFG_KEY = 'gh_vault';
     const TASKS_CACHE = 'cozy_tasks_cache_v1';
     const NOTES_CACHE = 'cozy_notes_cache_v1';
@@ -858,13 +763,12 @@
     let tasks = loadJson(TASKS_CACHE, []);
     let notesStore = loadJson(NOTES_CACHE, {});
     let activeNotePath = null;
-    let checklistHiddenByUser = false;
-    let selectedCalDate = '';
-    let calYear, calMonth;
+    let checklistOpen = false;
+    let editingTaskId = null;
 
     const now = new Date();
-    calYear = now.getFullYear();
-    calMonth = now.getMonth();
+    let calYear = now.getFullYear();
+    let calMonth = now.getMonth();
 
     function loadCfg() {
       const saved = loadJson(CFG_KEY, {});
@@ -886,7 +790,8 @@
     }
 
     function setStatus(msg) {
-      document.getElementById('status-line').textContent = msg;
+      const el = document.getElementById('status-line');
+      if (el) el.textContent = msg;
     }
 
     function escapeHtml(str = '') {
@@ -897,18 +802,68 @@
         .replace(/"/g, '&quot;');
     }
 
-    function normalizeDate(dateStr = '') {
-      return String(dateStr || '').trim().slice(0, 10);
+    function normalizeIsoDate(val = '') {
+      const s = String(val || '').trim();
+      const isoMatch = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (isoMatch) return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
+      const indMatch = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      if (indMatch) return `${indMatch[3]}-${indMatch[2]}-${indMatch[1]}`;
+      return '';
     }
 
-    function getTaskDate(t) {
-      return normalizeDate(t?.due || t?.date || t?.dueDate || '');
+    // Indian date format: DD/MM/YYYY
+    function formatIndianDate(isoOrRaw = '') {
+      const iso = normalizeIsoDate(isoOrRaw);
+      if (!iso) return '';
+      const [y, m, d] = iso.split('-');
+      return `${d}/${m}/${y}`;
     }
 
-    /* =====================================================================
-       JS SECTION 2: THEME, COLOR SWATCHES & TAB SWITCHING
-       - Handles dark/light toggle, 8 accent palettes, and view routing
-       ===================================================================== */
+    function offsetIsoDate(daysOffset = 0) {
+      const base = new Date();
+      const target = new Date(base.getFullYear(), base.getMonth(), base.getDate() + Number(daysOffset || 0));
+      const y = target.getFullYear();
+      const m = String(target.getMonth() + 1).padStart(2, '0');
+      const d = String(target.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function daysUntil(dateStr) {
+      const iso = normalizeIsoDate(dateStr);
+      if (!iso) return null;
+      const [y, m, d] = iso.split('-').map(Number);
+      const target = new Date(y, m - 1, d);
+      const cur = new Date();
+      const today = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate());
+      return Math.round((target - today) / 86400000);
+    }
+
+    // Mini Clock (IST)
+    function updateClock() {
+      const d = new Date();
+      const timeStr = d.toLocaleTimeString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+      const dateStr = d.toLocaleDateString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        weekday: 'short',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+      const tEl = document.getElementById('mini-clock-time');
+      const dEl = document.getElementById('mini-clock-date');
+      if (tEl) tEl.textContent = timeStr;
+      if (dEl) dEl.textContent = dateStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Theme & Palette
     function initTheme() {
       const saved = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
       applyTheme(saved.light, saved.palette);
@@ -936,6 +891,7 @@
       });
     });
 
+    // Tabs
     document.querySelectorAll('.tab').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -944,16 +900,26 @@
         document.getElementById('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
         document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
         document.getElementById('view-notes').classList.toggle('hidden', tab !== 'notes');
+        if (tab === 'dashboard') renderDashboard();
         if (tab === 'calendar') renderCalendar();
         if (tab === 'notes') showNotesGrid();
-        if (tab === 'dashboard') renderDashboard();
       });
     });
 
-    /* =====================================================================
-       JS SECTION 3: MARKDOWN FRONTMATTER & GITHUB REST API SYNC
-       - Parses title/pinned metadata, encodes UTF-8 Base64, syncs tasks & notes
-       ===================================================================== */
+    // Quick Date Dropdown bindings
+    document.getElementById('task-quick-date').addEventListener('change', e => {
+      if (e.target.value !== '') {
+        document.getElementById('task-date').value = offsetIsoDate(Number(e.target.value));
+      }
+    });
+
+    document.getElementById('edit-task-quick-date').addEventListener('change', e => {
+      if (e.target.value !== '') {
+        document.getElementById('edit-task-date').value = offsetIsoDate(Number(e.target.value));
+      }
+    });
+
+    // Notes Frontmatter (title + pinned, .md hidden in UI)
     function parseNoteMarkdown(filename, rawText) {
       const baseTitle = filename.replace(/\.md$/i, '');
       let pinned = false;
@@ -969,14 +935,12 @@
         if (titleMatch) title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
         body = body.slice(fmMatch[0].length);
       }
-
       return { title: title || baseTitle, pinned, body };
     }
 
     function serializeNoteMarkdown({ title, pinned, body }) {
       const cleanTitle = (title || 'Untitled').trim() || 'Untitled';
-      const lines = ['---', `title: "${cleanTitle.replace(/"/g, '\\"')}"`, `pinned: ${Boolean(pinned)}`, '---', ''];
-      return lines.join('\n') + (body || '');
+      return ['---', `title: "${cleanTitle.replace(/"/g, '\\"')}"`, `pinned: ${Boolean(pinned)}`, '---', '', body || ''].join('\n');
     }
 
     function slugifyFilename(title) {
@@ -988,10 +952,9 @@
       return `${cleaned || 'untitled'}.md`;
     }
 
+    // GitHub API
     async function ghFetch(endpoint, options = {}) {
-      if (!cfg.owner || !cfg.repo || !cfg.token) {
-        throw new Error('Missing GitHub owner, repo, or token');
-      }
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error('Missing GitHub config');
       const url = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/${endpoint}`;
       const res = await fetch(url, {
         ...options,
@@ -1003,8 +966,8 @@
         }
       });
       if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(`GitHub ${res.status}: ${errText.slice(0, 120)}`);
+        const txt = await res.text();
+        throw new Error(`GitHub ${res.status}: ${txt.slice(0, 120)}`);
       }
       return res.json();
     }
@@ -1024,23 +987,13 @@
     }
 
     async function ghPutFile(path, contentStr, message, sha = null) {
-      const body = {
-        message,
-        content: b64EncodeUtf8(contentStr),
-        branch: cfg.branch
-      };
+      const body = { message, content: b64EncodeUtf8(contentStr), branch: cfg.branch };
       if (sha) body.sha = sha;
-      return ghFetch(`contents/${encodeURIComponent(path)}`, {
-        method: 'PUT',
-        body: JSON.stringify(body)
-      });
+      return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'PUT', body: JSON.stringify(body) });
     }
 
     async function ghDeleteFile(path, sha, message) {
-      return ghFetch(`contents/${encodeURIComponent(path)}`, {
-        method: 'DELETE',
-        body: JSON.stringify({ message, sha, branch: cfg.branch })
-      });
+      return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'DELETE', body: JSON.stringify({ message, sha, branch: cfg.branch }) });
     }
 
     async function syncAll() {
@@ -1124,25 +1077,40 @@
       }
     }
 
-    /* =====================================================================
-       JS SECTION 4: DASHBOARD RENDERING & TASK CRUD
-       - Updates stats, pinned notes preview, remaining & completed tasks
-       ===================================================================== */
-    function daysUntil(dateStr) {
-      const norm = normalizeDate(dateStr);
-      if (!norm) return null;
-      const [y, m, d] = norm.split('-').map(Number);
-      if (!y || !m || !d) return null;
-      const target = new Date(y, m - 1, d);
-      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      return Math.round((target - today) / 86400000);
+    // Mini Calendar on Dashboard
+    function renderMiniCalendar() {
+      const cur = new Date();
+      const y = cur.getFullYear();
+      const m = cur.getMonth();
+      const todayDay = cur.getDate();
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const label = document.getElementById('mini-cal-label');
+      const grid = document.getElementById('mini-cal-grid');
+      if (!label || !grid) return;
+
+      label.textContent = `${months[m]} ${y}`;
+      const firstDay = new Date(y, m, 1).getDay();
+      const totalDays = new Date(y, m + 1, 0).getDate();
+      const dows = ['S','M','T','W','T','F','S'];
+
+      let html = dows.map(d => `<div class="mini-dow">${d}</div>`).join('');
+      for (let i = 0; i < firstDay; i++) html += `<div class="mini-day empty"></div>`;
+
+      for (let day = 1; day <= totalDays; day++) {
+        const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const hasTask = tasks.some(t => normalizeIsoDate(t.due) === iso && !t.done);
+        const isToday = day === todayDay;
+        html += `<div class="mini-day ${isToday ? 'today' : ''} ${hasTask ? 'has-task' : ''}">${day}</div>`;
+      }
+      grid.innerHTML = html;
     }
 
+    // Dashboard & Tasks
     function renderDashboard() {
       const openTasks = tasks.filter(t => !t.done);
       const doneTasks = tasks.filter(t => t.done);
       const dueSoon = openTasks.filter(t => {
-        const diff = daysUntil(getTaskDate(t));
+        const diff = daysUntil(t.due);
         return diff !== null && diff <= 3;
       });
 
@@ -1150,6 +1118,8 @@
       document.getElementById('stat-due').textContent = dueSoon.length;
       document.getElementById('stat-done').textContent = doneTasks.length;
       document.getElementById('rem-count').textContent = `${openTasks.length} left`;
+
+      renderMiniCalendar();
 
       const pinnedNotes = Object.entries(notesStore)
         .filter(([, n]) => n.pinned)
@@ -1189,8 +1159,7 @@
 
       document.querySelectorAll('[data-toggle-task]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const id = btn.dataset.toggleTask;
-          const target = tasks.find(t => t.id === id);
+          const target = tasks.find(t => t.id === btn.dataset.toggleTask);
           if (target) {
             target.done = !target.done;
             pushTasksToGitHub();
@@ -1198,18 +1167,22 @@
         });
       });
 
+      document.querySelectorAll('[data-edit-task]').forEach(btn => {
+        btn.addEventListener('click', () => openEditTaskModal(btn.dataset.editTask));
+      });
+
       document.querySelectorAll('[data-del-task]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const id = btn.dataset.delTask;
-          tasks = tasks.filter(t => t.id !== id);
+          tasks = tasks.filter(t => t.id !== btn.dataset.delTask);
           pushTasksToGitHub();
         });
       });
     }
 
     function renderTaskRow(t) {
-      const taskDate = getTaskDate(t);
-      const diff = daysUntil(taskDate);
+      const iso = normalizeIsoDate(t.due);
+      const indDate = formatIndianDate(iso);
+      const diff = daysUntil(iso);
       let dueBadge = '';
       if (!t.done && diff !== null) {
         const label = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff} days left`;
@@ -1223,12 +1196,15 @@
               <div class="task-title ${t.done ? 'done' : ''}">${escapeHtml(t.title)}</div>
               <div class="task-meta">
                 ${t.category ? `<span class="badge-cat">${escapeHtml(t.category)}</span>` : ''}
-                ${taskDate ? `<span class="badge-date">${escapeHtml(taskDate)}</span>` : ''}
+                ${indDate ? `<span class="badge-date">${escapeHtml(indDate)}</span>` : ''}
                 ${dueBadge}
               </div>
             </div>
           </div>
-          <button class="icon-x" data-del-task="${escapeHtml(t.id)}" title="Delete">✕</button>
+          <div class="task-actions">
+            <button class="btn btn-sm" data-edit-task="${escapeHtml(t.id)}">Edit</button>
+            <button class="btn btn-sm btn-danger" data-del-task="${escapeHtml(t.id)}">✕</button>
+          </div>
         </div>
       `;
     }
@@ -1238,16 +1214,22 @@
       const titleEl = document.getElementById('task-title');
       const catEl = document.getElementById('task-cat');
       const dateEl = document.getElementById('task-date');
+      const quickEl = document.getElementById('task-quick-date');
       const title = titleEl.value.trim();
       if (!title) return;
+
+      const chosenDate = normalizeIsoDate(dateEl.value) || (quickEl.value !== '' ? offsetIsoDate(Number(quickEl.value)) : '');
+
       tasks.unshift({
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
         title,
         category: catEl.value.trim(),
-        due: normalizeDate(dateEl.value),
+        due: chosenDate,
         done: false
       });
+
       titleEl.value = '';
+      quickEl.value = '';
       pushTasksToGitHub();
     });
 
@@ -1256,12 +1238,42 @@
       pushTasksToGitHub();
     });
 
-    /* =====================================================================
-       JS SECTION 5: INTERACTIVE CALENDAR & DATE-CLICK TASK CREATION
-       - Renders month cells, displays inline task chips, opens quick-add modal
-       ===================================================================== */
-    const calModal = document.getElementById('cal-add-modal');
+    // Edit Task Modal
+    const editTaskModal = document.getElementById('edit-task-modal');
+    function openEditTaskModal(id) {
+      const target = tasks.find(t => t.id === id);
+      if (!target) return;
+      editingTaskId = id;
+      document.getElementById('edit-task-title').value = target.title || '';
+      document.getElementById('edit-task-cat').value = target.category || '';
+      document.getElementById('edit-task-quick-date').value = '';
+      document.getElementById('edit-task-date').value = normalizeIsoDate(target.due);
+      editTaskModal.classList.add('open');
+      document.getElementById('edit-task-title').focus();
+    }
 
+    document.getElementById('cancel-edit-task-btn').addEventListener('click', () => {
+      editingTaskId = null;
+      editTaskModal.classList.remove('open');
+    });
+
+    document.getElementById('save-edit-task-btn').addEventListener('click', () => {
+      if (!editingTaskId) return;
+      const target = tasks.find(t => t.id === editingTaskId);
+      if (!target) return;
+      const newTitle = document.getElementById('edit-task-title').value.trim();
+      if (!newTitle) return;
+
+      target.title = newTitle;
+      target.category = document.getElementById('edit-task-cat').value.trim();
+      target.due = normalizeIsoDate(document.getElementById('edit-task-date').value);
+
+      editingTaskId = null;
+      editTaskModal.classList.remove('open');
+      pushTasksToGitHub();
+    });
+
+    // Calendar Tab (Restored clean monthly grid + inline chips)
     function renderCalendar() {
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       const labelEl = document.getElementById('cal-month-label');
@@ -1269,74 +1281,37 @@
       if (!labelEl || !gridEl) return;
 
       labelEl.textContent = `${monthNames[calMonth]} ${calYear}`;
-
       const firstDay = new Date(calYear, calMonth, 1).getDay();
       const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
       const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
       let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
-      for (let i = 0; i < firstDay; i++) {
-        html += `<div class="cal-cell empty"></div>`;
-      }
+      for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
 
       for (let day = 1; day <= daysInMonth; day++) {
         const mm = String(calMonth + 1).padStart(2, '0');
         const dd = String(day).padStart(2, '0');
         const iso = `${calYear}-${mm}-${dd}`;
         const isToday = calYear === now.getFullYear() && calMonth === now.getMonth() && day === now.getDate();
-        const dayTasks = tasks.filter(t => getTaskDate(t) === iso);
+        const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
 
         const maxChips = 3;
         const chips = dayTasks.slice(0, maxChips).map(t =>
-          `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</div>`
+          `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)} (${formatIndianDate(iso)})">${escapeHtml(t.title)}</div>`
         ).join('');
         const extra = dayTasks.length - maxChips;
         const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
 
         html += `
-          <div class="cal-cell ${isToday ? 'today' : ''}" data-date="${iso}" title="Click to add task on ${iso}">
+          <div class="cal-cell ${isToday ? 'today' : ''}">
             <div class="cal-day-num">${day}</div>
             ${chips}
             ${more}
           </div>
         `;
       }
-
       gridEl.innerHTML = html;
-
-      gridEl.querySelectorAll('.cal-cell[data-date]').forEach(cell => {
-        cell.addEventListener('click', () => {
-          selectedCalDate = cell.dataset.date;
-          document.getElementById('cal-modal-date-title').textContent = `Add Task — ${selectedCalDate}`;
-          document.getElementById('cal-task-title').value = '';
-          document.getElementById('cal-task-cat').value = '';
-          calModal.classList.add('open');
-          document.getElementById('cal-task-title').focus();
-        });
-      });
     }
-
-    document.getElementById('cal-cancel-btn').addEventListener('click', () => {
-      calModal.classList.remove('open');
-    });
-
-    document.getElementById('cal-save-btn').addEventListener('click', () => {
-      const titleEl = document.getElementById('cal-task-title');
-      const catEl = document.getElementById('cal-task-cat');
-      const title = titleEl.value.trim();
-      if (!title || !selectedCalDate) return;
-
-      tasks.unshift({
-        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        title,
-        category: catEl.value.trim(),
-        due: selectedCalDate,
-        done: false
-      });
-
-      calModal.classList.remove('open');
-      pushTasksToGitHub();
-    });
 
     document.getElementById('prev-month').addEventListener('click', () => {
       calMonth--;
@@ -1350,10 +1325,7 @@
       renderCalendar();
     });
 
-    /* =====================================================================
-       JS SECTION 6: NOTES GRID, TITLE RENAMING, PINNING & CHECKLIST TOGGLE
-       - Hides .md extensions, renames files on title change, toggles checklist
-       ===================================================================== */
+    // Notes
     function showNotesGrid() {
       activeNotePath = null;
       document.getElementById('notes-grid-view').classList.remove('hidden');
@@ -1428,28 +1400,74 @@
 
     document.getElementById('note-search').addEventListener('input', renderNotesGrid);
 
-    function syncChecklistToggleLabel() {
+    // Checkbox panel below editor stays HIDDEN unless explicitly opened
+    function applyChecklistVisibility() {
+      const panel = document.getElementById('checklist-panel');
       const btn = document.getElementById('toggle-checklist-btn');
-      btn.textContent = checklistHiddenByUser ? 'Show Checklist' : 'Hide Checklist';
+      const items = getNoteCheckboxItems();
+
+      if (!items.length) {
+        btn.classList.add('hidden');
+        panel.classList.remove('open');
+        panel.innerHTML = '';
+        return;
+      }
+
+      btn.classList.remove('hidden');
+      btn.textContent = checklistOpen ? 'Hide Checkboxes' : 'Show Checkboxes';
+      panel.classList.toggle('open', checklistOpen);
+
+      if (checklistOpen) {
+        panel.innerHTML = items.map(it => `
+          <label class="check-row ${it.checked ? 'checked' : ''}">
+            <input type="checkbox" ${it.checked ? 'checked' : ''} data-line-idx="${it.idx}" />
+            <span>${escapeHtml(it.text || 'Checkbox item')}</span>
+          </label>
+        `).join('');
+
+        panel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.addEventListener('change', () => {
+            const ta = document.getElementById('note-editor');
+            const lines = ta.value.split('\n');
+            const idx = Number(cb.dataset.lineIdx);
+            lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
+            ta.value = lines.join('\n');
+            applyChecklistVisibility();
+          });
+        });
+      }
+    }
+
+    function getNoteCheckboxItems() {
+      const text = document.getElementById('note-editor').value || '';
+      const out = [];
+      text.split('\n').forEach((line, idx) => {
+        const m = line.match(/^\s*-\s*\[([ xX])\]\s*(.*)$/);
+        if (m) out.push({ idx, checked: m[1].toLowerCase() === 'x', text: m[2] });
+      });
+      return out;
     }
 
     document.getElementById('toggle-checklist-btn').addEventListener('click', () => {
-      checklistHiddenByUser = !checklistHiddenByUser;
-      syncChecklistToggleLabel();
-      renderNoteChecklist();
+      checklistOpen = !checklistOpen;
+      applyChecklistVisibility();
+    });
+
+    document.getElementById('note-editor').addEventListener('input', () => {
+      if (!getNoteCheckboxItems().length) checklistOpen = false;
+      applyChecklistVisibility();
     });
 
     document.getElementById('new-note-btn').addEventListener('click', () => {
       activeNotePath = null;
-      checklistHiddenByUser = false;
-      syncChecklistToggleLabel();
+      checklistOpen = false;
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = '';
       document.getElementById('note-editor').value = '';
       updateEditorPinLabel(false);
       document.getElementById('editor-delete-btn').classList.add('hidden');
-      renderNoteChecklist();
+      applyChecklistVisibility();
       document.getElementById('note-title-input').focus();
     });
 
@@ -1457,15 +1475,14 @@
       const note = notesStore[path];
       if (!note) return;
       activeNotePath = path;
-      checklistHiddenByUser = false;
-      syncChecklistToggleLabel();
+      checklistOpen = false;
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = note.title;
       document.getElementById('note-editor').value = note.body;
       updateEditorPinLabel(Boolean(note.pinned));
       document.getElementById('editor-delete-btn').classList.remove('hidden');
-      renderNoteChecklist();
+      applyChecklistVisibility();
     }
 
     function updateEditorPinLabel(isPinned) {
@@ -1481,58 +1498,6 @@
     });
 
     document.getElementById('back-to-notes-btn').addEventListener('click', showNotesGrid);
-
-    function renderNoteChecklist() {
-      const panel = document.getElementById('checklist-panel');
-      const toggleBtn = document.getElementById('toggle-checklist-btn');
-      const text = document.getElementById('note-editor').value;
-      const lines = text.split('\n');
-      const items = [];
-
-      lines.forEach((line, idx) => {
-        const m = line.match(/^\s*-\s*\[([ xX])\]\s*(.*)$/);
-        if (m) {
-          items.push({ idx, checked: m[1].toLowerCase() === 'x', text: m[2] });
-        }
-      });
-
-      if (!items.length) {
-        toggleBtn.classList.add('hidden');
-        panel.classList.remove('visible');
-        panel.innerHTML = '';
-        return;
-      }
-
-      toggleBtn.classList.remove('hidden');
-      if (checklistHiddenByUser) {
-        panel.classList.remove('visible');
-        return;
-      }
-
-      panel.classList.add('visible');
-      panel.innerHTML = items.map(it => `
-        <label class="check-row ${it.checked ? 'checked' : ''}">
-          <input type="checkbox" ${it.checked ? 'checked' : ''} data-line-idx="${it.idx}" />
-          <span>${escapeHtml(it.text || 'Checkbox item')}</span>
-        </label>
-      `).join('');
-
-      panel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        cb.addEventListener('change', () => {
-          toggleNoteCheckboxLine(Number(cb.dataset.lineIdx), cb.checked);
-        });
-      });
-    }
-
-    function toggleNoteCheckboxLine(lineIdx, checked) {
-      const ta = document.getElementById('note-editor');
-      const lines = ta.value.split('\n');
-      lines[lineIdx] = lines[lineIdx].replace(/^\s*-\s*\[[ xX]\]/, checked ? '- [x]' : '- [ ]');
-      ta.value = lines.join('\n');
-      renderNoteChecklist();
-    }
-
-    document.getElementById('note-editor').addEventListener('input', renderNoteChecklist);
 
     document.getElementById('save-note-btn').addEventListener('click', async () => {
       const titleInput = document.getElementById('note-title-input').value.trim() || 'Untitled';
@@ -1553,23 +1518,18 @@
       };
 
       notesStore[newPath] = record;
-      if (oldPath && oldPath !== newPath) {
-        delete notesStore[oldPath];
-      }
+      if (oldPath && oldPath !== newPath) delete notesStore[oldPath];
       localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
       renderDashboard();
 
       if (cfg.owner && cfg.repo && cfg.token) {
         try {
           setStatus('Saving note...');
-          const mdContent = serializeNoteMarkdown(record);
-          const putRes = await ghPutFile(newPath, mdContent, `Save ${newPath}`, record.sha);
+          const putRes = await ghPutFile(newPath, serializeNoteMarkdown(record), `Save ${newPath}`, record.sha);
           record.sha = putRes.content.sha;
-
           if (oldPath && oldPath !== newPath && oldRecord?.sha) {
             await ghDeleteFile(oldPath, oldRecord.sha, `Rename ${oldPath} to ${newPath}`);
           }
-
           localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
           setStatus('Synced ✓');
         } catch (err) {
@@ -1610,20 +1570,17 @@
       if (activeNotePath) await deleteNoteByPath(activeNotePath);
     });
 
-    /* =====================================================================
-       JS SECTION 7: VAULT SETTINGS MODAL & INITIAL APP BOOT
-       - Saves GitHub credentials in localStorage and runs initial sync
-       ===================================================================== */
-    const modal = document.getElementById('config-modal');
+    // Config Modal
+    const cfgModal = document.getElementById('config-modal');
     document.getElementById('config-btn').addEventListener('click', () => {
       document.getElementById('cfg-owner').value = cfg.owner;
       document.getElementById('cfg-repo').value = cfg.repo;
       document.getElementById('cfg-branch').value = cfg.branch;
       document.getElementById('cfg-token').value = cfg.token;
-      modal.classList.add('open');
+      cfgModal.classList.add('open');
     });
 
-    document.getElementById('close-cfg-btn').addEventListener('click', () => modal.classList.remove('open'));
+    document.getElementById('close-cfg-btn').addEventListener('click', () => cfgModal.classList.remove('open'));
 
     document.getElementById('save-cfg-btn').addEventListener('click', async () => {
       cfg = {
@@ -1633,7 +1590,7 @@
         token: document.getElementById('cfg-token').value.trim()
       };
       localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
-      modal.classList.remove('open');
+      cfgModal.classList.remove('open');
       await syncAll();
     });
 
