@@ -7,6 +7,9 @@
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%238ab89a' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
 
+  <!-- ========================================================= -->
+  <!-- CSS STYLES                                                -->
+  <!-- ========================================================= -->
   <style>
     :root {
       --bg: #111214;
@@ -38,29 +41,31 @@
       --border: rgba(20, 22, 25, 0.1);
     }
 
+    /* Palettes */
     body[data-palette="terracotta"] { --accent: #e08e6d; --accent-soft: rgba(224, 142, 109, 0.18); }
     body.light[data-palette="terracotta"] { --accent: #c96d49; --accent-soft: rgba(201, 109, 73, 0.15); }
-
     body[data-palette="sage"] { --accent: #8ab89a; --accent-soft: rgba(138, 184, 154, 0.18); }
     body.light[data-palette="sage"] { --accent: #4f8a66; --accent-soft: rgba(79, 138, 102, 0.15); }
-
     body[data-palette="latte"] { --accent: #ddb46b; --accent-soft: rgba(221, 180, 107, 0.18); }
     body.light[data-palette="latte"] { --accent: #b88428; --accent-soft: rgba(184, 132, 40, 0.15); }
-
     body[data-palette="sky"] { --accent: #86b6e0; --accent-soft: rgba(134, 182, 224, 0.18); }
     body.light[data-palette="sky"] { --accent: #3d7ab3; --accent-soft: rgba(61, 122, 179, 0.15); }
-
     body[data-palette="lilac"] { --accent: #c8b6ff; --accent-soft: rgba(200, 182, 255, 0.2); }
     body.light[data-palette="lilac"] { --accent: #8566e6; --accent-soft: rgba(133, 102, 230, 0.15); }
-
     body[data-palette="mango"] { --accent: #ffb84d; --accent-soft: rgba(255, 184, 77, 0.2); }
     body.light[data-palette="mango"] { --accent: #d4820a; --accent-soft: rgba(212, 130, 10, 0.15); }
-
     body[data-palette="periwinkle"] { --accent: #9db4ff; --accent-soft: rgba(157, 180, 255, 0.2); }
     body.light[data-palette="periwinkle"] { --accent: #5272db; --accent-soft: rgba(82, 114, 219, 0.15); }
-
     body[data-palette="bubblegum"] { --accent: #ff77b7; --accent-soft: rgba(255, 119, 183, 0.2); }
     body.light[data-palette="bubblegum"] { --accent: #d4438a; --accent-soft: rgba(212, 67, 138, 0.15); }
+    
+    /* New Colors */
+    body[data-palette="rose"] { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.18); }
+    body.light[data-palette="rose"] { --accent: #be123c; --accent-soft: rgba(190, 18, 60, 0.15); }
+    body[data-palette="mint"] { --accent: #2dd4bf; --accent-soft: rgba(45, 212, 191, 0.18); }
+    body.light[data-palette="mint"] { --accent: #0f766e; --accent-soft: rgba(15, 118, 110, 0.15); }
+    body[data-palette="ocean"] { --accent: #3b82f6; --accent-soft: rgba(59, 130, 246, 0.18); }
+    body.light[data-palette="ocean"] { --accent: #1d4ed8; --accent-soft: rgba(29, 78, 216, 0.15); }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -75,6 +80,7 @@
 
     .container { width: 100%; max-width: 1320px; margin: 0 auto; }
 
+    /* Header */
     header {
       display: flex;
       flex-wrap: wrap;
@@ -111,6 +117,7 @@
 
     button, input, select, textarea { font-family: inherit; color: var(--text); }
 
+    /* Buttons */
     .btn {
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -119,6 +126,7 @@
       font-size: 0.84rem;
       font-weight: 500;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
     .btn:hover { background: var(--surface-3); }
 
@@ -138,6 +146,7 @@
       color: var(--urgent);
     }
 
+    /* Toolbar / Tabs */
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -168,28 +177,7 @@
     }
     .tab.active { background: var(--accent); color: var(--accent-contrast); }
 
-    .palette-bar {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--surface);
-      padding: 6px 12px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .swatch {
-      width: 17px;
-      height: 17px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      cursor: pointer;
-    }
-    .swatch.active { border-color: var(--text); transform: scale(1.15); }
-
-    /* Dashboard */
+    /* Cards & Layout */
     .dash-main-grid {
       display: grid;
       grid-template-columns: 1.75fr 0.85fr;
@@ -205,9 +193,10 @@
       margin-bottom: 16px;
     }
 
+    /* Dashboard Stats */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin-bottom: 14px;
     }
@@ -222,7 +211,7 @@
     .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
     .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 2px; }
 
-    /* Minimal task bar */
+    /* Forms & Fields */
     .minimal-task-bar {
       display: flex;
       flex-wrap: wrap;
@@ -237,6 +226,7 @@
       padding: 8px 11px;
       font-size: 0.88rem;
       outline: none;
+      color: var(--text);
     }
     .field:focus { border-color: var(--accent); }
     .field-grow { flex: 1 1 210px; min-width: 160px; }
@@ -244,7 +234,7 @@
     .field-quick { width: 130px; }
     .field-date { width: 145px; }
 
-    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
     .section-title { font-size: 1rem; font-weight: 650; }
 
     .pill {
@@ -256,6 +246,7 @@
       border: 1px solid var(--border);
     }
 
+    /* Task List */
     .task-list { display: flex; flex-direction: column; gap: 9px; }
 
     .task-item {
@@ -319,7 +310,7 @@
     }
     .badge-due.soon { background: rgba(224, 108, 117, 0.18); color: var(--urgent); }
 
-    /* Compact sidebar: Pinned Notes + Small Mini Calendar */
+    /* Pinned Notes */
     .pinned-stack { display: flex; flex-direction: column; gap: 9px; }
 
     .pinned-card {
@@ -330,7 +321,10 @@
       cursor: pointer;
     }
     .pinned-card:hover { border-color: var(--accent); }
+    .pinned-card .note-card-title { font-weight: 700; font-size: 0.95rem; }
+    .pinned-card .note-preview { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
 
+    /* Mini Calendar */
     .mini-cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -366,7 +360,7 @@
       margin: 1px auto 0;
     }
 
-    /* Full Calendar Tab */
+    /* Full Calendar */
     .cal-header {
       display: flex;
       align-items: center;
@@ -377,7 +371,7 @@
     .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
+      gap: 6px;
     }
 
     .cal-dow {
@@ -389,37 +383,40 @@
     }
 
     .cal-cell {
-      min-height: 104px;
+      min-height: 70px; /* Made smaller */
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 8px;
+      padding: 5px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
       cursor: pointer;
+      position: relative;
     }
     .cal-cell:not(.empty):hover { border-color: var(--accent); }
     .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; }
     .cal-cell.today { border-color: var(--accent); background: var(--accent-soft); }
 
-    .cal-day-num { font-size: 0.82rem; font-weight: 700; }
+    .cal-day-num { font-size: 0.8rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+    .cal-plus { font-size: 0.9rem; color: var(--accent); opacity: 0.4; font-weight: bold; }
+    .cal-cell:hover .cal-plus { opacity: 1; }
 
     .cal-chip {
-      font-size: 0.72rem;
-      padding: 3px 7px;
-      border-radius: 7px;
+      font-size: 0.68rem;
+      padding: 2px 5px;
+      border-radius: 5px;
       background: var(--surface-3);
-      border-left: 3px solid var(--accent);
+      border-left: 2px solid var(--accent);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     .cal-chip.done { opacity: 0.55; text-decoration: line-through; }
 
-    .cal-more { font-size: 0.7rem; color: var(--muted); padding-left: 4px; }
+    .cal-more { font-size: 0.65rem; color: var(--muted); padding-left: 2px; }
 
-    /* Notes Tab */
+    /* Notes */
     .notes-top {
       display: flex;
       flex-wrap: wrap;
@@ -500,7 +497,7 @@
       width: 100%;
     }
 
-    /* Keep-style checklist block below note */
+    /* Keep-style checklist block */
     .keep-checklist-card {
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -530,7 +527,56 @@
       color: var(--muted);
     }
 
-    /* Modal */
+    .add-check-item-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px dashed var(--border);
+      padding: 6px 0;
+      font-size: 0.92rem;
+      outline: none;
+      margin-top: 4px;
+    }
+    .add-check-item-input:focus { border-bottom-color: var(--accent); }
+
+    /* Settings View */
+    .settings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 600px;
+    }
+
+    .setting-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-2);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    .setting-label { font-weight: 600; font-size: 0.95rem; }
+    .setting-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .palette-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .swatch:hover { transform: scale(1.1); }
+    .swatch.active { border-color: var(--text); transform: scale(1.1); }
+
+    /* Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -552,6 +598,17 @@
       display: flex;
       flex-direction: column;
       gap: 11px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .cal-modal-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+      max-height: 150px;
+      overflow-y: auto;
     }
 
     .hidden { display: none !important; }
@@ -561,15 +618,19 @@
     }
 
     @media (max-width: 720px) {
-      .stats-row { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
       .field-cat, .field-quick, .field-date { width: 100%; }
       .cal-grid { gap: 4px; }
-      .cal-cell { min-height: 76px; padding: 5px; }
+      .cal-cell { min-height: 60px; padding: 4px; }
+      .tabs { flex-wrap: wrap; justify-content: center; }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- ========================================================= -->
+    <!-- HEADER                                                    -->
+    <!-- ========================================================= -->
     <header>
       <div class="brand-row">
         <div class="brand"><h1>Cozy Brain</h1></div>
@@ -581,33 +642,26 @@
           <strong id="clock-time">--:--</strong>
           <span id="clock-date">--/--/----</span>
         </div>
-        <button id="theme-toggle" class="btn">☀️ Light</button>
         <button id="sync-btn" class="btn">Sync</button>
         <button id="config-btn" class="btn">Key / Repo</button>
       </div>
     </header>
 
+    <!-- ========================================================= -->
+    <!-- TABS TOOLBAR                                              -->
+    <!-- ========================================================= -->
     <div class="toolbar">
       <div class="tabs">
         <button class="tab active" data-tab="dashboard">Dashboard</button>
         <button class="tab" data-tab="calendar">Calendar</button>
         <button class="tab" data-tab="notes">Notes</button>
-      </div>
-
-      <div class="palette-bar">
-        <span>Color</span>
-        <button class="swatch active" data-p="terracotta" style="background:#e08e6d" title="Terracotta"></button>
-        <button class="swatch" data-p="sage" style="background:#8ab89a" title="Sage"></button>
-        <button class="swatch" data-p="latte" style="background:#ddb46b" title="Latte"></button>
-        <button class="swatch" data-p="sky" style="background:#86b6e0" title="Sky"></button>
-        <button class="swatch" data-p="lilac" style="background:#c8b6ff" title="Lilac"></button>
-        <button class="swatch" data-p="mango" style="background:#ffb84d" title="Mango"></button>
-        <button class="swatch" data-p="periwinkle" style="background:#9db4ff" title="Periwinkle"></button>
-        <button class="swatch" data-p="bubblegum" style="background:#ff77b7" title="Bubblegum"></button>
+        <button class="tab" data-tab="settings">Settings</button>
       </div>
     </div>
 
-    <!-- DASHBOARD (Tasks & Pinned Notes first; Compact Mini Calendar on side) -->
+    <!-- ========================================================= -->
+    <!-- DASHBOARD VIEW                                            -->
+    <!-- ========================================================= -->
     <section id="view-dashboard">
       <div class="dash-main-grid">
         <div>
@@ -624,6 +678,10 @@
               <div class="stat-label">Completed</div>
               <div id="stat-done" class="stat-value">0</div>
             </div>
+            <div class="mini-stat">
+              <div class="stat-label">Time on Screen</div>
+              <div id="stat-time" class="stat-value" style="font-size:1.1rem;">00:00:00</div>
+            </div>
           </div>
 
           <div class="card">
@@ -631,6 +689,7 @@
               <input id="task-title" class="field field-grow" type="text" placeholder="Add a task..." required />
               <input id="task-cat" class="field field-cat" type="text" list="cat-suggestions" placeholder="Category" />
               <datalist id="cat-suggestions">
+                <option value="Games"></option>
                 <option value="Exam"></option>
                 <option value="Study"></option>
                 <option value="Project"></option>
@@ -652,7 +711,12 @@
           <div class="card">
             <div class="section-head">
               <div class="section-title">Remaining Tasks</div>
-              <span id="rem-count" class="pill">0 left</span>
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <select id="filter-cat" class="field btn-sm" style="padding:4px 8px; border-radius:8px;">
+                  <option value="">All Categories</option>
+                </select>
+                <span id="rem-count" class="pill">0 left</span>
+              </div>
             </div>
             <div id="rem-list" class="task-list"></div>
           </div>
@@ -686,7 +750,9 @@
       </div>
     </section>
 
-    <!-- FULL CALENDAR -->
+    <!-- ========================================================= -->
+    <!-- CALENDAR VIEW                                             -->
+    <!-- ========================================================= -->
     <section id="view-calendar" class="hidden">
       <div class="card">
         <div class="cal-header">
@@ -698,7 +764,9 @@
       </div>
     </section>
 
-    <!-- NOTES -->
+    <!-- ========================================================= -->
+    <!-- NOTES VIEW                                                -->
+    <!-- ========================================================= -->
     <section id="view-notes" class="hidden">
       <div id="notes-grid-view" class="card">
         <div class="notes-top">
@@ -716,28 +784,100 @@
           <div class="editor-bar">
             <button id="back-to-notes-btn" class="btn">← All Notes</button>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button id="toggle-checklist-btn" class="btn hidden">Checklist</button>
+              <button id="toggle-editor-mode-btn" class="btn hidden">Edit Raw Text</button>
               <button id="editor-pin-btn" class="pin-btn">Pin</button>
               <button id="editor-delete-btn" class="btn btn-danger">Delete</button>
               <button id="save-note-btn" class="btn btn-accent">Save</button>
             </div>
           </div>
           <input id="note-title-input" class="note-title-input" type="text" placeholder="Note title..." />
+          
+          <!-- Raw Markdown Textarea -->
           <textarea id="note-editor" class="field note-area" placeholder="Write your note... Use '- [ ] ' for Keep-style checkboxes"></textarea>
-          <div id="keep-checklist-card" class="keep-checklist-card"></div>
+          
+          <!-- Keep-style checklist (Interactive Mode) -->
+          <div id="keep-checklist-card" class="keep-checklist-card">
+            <div id="keep-items-list"></div>
+            <input id="new-check-item" class="add-check-item-input" type="text" placeholder="+ Add new checklist item and press Enter..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SETTINGS VIEW                                             -->
+    <!-- ========================================================= -->
+    <section id="view-settings" class="hidden">
+      <div class="card">
+        <div class="section-title" style="margin-bottom:16px;">App Settings</div>
+        
+        <div class="settings-grid">
+          <!-- Theme Setting -->
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Appearance</div>
+              <div class="setting-desc">Toggle between dark and light mode</div>
+            </div>
+            <button id="theme-toggle" class="btn">☀️ Light</button>
+          </div>
+
+          <!-- Time Format Setting -->
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Time Format</div>
+              <div class="setting-desc">Choose between 12-hour or 24-hour clock</div>
+            </div>
+            <select id="setting-time-format" class="field">
+              <option value="12h">12-Hour (AM/PM)</option>
+              <option value="24h">24-Hour</option>
+            </select>
+          </div>
+
+          <!-- Colors Setting -->
+          <div class="setting-item" style="flex-direction:column; align-items:flex-start; gap:12px;">
+            <div>
+              <div class="setting-label">Accent Color</div>
+              <div class="setting-desc">Pick a color palette for the UI</div>
+            </div>
+            <div class="palette-bar">
+              <button class="swatch active" data-p="terracotta" style="background:#e08e6d" title="Terracotta"></button>
+              <button class="swatch" data-p="sage" style="background:#8ab89a" title="Sage"></button>
+              <button class="swatch" data-p="latte" style="background:#ddb46b" title="Latte"></button>
+              <button class="swatch" data-p="sky" style="background:#86b6e0" title="Sky"></button>
+              <button class="swatch" data-p="lilac" style="background:#c8b6ff" title="Lilac"></button>
+              <button class="swatch" data-p="mango" style="background:#ffb84d" title="Mango"></button>
+              <button class="swatch" data-p="periwinkle" style="background:#9db4ff" title="Periwinkle"></button>
+              <button class="swatch" data-p="bubblegum" style="background:#ff77b7" title="Bubblegum"></button>
+              <button class="swatch" data-p="rose" style="background:#f43f5e" title="Rose"></button>
+              <button class="swatch" data-p="mint" style="background:#2dd4bf" title="Mint"></button>
+              <button class="swatch" data-p="ocean" style="background:#3b82f6" title="Ocean"></button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- CALENDAR QUICK-ADD TASK MODAL -->
+  <!-- ========================================================= -->
+  <!-- MODALS                                                    -->
+  <!-- ========================================================= -->
+  
+  <!-- CALENDAR MODAL -->
   <div id="cal-add-modal" class="modal-backdrop">
     <div class="modal">
-      <div id="cal-modal-title" class="section-title">Add Task</div>
-      <input id="cal-task-title" class="field" type="text" placeholder="Task title..." />
-      <input id="cal-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (optional)" />
+      <div id="cal-modal-title" class="section-title">Tasks for Date</div>
+      
+      <!-- Existing tasks for the date -->
+      <div id="cal-modal-tasks" class="cal-modal-tasks"></div>
+
+      <div style="border-top: 1px solid var(--border); margin: 8px 0; padding-top: 12px;">
+        <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">Add New Task</div>
+        <input id="cal-task-title" class="field" type="text" placeholder="Task title..." style="margin-bottom:8px;" />
+        <input id="cal-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (optional)" />
+      </div>
+      
       <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
-        <button id="cal-cancel-btn" class="btn">Cancel</button>
+        <button id="cal-cancel-btn" class="btn">Close</button>
         <button id="cal-save-btn" class="btn btn-accent">Add Task</button>
       </div>
     </div>
@@ -783,24 +923,36 @@
     </div>
   </div>
 
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT LOGIC                                          -->
+  <!-- ========================================================= -->
   <script>
+    // --- 1. STATE & VARIABLES ---
     const CFG_KEY = 'gh_vault';
     const TASKS_CACHE = 'cozy_tasks_cache_v1';
     const NOTES_CACHE = 'cozy_notes_cache_v1';
-    const THEME_KEY = 'cozy_theme_v1';
+    const SETTINGS_KEY = 'cozy_settings_v1';
 
     let cfg = loadCfg();
     let tasks = loadJson(TASKS_CACHE, []);
     let notesStore = loadJson(NOTES_CACHE, {});
+    
+    // Settings
+    let settings = loadJson(SETTINGS_KEY, { light: false, palette: 'terracotta', timeFormat: '12h' });
+
+    // UI State
     let activeNotePath = null;
-    let checklistOpen = true;
     let editingTaskId = null;
     let selectedCalIso = '';
+    let isRawTextMode = false; // Toggles between checklist view and textarea
+    let currentFilterCat = '';
 
+    // Calendar State
     const initNow = new Date();
     let calYear = initNow.getFullYear();
     let calMonth = initNow.getMonth();
 
+    // --- 2. UTILITIES ---
     function loadCfg() {
       const saved = loadJson(CFG_KEY, {});
       return {
@@ -865,17 +1017,34 @@
       return Math.round((target - today) / 86400000);
     }
 
-    // Header Clock (IST, DD/MM/YYYY)
+    // Debounce utility to prevent API spam
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // --- 3. CLOCK & SCREEN TIME ---
+    let sessionStart = Date.now();
     function updateClock() {
       const d = new Date();
+      const is24h = settings.timeFormat === '24h';
+      
       const tEl = document.getElementById('clock-time');
       const dEl = document.getElementById('clock-date');
+      
       if (tEl) {
         tEl.textContent = d.toLocaleTimeString('en-IN', {
           timeZone: 'Asia/Kolkata',
           hour: '2-digit',
           minute: '2-digit',
-          hour12: true
+          hour12: !is24h
         });
       }
       if (dEl) {
@@ -886,100 +1055,72 @@
           year: 'numeric'
         });
       }
+
+      // Time on Screen Update
+      const timeEl = document.getElementById('stat-time');
+      if (timeEl) {
+        const diff = Math.floor((Date.now() - sessionStart) / 1000);
+        const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+        const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+        const s = String(diff % 60).padStart(2, '0');
+        timeEl.textContent = is24h ? `${h}:${m}:${s}` : `${h}h ${m}m ${s}s`;
+      }
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Theme & Swatches
-    function initTheme() {
-      const saved = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
-      applyTheme(saved.light, saved.palette);
-    }
-
-    function applyTheme(isLight, palette) {
-      document.body.classList.toggle('light', Boolean(isLight));
-      document.body.setAttribute('data-palette', palette || 'terracotta');
-      document.getElementById('theme-toggle').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+    // --- 4. THEME & SETTINGS ---
+    function applySettings() {
+      document.body.classList.toggle('light', Boolean(settings.light));
+      document.body.setAttribute('data-palette', settings.palette || 'terracotta');
+      
+      document.getElementById('theme-toggle').textContent = settings.light ? '🌙 Dark' : '☀️ Light';
+      document.getElementById('setting-time-format').value = settings.timeFormat;
+      
       document.querySelectorAll('.swatch').forEach(s => {
-        s.classList.toggle('active', s.dataset.p === palette);
+        s.classList.toggle('active', s.dataset.p === settings.palette);
       });
-      localStorage.setItem(THEME_KEY, JSON.stringify({ light: Boolean(isLight), palette }));
+      
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      updateClock(); // Refresh clock immediately
     }
 
     document.getElementById('theme-toggle').addEventListener('click', () => {
-      const cur = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
-      applyTheme(!cur.light, cur.palette);
+      settings.light = !settings.light;
+      applySettings();
+    });
+
+    document.getElementById('setting-time-format').addEventListener('change', (e) => {
+      settings.timeFormat = e.target.value;
+      applySettings();
     });
 
     document.querySelectorAll('.swatch').forEach(swatch => {
       swatch.addEventListener('click', () => {
-        const cur = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
-        applyTheme(cur.light, swatch.dataset.p);
+        settings.palette = swatch.dataset.p;
+        applySettings();
       });
     });
 
-    // Tabs
+    // --- 5. TABS NAVIGATION ---
     function switchTab(tab) {
       document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
       document.getElementById('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
       document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
       document.getElementById('view-notes').classList.toggle('hidden', tab !== 'notes');
+      document.getElementById('view-settings').classList.toggle('hidden', tab !== 'settings');
+      
       if (tab === 'dashboard') renderDashboard();
       if (tab === 'calendar') renderCalendar();
       if (tab === 'notes') showNotesGrid();
+      if (tab === 'settings') applySettings();
     }
 
     document.querySelectorAll('.tab').forEach(btn => {
       btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    // Quick Date Dropdowns
-    document.getElementById('task-quick-date').addEventListener('change', e => {
-      if (e.target.value !== '') {
-        document.getElementById('task-date').value = offsetIsoDate(Number(e.target.value));
-      }
-    });
-
-    document.getElementById('edit-task-quick-date').addEventListener('change', e => {
-      if (e.target.value !== '') {
-        document.getElementById('edit-task-date').value = offsetIsoDate(Number(e.target.value));
-      }
-    });
-
-    // Notes Frontmatter
-    function parseNoteMarkdown(filename, rawText) {
-      const baseTitle = filename.replace(/\.md$/i, '');
-      let pinned = false;
-      let title = baseTitle;
-      let body = rawText || '';
-
-      const fmMatch = body.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-      if (fmMatch) {
-        const fm = fmMatch[1];
-        const pinMatch = fm.match(/^pinned:\s*(true|false)\s*$/mi);
-        if (pinMatch) pinned = pinMatch[1].toLowerCase() === 'true';
-        const titleMatch = fm.match(/^title:\s*(.+)\s*$/mi);
-        if (titleMatch) title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
-        body = body.slice(fmMatch[0].length);
-      }
-      return { title: title || baseTitle, pinned, body };
-    }
-
-    function serializeNoteMarkdown({ title, pinned, body }) {
-      const cleanTitle = (title || 'Untitled').trim() || 'Untitled';
-      return ['---', `title: "${cleanTitle.replace(/"/g, '\\"')}"`, `pinned: ${Boolean(pinned)}`, '---', '', body || ''].join('\n');
-    }
-
-    function slugifyFilename(title) {
-      const cleaned = (title || 'untitled')
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9._-]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-      return `${cleaned || 'untitled'}.md`;
-    }
-
-    // GitHub API
+    // --- 6. GITHUB API LOGIC ---
     async function ghFetch(endpoint, options = {}) {
       if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error('Missing GitHub config');
       const url = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/${endpoint}`;
@@ -1023,9 +1164,11 @@
       return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'DELETE', body: JSON.stringify({ message, sha, branch: cfg.branch }) });
     }
 
+    // --- 7. SYNCING (EFFICIENT) ---
     async function syncAll() {
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
       localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      
       renderDashboard();
       renderCalendar();
       if (!document.getElementById('view-notes').classList.contains('hidden') &&
@@ -1040,6 +1183,8 @@
 
       try {
         setStatus('Syncing...');
+        
+        // 1. Sync Tasks
         let remoteTasks = null;
         let tasksSha = null;
         try {
@@ -1057,25 +1202,33 @@
           await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', tasksSha);
         }
 
+        // 2. Sync Notes (Parallel fetching for speed)
         const dirItems = await ghFetch(`contents?ref=${encodeURIComponent(cfg.branch)}`);
         const mdFiles = Array.isArray(dirItems) ? dirItems.filter(f => f.type === 'file' && /\.md$/i.test(f.name)) : [];
-        const nextNotes = {};
-
-        for (const item of mdFiles) {
+        
+        const fetchPromises = mdFiles.map(async (item) => {
           const fileData = await ghFetch(`contents/${encodeURIComponent(item.path)}?ref=${encodeURIComponent(cfg.branch)}`);
           const raw = b64DecodeUtf8(fileData.content);
           const parsed = parseNoteMarkdown(item.name, raw);
-          nextNotes[item.path] = {
-            name: item.name,
-            title: parsed.title,
-            pinned: parsed.pinned,
-            body: parsed.body,
-            sha: fileData.sha
+          return {
+            path: item.path,
+            data: {
+              name: item.name,
+              title: parsed.title,
+              pinned: parsed.pinned,
+              body: parsed.body,
+              sha: fileData.sha
+            }
           };
-        }
+        });
+
+        const results = await Promise.all(fetchPromises);
+        const nextNotes = {};
+        results.forEach(res => { nextNotes[res.path] = res.data; });
 
         notesStore = nextNotes;
         localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+        
         renderDashboard();
         renderCalendar();
         renderNotesGrid();
@@ -1085,10 +1238,11 @@
       }
     }
 
-    async function pushTasksToGitHub() {
+    const debouncedSyncTasks = debounce(async () => {
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
       renderDashboard();
-      renderCalendar();
+      if (!document.getElementById('view-calendar').classList.contains('hidden')) renderCalendar();
+      
       if (!cfg.owner || !cfg.repo || !cfg.token) return;
       try {
         setStatus('Saving tasks...');
@@ -1102,37 +1256,9 @@
       } catch (err) {
         setStatus(`Save error: ${err.message}`);
       }
-    }
+    }, 2000); // Wait 2 seconds after last click to save
 
-    // Mini Calendar on Dashboard
-    function renderMiniCalendar() {
-      const cur = new Date();
-      const y = cur.getFullYear();
-      const m = cur.getMonth();
-      const todayDay = cur.getDate();
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      const label = document.getElementById('mini-cal-label');
-      const grid = document.getElementById('mini-cal-grid');
-      if (!label || !grid) return;
-
-      label.textContent = `${months[m]} ${y}`;
-      const firstDay = new Date(y, m, 1).getDay();
-      const totalDays = new Date(y, m + 1, 0).getDate();
-      const dows = ['S','M','T','W','T','F','S'];
-
-      let html = dows.map(d => `<div class="mini-dow">${d}</div>`).join('');
-      for (let i = 0; i < firstDay; i++) html += `<div class="mini-day empty"></div>`;
-
-      for (let day = 1; day <= totalDays; day++) {
-        const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const hasTask = tasks.some(t => normalizeIsoDate(t.due) === iso && !t.done);
-        const isToday = day === todayDay;
-        html += `<div class="mini-day ${isToday ? 'today' : ''} ${hasTask ? 'has-task' : ''}">${day}</div>`;
-      }
-      grid.innerHTML = html;
-    }
-
-    // Dashboard
+    // --- 8. DASHBOARD RENDERING ---
     function renderDashboard() {
       const openTasks = tasks.filter(t => !t.done);
       const doneTasks = tasks.filter(t => t.done);
@@ -1144,10 +1270,20 @@
       document.getElementById('stat-left').textContent = openTasks.length;
       document.getElementById('stat-due').textContent = dueSoon.length;
       document.getElementById('stat-done').textContent = doneTasks.length;
-      document.getElementById('rem-count').textContent = `${openTasks.length} left`;
+      
+      // Update Category Filter Options
+      const catFilter = document.getElementById('filter-cat');
+      const cats = [...new Set(tasks.map(t => t.category).filter(Boolean))];
+      catFilter.innerHTML = `<option value="">All Categories</option>` + 
+        cats.map(c => `<option value="${escapeHtml(c)}" ${currentFilterCat === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
+
+      // Apply Filter
+      const filteredOpen = openTasks.filter(t => !currentFilterCat || t.category === currentFilterCat);
+      document.getElementById('rem-count').textContent = `${filteredOpen.length} left`;
 
       renderMiniCalendar();
 
+      // Pinned Notes
       const pinnedNotes = Object.entries(notesStore)
         .filter(([, n]) => n.pinned)
         .map(([path, n]) => ({ path, ...n }));
@@ -1174,22 +1310,24 @@
         pinnedCard.classList.add('hidden');
       }
 
+      // Render Lists
       const remList = document.getElementById('rem-list');
-      remList.innerHTML = openTasks.length
-        ? openTasks.map(renderTaskRow).join('')
-        : '<p style="color:var(--muted);font-size:0.88rem;">No remaining tasks.</p>';
+      remList.innerHTML = filteredOpen.length
+        ? filteredOpen.map(renderTaskRow).join('')
+        : '<p style="color:var(--muted);font-size:0.88rem;">No tasks found.</p>';
 
       const doneList = document.getElementById('done-list');
       doneList.innerHTML = doneTasks.length
         ? doneTasks.map(renderTaskRow).join('')
         : '<p style="color:var(--muted);font-size:0.88rem;">No completed tasks.</p>';
 
+      // Bind Task Actions
       document.querySelectorAll('[data-toggle-task]').forEach(btn => {
         btn.addEventListener('click', () => {
           const target = tasks.find(t => t.id === btn.dataset.toggleTask);
           if (target) {
             target.done = !target.done;
-            pushTasksToGitHub();
+            debouncedSyncTasks(); // Efficient sync
           }
         });
       });
@@ -1201,10 +1339,15 @@
       document.querySelectorAll('[data-del-task]').forEach(btn => {
         btn.addEventListener('click', () => {
           tasks = tasks.filter(t => t.id !== btn.dataset.delTask);
-          pushTasksToGitHub();
+          debouncedSyncTasks();
         });
       });
     }
+
+    document.getElementById('filter-cat').addEventListener('change', (e) => {
+      currentFilterCat = e.target.value;
+      renderDashboard();
+    });
 
     function renderTaskRow(t) {
       const iso = normalizeIsoDate(t.due);
@@ -1236,6 +1379,158 @@
       `;
     }
 
+    // --- 9. MINI CALENDAR ---
+    function renderMiniCalendar() {
+      const cur = new Date();
+      const y = cur.getFullYear();
+      const m = cur.getMonth();
+      const todayDay = cur.getDate();
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const label = document.getElementById('mini-cal-label');
+      const grid = document.getElementById('mini-cal-grid');
+      if (!label || !grid) return;
+
+      label.textContent = `${months[m]} ${y}`;
+      const firstDay = new Date(y, m, 1).getDay();
+      const totalDays = new Date(y, m + 1, 0).getDate();
+      const dows = ['S','M','T','W','T','F','S'];
+
+      let html = dows.map(d => `<div class="mini-dow">${d}</div>`).join('');
+      for (let i = 0; i < firstDay; i++) html += `<div class="mini-day empty"></div>`;
+
+      for (let day = 1; day <= totalDays; day++) {
+        const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const hasTask = tasks.some(t => normalizeIsoDate(t.due) === iso && !t.done);
+        const isToday = day === todayDay;
+        html += `<div class="mini-day ${isToday ? 'today' : ''} ${hasTask ? 'has-task' : ''}">${day}</div>`;
+      }
+      grid.innerHTML = html;
+    }
+
+    // --- 10. FULL CALENDAR ---
+    const calAddModal = document.getElementById('cal-add-modal');
+
+    function renderCalendar() {
+      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const labelEl = document.getElementById('cal-month-label');
+      const gridEl = document.getElementById('cal-grid');
+      if (!labelEl || !gridEl) return;
+
+      labelEl.textContent = `${monthNames[calMonth]} ${calYear}`;
+      const firstDay = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+      const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const todayRef = new Date();
+
+      let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+      for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const mm = String(calMonth + 1).padStart(2, '0');
+        const dd = String(day).padStart(2, '0');
+        const iso = `${calYear}-${mm}-${dd}`;
+        const isToday = calYear === todayRef.getFullYear() && calMonth === todayRef.getMonth() && day === todayRef.getDate();
+        const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
+
+        const maxChips = 3;
+        const chips = dayTasks.slice(0, maxChips).map(t =>
+          `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</div>`
+        ).join('');
+        const extra = dayTasks.length - maxChips;
+        const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
+
+        html += `
+          <div class="cal-cell ${isToday ? 'today' : ''}" data-cal-iso="${iso}">
+            <div class="cal-day-num">
+              <span>${day}</span>
+              <span class="cal-plus">+</span>
+            </div>
+            ${chips}
+            ${more}
+          </div>
+        `;
+      }
+      gridEl.innerHTML = html;
+
+      gridEl.querySelectorAll('.cal-cell[data-cal-iso]').forEach(cell => {
+        cell.addEventListener('click', () => {
+          openCalModal(cell.dataset.calIso);
+        });
+      });
+    }
+
+    function openCalModal(iso) {
+      selectedCalIso = iso;
+      document.getElementById('cal-modal-title').textContent = `Tasks for ${formatIndianDate(iso)}`;
+      document.getElementById('cal-task-title').value = '';
+      document.getElementById('cal-task-cat').value = '';
+      
+      // Render existing tasks inside the modal
+      const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
+      const taskContainer = document.getElementById('cal-modal-tasks');
+      
+      if (dayTasks.length > 0) {
+        taskContainer.innerHTML = dayTasks.map(t => `
+          <div class="task-item" style="padding: 6px 10px;">
+            <div class="task-left">
+              <button class="check-btn ${t.done ? 'done' : ''}" onclick="toggleCalTask('${t.id}')">${t.done ? '✓' : ''}</button>
+              <div class="task-title ${t.done ? 'done' : ''}" style="font-size:0.85rem;">${escapeHtml(t.title)}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        taskContainer.innerHTML = '<div style="font-size:0.8rem; color:var(--muted); padding:4px;">No tasks for this date.</div>';
+      }
+
+      calAddModal.classList.add('open');
+      document.getElementById('cal-task-title').focus();
+    }
+
+    window.toggleCalTask = function(id) {
+      const target = tasks.find(t => t.id === id);
+      if (target) {
+        target.done = !target.done;
+        openCalModal(selectedCalIso); // Refresh modal UI
+        debouncedSyncTasks(); // Save
+      }
+    };
+
+    document.getElementById('cal-cancel-btn').addEventListener('click', () => {
+      selectedCalIso = '';
+      calAddModal.classList.remove('open');
+    });
+
+    document.getElementById('cal-save-btn').addEventListener('click', () => {
+      const title = document.getElementById('cal-task-title').value.trim();
+      const cat = document.getElementById('cal-task-cat').value.trim();
+      if (!title || !selectedCalIso) return;
+
+      tasks.unshift({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        title,
+        category: cat,
+        due: selectedCalIso,
+        done: false
+      });
+
+      selectedCalIso = '';
+      calAddModal.classList.remove('open');
+      debouncedSyncTasks();
+    });
+
+    document.getElementById('prev-month').addEventListener('click', () => {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    });
+
+    document.getElementById('next-month').addEventListener('click', () => {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCalendar();
+    });
+
+    // --- 11. TASK ADD & EDIT ---
     document.getElementById('task-form').addEventListener('submit', e => {
       e.preventDefault();
       const titleEl = document.getElementById('task-title');
@@ -1257,12 +1552,12 @@
 
       titleEl.value = '';
       quickEl.value = '';
-      pushTasksToGitHub();
+      debouncedSyncTasks();
     });
 
     document.getElementById('clear-done-btn').addEventListener('click', () => {
       tasks = tasks.filter(t => !t.done);
-      pushTasksToGitHub();
+      debouncedSyncTasks();
     });
 
     // Edit Task Modal
@@ -1297,99 +1592,54 @@
 
       editingTaskId = null;
       editTaskModal.classList.remove('open');
-      pushTasksToGitHub();
+      debouncedSyncTasks();
     });
 
-    // Calendar Tab + Click Date to Add Task
-    const calAddModal = document.getElementById('cal-add-modal');
-
-    function renderCalendar() {
-      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      const labelEl = document.getElementById('cal-month-label');
-      const gridEl = document.getElementById('cal-grid');
-      if (!labelEl || !gridEl) return;
-
-      labelEl.textContent = `${monthNames[calMonth]} ${calYear}`;
-      const firstDay = new Date(calYear, calMonth, 1).getDay();
-      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-      const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const todayRef = new Date();
-
-      let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
-      for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const mm = String(calMonth + 1).padStart(2, '0');
-        const dd = String(day).padStart(2, '0');
-        const iso = `${calYear}-${mm}-${dd}`;
-        const isToday = calYear === todayRef.getFullYear() && calMonth === todayRef.getMonth() && day === todayRef.getDate();
-        const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
-
-        const maxChips = 3;
-        const chips = dayTasks.slice(0, maxChips).map(t =>
-          `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)} (${formatIndianDate(iso)})">${escapeHtml(t.title)}</div>`
-        ).join('');
-        const extra = dayTasks.length - maxChips;
-        const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
-
-        html += `
-          <div class="cal-cell ${isToday ? 'today' : ''}" data-cal-iso="${iso}" title="Click to add task on ${formatIndianDate(iso)}">
-            <div class="cal-day-num">${day}</div>
-            ${chips}
-            ${more}
-          </div>
-        `;
+    document.getElementById('edit-task-quick-date').addEventListener('change', e => {
+      if (e.target.value !== '') {
+        document.getElementById('edit-task-date').value = offsetIsoDate(Number(e.target.value));
       }
-      gridEl.innerHTML = html;
+    });
 
-      gridEl.querySelectorAll('.cal-cell[data-cal-iso]').forEach(cell => {
-        cell.addEventListener('click', () => {
-          selectedCalIso = cell.dataset.calIso;
-          document.getElementById('cal-modal-title').textContent = `Add Task — ${formatIndianDate(selectedCalIso)}`;
-          document.getElementById('cal-task-title').value = '';
-          document.getElementById('cal-task-cat').value = '';
-          calAddModal.classList.add('open');
-          document.getElementById('cal-task-title').focus();
-        });
-      });
+    document.getElementById('task-quick-date').addEventListener('change', e => {
+      if (e.target.value !== '') {
+        document.getElementById('task-date').value = offsetIsoDate(Number(e.target.value));
+      }
+    });
+
+    // --- 12. NOTES LOGIC ---
+    function parseNoteMarkdown(filename, rawText) {
+      const baseTitle = filename.replace(/\.md$/i, '');
+      let pinned = false;
+      let title = baseTitle;
+      let body = rawText || '';
+
+      const fmMatch = body.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+      if (fmMatch) {
+        const fm = fmMatch[1];
+        const pinMatch = fm.match(/^pinned:\s*(true|false)\s*$/mi);
+        if (pinMatch) pinned = pinMatch[1].toLowerCase() === 'true';
+        const titleMatch = fm.match(/^title:\s*(.+)\s*$/mi);
+        if (titleMatch) title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
+        body = body.slice(fmMatch[0].length);
+      }
+      return { title: title || baseTitle, pinned, body };
     }
 
-    document.getElementById('cal-cancel-btn').addEventListener('click', () => {
-      selectedCalIso = '';
-      calAddModal.classList.remove('open');
-    });
+    function serializeNoteMarkdown({ title, pinned, body }) {
+      const cleanTitle = (title || 'Untitled').trim() || 'Untitled';
+      return ['---', `title: "${cleanTitle.replace(/"/g, '\\"')}"`, `pinned: ${Boolean(pinned)}`, '---', '', body || ''].join('\n');
+    }
 
-    document.getElementById('cal-save-btn').addEventListener('click', () => {
-      const title = document.getElementById('cal-task-title').value.trim();
-      const cat = document.getElementById('cal-task-cat').value.trim();
-      if (!title || !selectedCalIso) return;
+    function slugifyFilename(title) {
+      const cleaned = (title || 'untitled')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9._-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      return `${cleaned || 'untitled'}.md`;
+    }
 
-      tasks.unshift({
-        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        title,
-        category: cat,
-        due: selectedCalIso,
-        done: false
-      });
-
-      selectedCalIso = '';
-      calAddModal.classList.remove('open');
-      pushTasksToGitHub();
-    });
-
-    document.getElementById('prev-month').addEventListener('click', () => {
-      calMonth--;
-      if (calMonth < 0) { calMonth = 11; calYear--; }
-      renderCalendar();
-    });
-
-    document.getElementById('next-month').addEventListener('click', () => {
-      calMonth++;
-      if (calMonth > 11) { calMonth = 0; calYear++; }
-      renderCalendar();
-    });
-
-    // Notes + Pin + Keep Checklist
     function showNotesGrid() {
       activeNotePath = null;
       document.getElementById('notes-grid-view').classList.remove('hidden');
@@ -1468,6 +1718,7 @@
 
     document.getElementById('note-search').addEventListener('input', renderNotesGrid);
 
+    // --- 13. CHECKLIST & EDITOR LOGIC ---
     function getNoteCheckboxItems() {
       const text = document.getElementById('note-editor').value || '';
       const out = [];
@@ -1478,49 +1729,70 @@
       return out;
     }
 
-    function renderKeepChecklist() {
-      const card = document.getElementById('keep-checklist-card');
-      const btn = document.getElementById('toggle-checklist-btn');
+    function updateEditorMode() {
+      const textarea = document.getElementById('note-editor');
+      const checklistCard = document.getElementById('keep-checklist-card');
+      const toggleBtn = document.getElementById('toggle-editor-mode-btn');
       const items = getNoteCheckboxItems();
 
-      if (!items.length) {
-        btn.classList.add('hidden');
-        card.classList.remove('open');
-        card.innerHTML = '';
+      if (items.length === 0) {
+        // No checkboxes, force raw text mode
+        isRawTextMode = true;
+        textarea.classList.remove('hidden');
+        checklistCard.classList.remove('open');
+        toggleBtn.classList.add('hidden');
         return;
       }
 
-      btn.classList.remove('hidden');
-      btn.textContent = checklistOpen ? 'Hide List' : 'Show List';
-      card.classList.toggle('open', checklistOpen);
-
-      if (checklistOpen) {
-        card.innerHTML = items.map(it => `
+      toggleBtn.classList.remove('hidden');
+      toggleBtn.textContent = isRawTextMode ? 'View Checklist' : 'Edit Raw Text';
+      
+      if (isRawTextMode) {
+        textarea.classList.remove('hidden');
+        checklistCard.classList.remove('open');
+      } else {
+        textarea.classList.add('hidden');
+        checklistCard.classList.add('open');
+        
+        const listEl = document.getElementById('keep-items-list');
+        listEl.innerHTML = items.map(it => `
           <label class="keep-check-row ${it.checked ? 'checked' : ''}">
             <input type="checkbox" ${it.checked ? 'checked' : ''} data-line-idx="${it.idx}" />
             <span>${escapeHtml(it.text || 'Item')}</span>
           </label>
         `).join('');
 
-        card.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        listEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
           cb.addEventListener('change', () => {
-            const ta = document.getElementById('note-editor');
-            const lines = ta.value.split('\n');
+            const lines = textarea.value.split('\n');
             const idx = Number(cb.dataset.lineIdx);
             lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
-            ta.value = lines.join('\n');
-            renderKeepChecklist();
+            textarea.value = lines.join('\n');
+            updateEditorMode();
           });
         });
       }
     }
 
-    document.getElementById('toggle-checklist-btn').addEventListener('click', () => {
-      checklistOpen = !checklistOpen;
-      renderKeepChecklist();
+    document.getElementById('toggle-editor-mode-btn').addEventListener('click', () => {
+      isRawTextMode = !isRawTextMode;
+      updateEditorMode();
     });
 
-    document.getElementById('note-editor').addEventListener('input', renderKeepChecklist);
+    document.getElementById('note-editor').addEventListener('input', () => {
+      if (!isRawTextMode) updateEditorMode(); // Update checklist if editing raw text dynamically
+    });
+
+    document.getElementById('new-check-item').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const val = e.target.value.trim();
+        if (!val) return;
+        const textarea = document.getElementById('note-editor');
+        textarea.value += `\n- [ ] ${val}`;
+        e.target.value = '';
+        updateEditorMode();
+      }
+    });
 
     function setEditorPinState(isPinned) {
       const btn = document.getElementById('editor-pin-btn');
@@ -1544,14 +1816,14 @@
 
     document.getElementById('new-note-btn').addEventListener('click', () => {
       activeNotePath = null;
-      checklistOpen = true;
+      isRawTextMode = false;
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = '';
       document.getElementById('note-editor').value = '';
       setEditorPinState(false);
       document.getElementById('editor-delete-btn').classList.add('hidden');
-      renderKeepChecklist();
+      updateEditorMode();
       document.getElementById('note-title-input').focus();
     });
 
@@ -1559,14 +1831,14 @@
       const note = notesStore[path];
       if (!note) return;
       activeNotePath = path;
-      checklistOpen = true;
+      isRawTextMode = false;
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = note.title;
       document.getElementById('note-editor').value = note.body;
       setEditorPinState(Boolean(note.pinned));
       document.getElementById('editor-delete-btn').classList.remove('hidden');
-      renderKeepChecklist();
+      updateEditorMode();
     }
 
     document.getElementById('back-to-notes-btn').addEventListener('click', showNotesGrid);
@@ -1642,7 +1914,7 @@
       if (activeNotePath) await deleteNoteByPath(activeNotePath);
     });
 
-    // Config Modal
+    // --- 14. GITHUB CONFIG MODAL ---
     const cfgModal = document.getElementById('config-modal');
     document.getElementById('config-btn').addEventListener('click', () => {
       document.getElementById('cfg-owner').value = cfg.owner;
@@ -1668,11 +1940,14 @@
 
     document.getElementById('sync-btn').addEventListener('click', syncAll);
 
-    // Boot
-    initTheme();
-    renderDashboard();
-    renderCalendar();
-    syncAll();
+    // --- 15. BOOT SEQUENCE ---
+    function init() {
+      applySettings();
+      renderDashboard();
+      renderCalendar();
+      syncAll();
+    }
+    init();
   </script>
 </body>
 </html>
