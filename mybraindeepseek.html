@@ -1,0 +1,1977 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cozy Brain</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%238ab89a' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
+
+  <!-- ========================================================= -->
+  <!-- CSS STYLES                                                -->
+  <!-- ========================================================= -->
+  <style>
+    :root {
+      --bg: #111214;
+      --surface: #18191c;
+      --surface-2: #202226;
+      --surface-3: #2a2d32;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent: #e08e6d;
+      --accent-contrast: #111214;
+      --accent-soft: rgba(224, 142, 109, 0.16);
+      --sage: #8ab89a;
+      --warn: #e5b567;
+      --urgent: #e06c75;
+      --border: rgba(243, 244, 246, 0.1);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-pill: 999px;
+    }
+
+    body.light {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --surface-2: #eef0f4;
+      --surface-3: #e2e6ec;
+      --text: #141619;
+      --muted: #5f6672;
+      --accent-contrast: #ffffff;
+      --border: rgba(20, 22, 25, 0.1);
+    }
+
+    /* Palettes */
+    body[data-palette="terracotta"] { --accent: #e08e6d; --accent-soft: rgba(224, 142, 109, 0.18); }
+    body.light[data-palette="terracotta"] { --accent: #c96d49; --accent-soft: rgba(201, 109, 73, 0.15); }
+    body[data-palette="sage"] { --accent: #8ab89a; --accent-soft: rgba(138, 184, 154, 0.18); }
+    body.light[data-palette="sage"] { --accent: #4f8a66; --accent-soft: rgba(79, 138, 102, 0.15); }
+    body[data-palette="latte"] { --accent: #ddb46b; --accent-soft: rgba(221, 180, 107, 0.18); }
+    body.light[data-palette="latte"] { --accent: #b88428; --accent-soft: rgba(184, 132, 40, 0.15); }
+    body[data-palette="sky"] { --accent: #86b6e0; --accent-soft: rgba(134, 182, 224, 0.18); }
+    body.light[data-palette="sky"] { --accent: #3d7ab3; --accent-soft: rgba(61, 122, 179, 0.15); }
+    body[data-palette="lilac"] { --accent: #c8b6ff; --accent-soft: rgba(200, 182, 255, 0.2); }
+    body.light[data-palette="lilac"] { --accent: #8566e6; --accent-soft: rgba(133, 102, 230, 0.15); }
+    body[data-palette="mango"] { --accent: #ffb84d; --accent-soft: rgba(255, 184, 77, 0.2); }
+    body.light[data-palette="mango"] { --accent: #d4820a; --accent-soft: rgba(212, 130, 10, 0.15); }
+    body[data-palette="periwinkle"] { --accent: #9db4ff; --accent-soft: rgba(157, 180, 255, 0.2); }
+    body.light[data-palette="periwinkle"] { --accent: #5272db; --accent-soft: rgba(82, 114, 219, 0.15); }
+    body[data-palette="bubblegum"] { --accent: #ff77b7; --accent-soft: rgba(255, 119, 183, 0.2); }
+    body.light[data-palette="bubblegum"] { --accent: #d4438a; --accent-soft: rgba(212, 67, 138, 0.15); }
+    
+    /* New Colors */
+    body[data-palette="rose"] { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.18); }
+    body.light[data-palette="rose"] { --accent: #be123c; --accent-soft: rgba(190, 18, 60, 0.15); }
+    body[data-palette="mint"] { --accent: #2dd4bf; --accent-soft: rgba(45, 212, 191, 0.18); }
+    body.light[data-palette="mint"] { --accent: #0f766e; --accent-soft: rgba(15, 118, 110, 0.15); }
+    body[data-palette="ocean"] { --accent: #3b82f6; --accent-soft: rgba(59, 130, 246, 0.18); }
+    body.light[data-palette="ocean"] { --accent: #1d4ed8; --accent-soft: rgba(29, 78, 216, 0.15); }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 18px 24px 44px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .container { width: 100%; max-width: 1320px; margin: 0 auto; }
+
+    /* Header */
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .brand h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.02em; }
+    .status-line { font-size: 0.8rem; color: var(--muted); }
+
+    .header-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-clock {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .top-clock strong { color: var(--accent); font-weight: 600; }
+
+    button, input, select, textarea { font-family: inherit; color: var(--text); }
+
+    /* Buttons */
+    .btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 8px 13px;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { background: var(--surface-3); }
+
+    .btn-sm { padding: 5px 10px; font-size: 0.75rem; }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .btn-accent:hover { opacity: 0.92; }
+
+    .btn-danger {
+      background: rgba(224, 108, 117, 0.14);
+      border-color: rgba(224, 108, 117, 0.35);
+      color: var(--urgent);
+    }
+
+    /* Toolbar / Tabs */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .tabs {
+      display: inline-flex;
+      background: var(--surface);
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      gap: 4px;
+    }
+
+    .tab {
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+    }
+    .tab.active { background: var(--accent); color: var(--accent-contrast); }
+
+    /* Cards & Layout */
+    .dash-main-grid {
+      display: grid;
+      grid-template-columns: 1.75fr 0.85fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
+
+    /* Dashboard Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mini-stat {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+    }
+
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+    .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 2px; }
+
+    /* Forms & Fields */
+    .minimal-task-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .field {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 11px;
+      font-size: 0.88rem;
+      outline: none;
+      color: var(--text);
+    }
+    .field:focus { border-color: var(--accent); }
+    .field-grow { flex: 1 1 210px; min-width: 160px; }
+    .field-cat { width: 140px; }
+    .field-quick { width: 130px; }
+    .field-date { width: 145px; }
+
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .section-title { font-size: 1rem; font-weight: 650; }
+
+    .pill {
+      font-size: 0.74rem;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* Task List */
+    .task-list { display: flex; flex-direction: column; gap: 9px; }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+    }
+
+    .task-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .task-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+
+    .check-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+      color: var(--accent-contrast);
+    }
+    .check-btn.done { background: var(--sage); border-color: var(--sage); }
+
+    .task-title { font-weight: 600; font-size: 0.92rem; }
+    .task-title.done { text-decoration: line-through; color: var(--muted); }
+
+    .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+
+    .badge-cat {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .badge-date {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-3);
+      color: var(--muted);
+    }
+
+    .badge-due {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(229, 181, 103, 0.16);
+      color: var(--warn);
+      font-weight: 600;
+    }
+    .badge-due.soon { background: rgba(224, 108, 117, 0.18); color: var(--urgent); }
+
+    /* Pinned Notes */
+    .pinned-stack { display: flex; flex-direction: column; gap: 9px; }
+
+    .pinned-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+      cursor: pointer;
+    }
+    .pinned-card:hover { border-color: var(--accent); }
+    .pinned-card .note-card-title { font-weight: 700; font-size: 0.95rem; }
+    .pinned-card .note-preview { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+    /* Mini Calendar */
+    .mini-cal-card { cursor: pointer; transition: border-color 0.2s; }
+    .mini-cal-card:hover { border-color: var(--accent); }
+
+    .mini-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      margin-top: 8px;
+    }
+
+    .mini-dow {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+
+    .mini-day {
+      text-align: center;
+      padding: 4px 1px;
+      border-radius: 7px;
+      font-size: 0.72rem;
+      background: var(--surface-2);
+      border: 1px solid transparent;
+    }
+    .mini-day.empty { background: transparent; }
+    .mini-day.today { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
+    .mini-day.has-task::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin: 1px auto 0;
+    }
+
+    /* Full Calendar */
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .cal-dow {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      padding-bottom: 6px;
+    }
+
+    .cal-cell {
+      min-height: 70px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      cursor: pointer;
+      position: relative;
+    }
+    .cal-cell:not(.empty):hover { border-color: var(--accent); }
+    .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; }
+    .cal-cell.today { border-color: var(--accent); background: var(--accent-soft); }
+
+    .cal-day-num { font-size: 0.8rem; font-weight: 700; }
+
+    .cal-chip {
+      font-size: 0.68rem;
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: var(--surface-3);
+      border-left: 2px solid var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cal-chip.done { opacity: 0.55; text-decoration: line-through; }
+
+    .cal-more { font-size: 0.65rem; color: var(--muted); padding-left: 2px; }
+
+    /* Notes */
+    .notes-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+      gap: 14px;
+    }
+
+    .note-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .note-card:hover { border-color: var(--accent); }
+
+    .note-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .note-card-title { font-weight: 700; font-size: 0.98rem; }
+
+    .pin-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 4px 11px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .pin-btn.pinned {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .note-preview { font-size: 0.84rem; color: var(--muted); white-space: pre-line; line-height: 1.45; margin-top: 8px; }
+
+    .note-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .editor-box { display: flex; flex-direction: column; gap: 12px; }
+    .editor-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+
+    .note-title-input {
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      width: 100%;
+    }
+    .note-title-input:focus { border-color: var(--accent); outline: none; }
+
+    textarea.note-area {
+      min-height: 250px;
+      resize: vertical;
+      line-height: 1.55;
+      font-size: 0.94rem;
+      width: 100%;
+    }
+
+    /* Keep-style checklist block */
+    .keep-checklist-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .keep-checklist-card.open { display: flex; }
+
+    .keep-check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+    .keep-check-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .keep-check-row.checked span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .add-check-item-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px dashed var(--border);
+      padding: 6px 0;
+      font-size: 0.92rem;
+      outline: none;
+      margin-top: 4px;
+    }
+    .add-check-item-input:focus { border-bottom-color: var(--accent); }
+
+    /* Settings View */
+    .settings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 600px;
+    }
+
+    .setting-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-2);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    .setting-label { font-weight: 600; font-size: 0.95rem; }
+    .setting-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .palette-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .swatch:hover { transform: scale(1.1); }
+    .swatch.active { border-color: var(--text); transform: scale(1.1); }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      place-items: center;
+      padding: 16px;
+      z-index: 50;
+    }
+    .modal-backdrop.open { display: grid; }
+
+    .modal {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .cal-modal-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      .dash-main-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .field-cat, .field-quick, .field-date { width: 100%; }
+      .cal-grid { gap: 4px; }
+      .cal-cell { min-height: 60px; padding: 4px; }
+      .tabs { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="brand-row">
+        <div class="brand"><h1>Cozy Brain</h1></div>
+        <div id="status-line" class="status-line">Ready</div>
+      </div>
+
+      <div class="header-right">
+        <div class="top-clock" title="Indian Standard Time">
+          <strong id="clock-time">--:--</strong>
+          <span id="clock-date">--/--/----</span>
+        </div>
+        <button id="sync-btn" class="btn">Sync</button>
+        <button id="config-btn" class="btn">Key / Repo</button>
+      </div>
+    </header>
+
+    <!-- TABS TOOLBAR -->
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="tab active" data-tab="dashboard">Dashboard</button>
+        <button class="tab" data-tab="calendar">Calendar</button>
+        <button class="tab" data-tab="notes">Notes</button>
+        <button class="tab" data-tab="settings">Settings</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="view-dashboard">
+      <div class="dash-main-grid">
+        <div>
+          <div class="stats-row">
+            <div class="mini-stat">
+              <div class="stat-label">Work Left</div>
+              <div id="stat-left" class="stat-value">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="stat-label">Due ≤3 Days</div>
+              <div id="stat-due" class="stat-value">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="stat-label">Completed</div>
+              <div id="stat-done" class="stat-value">0</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <form id="task-form" class="minimal-task-bar">
+              <input id="task-title" class="field field-grow" type="text" placeholder="Add a task..." required />
+              <input id="task-cat" class="field field-cat" type="text" list="cat-suggestions" placeholder="Category" />
+              <datalist id="cat-suggestions">
+                <option value="Games"></option>
+                <option value="Exam"></option>
+                <option value="Study"></option>
+                <option value="Project"></option>
+                <option value="Personal"></option>
+              </datalist>
+              <select id="task-quick-date" class="field field-quick" title="Quick date">
+                <option value="">Quick date...</option>
+                <option value="0">Today</option>
+                <option value="1">Tomorrow</option>
+                <option value="2">In 2 Days</option>
+                <option value="3">In 3 Days</option>
+                <option value="7">In 1 Week</option>
+              </select>
+              <input id="task-date" class="field field-date" type="date" />
+              <button type="submit" class="btn btn-accent">Add</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="section-head">
+              <div class="section-title">Remaining Tasks</div>
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <select id="filter-cat" class="field btn-sm" style="padding:4px 8px; border-radius:8px;">
+                  <option value="">All Categories</option>
+                </select>
+                <span id="rem-count" class="pill">0 left</span>
+              </div>
+            </div>
+            <div id="rem-list" class="task-list"></div>
+          </div>
+
+          <div class="card" style="margin-bottom:0">
+            <div class="section-head">
+              <div class="section-title">Completed</div>
+              <button id="clear-done-btn" class="btn btn-sm">Clear done</button>
+            </div>
+            <div id="done-list" class="task-list"></div>
+          </div>
+        </div>
+
+        <div>
+          <div id="dash-pinned-card" class="card hidden">
+            <div class="section-head">
+              <div class="section-title">Pinned Notes</div>
+              <span id="pinned-count" class="pill">0</span>
+            </div>
+            <div id="dash-pinned-grid" class="pinned-stack"></div>
+          </div>
+
+          <!-- Mini Calendar (Clickable) -->
+          <div id="mini-cal-card" class="card mini-cal-card" style="margin-bottom:0" title="Click to open full calendar">
+            <div class="section-head" style="margin-bottom:4px;">
+              <div class="section-title" style="font-size:0.92rem;">Mini Calendar</div>
+              <span id="mini-cal-label" class="pill"></span>
+            </div>
+            <div id="mini-cal-grid" class="mini-cal-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDAR VIEW -->
+    <section id="view-calendar" class="hidden">
+      <div class="card">
+        <div class="cal-header">
+          <button id="prev-month" class="btn">←</button>
+          <h2 id="cal-month-label" style="font-size:1.15rem;"></h2>
+          <button id="next-month" class="btn">→</button>
+        </div>
+        <div id="cal-grid" class="cal-grid"></div>
+      </div>
+    </section>
+
+    <!-- NOTES VIEW -->
+    <section id="view-notes" class="hidden">
+      <div id="notes-grid-view" class="card">
+        <div class="notes-top">
+          <div class="section-title">Notes</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input id="note-search" class="field" type="search" placeholder="Search notes..." style="width:210px;" />
+            <button id="new-note-btn" class="btn btn-accent">+ New Note</button>
+          </div>
+        </div>
+        <div id="notes-grid" class="notes-grid"></div>
+      </div>
+
+      <div id="notes-editor-view" class="card hidden">
+        <div class="editor-box">
+          <div class="editor-bar">
+            <button id="back-to-notes-btn" class="btn">← All Notes</button>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button id="add-checkbox-btn" class="btn" title="Add checkbox to selected text or insert a new one">☑️ Checkbox</button>
+              <button id="toggle-editor-mode-btn" class="btn hidden">Edit Raw Text</button>
+              <button id="editor-pin-btn" class="pin-btn">Pin</button>
+              <button id="editor-delete-btn" class="btn btn-danger">Delete</button>
+              <button id="save-note-btn" class="btn btn-accent">Save</button>
+            </div>
+          </div>
+          <input id="note-title-input" class="note-title-input" type="text" placeholder="Note title..." />
+          
+          <textarea id="note-editor" class="field note-area" placeholder="Write your note..."></textarea>
+          
+          <!-- Keep-style checklist (Interactive Mode) -->
+          <div id="keep-checklist-card" class="keep-checklist-card">
+            <div id="keep-items-list"></div>
+            <input id="new-check-item" class="add-check-item-input" type="text" placeholder="+ Add new checklist item and press Enter..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS VIEW -->
+    <section id="view-settings" class="hidden">
+      <div class="card">
+        <div class="section-title" style="margin-bottom:16px;">App Settings</div>
+        
+        <div class="settings-grid">
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Appearance</div>
+              <div class="setting-desc">Toggle between dark and light mode</div>
+            </div>
+            <button id="theme-toggle" class="btn">☀️ Light</button>
+          </div>
+
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Time Format</div>
+              <div class="setting-desc">Choose between 12-hour or 24-hour clock</div>
+            </div>
+            <select id="setting-time-format" class="field">
+              <option value="12h">12-Hour (AM/PM)</option>
+              <option value="24h">24-Hour</option>
+            </select>
+          </div>
+
+          <div class="setting-item" style="flex-direction:column; align-items:flex-start; gap:12px;">
+            <div>
+              <div class="setting-label">Accent Color</div>
+              <div class="setting-desc">Pick a color palette for the UI</div>
+            </div>
+            <div class="palette-bar">
+              <button class="swatch active" data-p="terracotta" style="background:#e08e6d" title="Terracotta"></button>
+              <button class="swatch" data-p="sage" style="background:#8ab89a" title="Sage"></button>
+              <button class="swatch" data-p="latte" style="background:#ddb46b" title="Latte"></button>
+              <button class="swatch" data-p="sky" style="background:#86b6e0" title="Sky"></button>
+              <button class="swatch" data-p="lilac" style="background:#c8b6ff" title="Lilac"></button>
+              <button class="swatch" data-p="mango" style="background:#ffb84d" title="Mango"></button>
+              <button class="swatch" data-p="periwinkle" style="background:#9db4ff" title="Periwinkle"></button>
+              <button class="swatch" data-p="bubblegum" style="background:#ff77b7" title="Bubblegum"></button>
+              <button class="swatch" data-p="rose" style="background:#f43f5e" title="Rose"></button>
+              <button class="swatch" data-p="mint" style="background:#2dd4bf" title="Mint"></button>
+              <button class="swatch" data-p="ocean" style="background:#3b82f6" title="Ocean"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODALS -->
+  <div id="cal-add-modal" class="modal-backdrop">
+    <div class="modal">
+      <div id="cal-modal-title" class="section-title">Tasks for Date</div>
+      <div id="cal-modal-tasks" class="cal-modal-tasks"></div>
+      <div style="border-top: 1px solid var(--border); margin: 8px 0; padding-top: 12px;">
+        <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">Add New Task</div>
+        <input id="cal-task-title" class="field" type="text" placeholder="Task title..." style="margin-bottom:8px;" />
+        <input id="cal-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (optional)" />
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
+        <button id="cal-cancel-btn" class="btn">Close</button>
+        <button id="cal-save-btn" class="btn btn-accent">Add Task</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="edit-task-modal" class="modal-backdrop">
+    <div class="modal">
+      <div class="section-title">Edit Task</div>
+      <input id="edit-task-title" class="field" type="text" placeholder="Task title" />
+      <input id="edit-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category" />
+      <select id="edit-task-quick-date" class="field">
+        <option value="">Quick date...</option>
+        <option value="0">Today</option>
+        <option value="1">Tomorrow</option>
+        <option value="2">In 2 Days</option>
+        <option value="3">In 3 Days</option>
+        <option value="7">In 1 Week</option>
+      </select>
+      <input id="edit-task-date" class="field" type="date" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
+        <button id="cancel-edit-task-btn" class="btn">Cancel</button>
+        <button id="save-edit-task-btn" class="btn btn-accent">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="config-modal" class="modal-backdrop">
+    <div class="modal">
+      <div class="section-title">GitHub Vault Settings</div>
+      <p style="font-size:0.82rem;color:var(--muted);">
+        Saved locally in <code>gh_vault</code>. Requires a Fine-Grained PAT with <strong>Contents: Read and write</strong> on your repo.
+      </p>
+      <input id="cfg-owner" class="field" type="text" placeholder="GitHub username / owner" />
+      <input id="cfg-repo" class="field" type="text" placeholder="Repository name (default: mybrain)" />
+      <input id="cfg-branch" class="field" type="text" placeholder="Branch (default: main)" />
+      <input id="cfg-token" class="field" type="password" placeholder="Fine-Grained Personal Access Token" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
+        <button id="close-cfg-btn" class="btn">Cancel</button>
+        <button id="save-cfg-btn" class="btn btn-accent">Save & Sync</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- 1. STATE & VARIABLES ---
+    const CFG_KEY = 'gh_vault';
+    const TASKS_CACHE = 'cozy_tasks_cache_v1';
+    const NOTES_CACHE = 'cozy_notes_cache_v1';
+    const SETTINGS_KEY = 'cozy_settings_v1';
+
+    let cfg = loadCfg();
+    let tasks = loadJson(TASKS_CACHE, []);
+    let notesStore = loadJson(NOTES_CACHE, {});
+    
+    let settings = loadJson(SETTINGS_KEY, { light: false, palette: 'terracotta', timeFormat: '12h' });
+
+    let activeNotePath = null;
+    let editingTaskId = null;
+    let selectedCalIso = '';
+    let isRawTextMode = false;
+    let currentFilterCat = '';
+
+    const initNow = new Date();
+    let calYear = initNow.getFullYear();
+    let calMonth = initNow.getMonth();
+
+    // --- 2. UTILITIES ---
+    function loadCfg() {
+      const saved = loadJson(CFG_KEY, {});
+      return {
+        owner: saved.owner || '',
+        repo: saved.repo || 'mybrain',
+        branch: saved.branch || 'main',
+        token: saved.token || ''
+      };
+    }
+
+    function loadJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function setStatus(msg) {
+      const el = document.getElementById('status-line');
+      if (el) el.textContent = msg;
+    }
+
+    function escapeHtml(str = '') {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function normalizeIsoDate(val = '') {
+      const s = String(val || '').trim();
+      const isoMatch = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (isoMatch) return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
+      const indMatch = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      if (indMatch) return `${indMatch[3]}-${indMatch[2]}-${indMatch[1]}`;
+      return '';
+    }
+
+    function formatIndianDate(val = '') {
+      const iso = normalizeIsoDate(val);
+      if (!iso) return '';
+      const [y, m, d] = iso.split('-');
+      return `${d}/${m}/${y}`;
+    }
+
+    function offsetIsoDate(daysOffset = 0) {
+      const base = new Date();
+      const target = new Date(base.getFullYear(), base.getMonth(), base.getDate() + Number(daysOffset || 0));
+      return `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}-${String(target.getDate()).padStart(2, '0')}`;
+    }
+
+    function daysUntil(dateStr) {
+      const iso = normalizeIsoDate(dateStr);
+      if (!iso) return null;
+      const [y, m, d] = iso.split('-').map(Number);
+      const target = new Date(y, m - 1, d);
+      const cur = new Date();
+      const today = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate());
+      return Math.round((target - today) / 86400000);
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Clean up Markdown for previews
+    function formatPreview(body) {
+      if (!body) return 'Empty note';
+      let text = body
+        .replace(/^---[\s\S]*?---/, '') // remove frontmatter
+        .replace(/^- \[[ xX]\] /gm, '') // remove checkbox markdown
+        .replace(/^-\s*\[[ xX]\]\s*/gm, '') // alternative checkbox spacing
+        .replace(/[#*`_~]/g, ''); // remove basic markdown chars
+      return text.slice(0, 150).trim() || 'Empty note';
+    }
+
+    // --- 3. CLOCK ---
+    function updateClock() {
+      const d = new Date();
+      const is24h = settings.timeFormat === '24h';
+      const tEl = document.getElementById('clock-time');
+      const dEl = document.getElementById('clock-date');
+      
+      if (tEl) {
+        tEl.textContent = d.toLocaleTimeString('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: !is24h
+        });
+      }
+      if (dEl) {
+        dEl.textContent = d.toLocaleDateString('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // --- 4. THEME & SETTINGS ---
+    function applySettings() {
+      document.body.classList.toggle('light', Boolean(settings.light));
+      document.body.setAttribute('data-palette', settings.palette || 'terracotta');
+      
+      document.getElementById('theme-toggle').textContent = settings.light ? '🌙 Dark' : '☀️ Light';
+      document.getElementById('setting-time-format').value = settings.timeFormat;
+      
+      document.querySelectorAll('.swatch').forEach(s => {
+        s.classList.toggle('active', s.dataset.p === settings.palette);
+      });
+      
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      updateClock();
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      settings.light = !settings.light;
+      applySettings();
+    });
+
+    document.getElementById('setting-time-format').addEventListener('change', (e) => {
+      settings.timeFormat = e.target.value;
+      applySettings();
+    });
+
+    document.querySelectorAll('.swatch').forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        settings.palette = swatch.dataset.p;
+        applySettings();
+      });
+    });
+
+    // --- 5. TABS NAVIGATION ---
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+      document.getElementById('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
+      document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
+      document.getElementById('view-notes').classList.toggle('hidden', tab !== 'notes');
+      document.getElementById('view-settings').classList.toggle('hidden', tab !== 'settings');
+      
+      if (tab === 'dashboard') renderDashboard();
+      if (tab === 'calendar') renderCalendar();
+      if (tab === 'notes') showNotesGrid();
+      if (tab === 'settings') applySettings();
+    }
+
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // Mini-calendar click navigation
+    document.getElementById('mini-cal-card').addEventListener('click', () => {
+      switchTab('calendar');
+    });
+
+    // --- 6. GITHUB API LOGIC ---
+    async function ghFetch(endpoint, options = {}) {
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error('Missing GitHub config');
+      const url = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/${endpoint}`;
+      const res = await fetch(url, {
+        ...options,
+        headers: {
+          Authorization: `Bearer ${cfg.token}`,
+          Accept: 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+          ...(options.headers || {})
+        }
+      });
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(`GitHub ${res.status}: ${txt.slice(0, 120)}`);
+      }
+      return res.json();
+    }
+
+    function b64EncodeUtf8(str) {
+      const bytes = new TextEncoder().encode(str);
+      let bin = '';
+      bytes.forEach(b => { bin += String.fromCharCode(b); });
+      return btoa(bin);
+    }
+
+    function b64DecodeUtf8(b64) {
+      const bin = atob(b64.replace(/\n/g, ''));
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder().decode(bytes);
+    }
+
+    async function ghPutFile(path, contentStr, message, sha = null) {
+      const body = { message, content: b64EncodeUtf8(contentStr), branch: cfg.branch };
+      if (sha) body.sha = sha;
+      return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'PUT', body: JSON.stringify(body) });
+    }
+
+    async function ghDeleteFile(path, sha, message) {
+      return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'DELETE', body: JSON.stringify({ message, sha, branch: cfg.branch }) });
+    }
+
+    // --- 7. SYNCING ---
+    async function syncAll() {
+      localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      
+      renderDashboard();
+      renderCalendar();
+      if (!document.getElementById('view-notes').classList.contains('hidden') &&
+          !document.getElementById('notes-grid-view').classList.contains('hidden')) {
+        renderNotesGrid();
+      }
+
+      if (!cfg.owner || !cfg.repo || !cfg.token) {
+        setStatus('Local cache');
+        return;
+      }
+
+      try {
+        setStatus('Syncing...');
+        let remoteTasks = null;
+        let tasksSha = null;
+        try {
+          const tFile = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
+          tasksSha = tFile.sha;
+          remoteTasks = JSON.parse(b64DecodeUtf8(tFile.content));
+        } catch (err) {
+          if (!String(err.message).includes('404')) throw err;
+        }
+
+        if (Array.isArray(remoteTasks)) {
+          tasks = remoteTasks;
+          localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
+        } else {
+          await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', tasksSha);
+        }
+
+        const dirItems = await ghFetch(`contents?ref=${encodeURIComponent(cfg.branch)}`);
+        const mdFiles = Array.isArray(dirItems) ? dirItems.filter(f => f.type === 'file' && /\.md$/i.test(f.name)) : [];
+        
+        const fetchPromises = mdFiles.map(async (item) => {
+          const fileData = await ghFetch(`contents/${encodeURIComponent(item.path)}?ref=${encodeURIComponent(cfg.branch)}`);
+          const raw = b64DecodeUtf8(fileData.content);
+          const parsed = parseNoteMarkdown(item.name, raw);
+          return {
+            path: item.path,
+            data: {
+              name: item.name,
+              title: parsed.title,
+              pinned: parsed.pinned,
+              body: parsed.body,
+              sha: fileData.sha
+            }
+          };
+        });
+
+        const results = await Promise.all(fetchPromises);
+        const nextNotes = {};
+        results.forEach(res => { nextNotes[res.path] = res.data; });
+
+        notesStore = nextNotes;
+        localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+        
+        renderDashboard();
+        renderCalendar();
+        renderNotesGrid();
+        setStatus('Synced ✓');
+      } catch (err) {
+        setStatus(`Sync error: ${err.message}`);
+      }
+    }
+
+    const debouncedSyncTasks = debounce(async () => {
+      localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
+      renderDashboard();
+      if (!document.getElementById('view-calendar').classList.contains('hidden')) renderCalendar();
+      
+      if (!cfg.owner || !cfg.repo || !cfg.token) return;
+      try {
+        setStatus('Saving tasks...');
+        let sha = null;
+        try {
+          const existing = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
+          sha = existing.sha;
+        } catch {}
+        await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Update tasks.json', sha);
+        setStatus('Synced ✓');
+      } catch (err) {
+        setStatus(`Save error: ${err.message}`);
+      }
+    }, 2000);
+
+    // --- 8. DASHBOARD ---
+    function renderDashboard() {
+      const openTasks = tasks.filter(t => !t.done);
+      const doneTasks = tasks.filter(t => t.done);
+      const dueSoon = openTasks.filter(t => {
+        const diff = daysUntil(t.due);
+        return diff !== null && diff <= 3;
+      });
+
+      document.getElementById('stat-left').textContent = openTasks.length;
+      document.getElementById('stat-due').textContent = dueSoon.length;
+      document.getElementById('stat-done').textContent = doneTasks.length;
+      
+      const catFilter = document.getElementById('filter-cat');
+      const cats = [...new Set(tasks.map(t => t.category).filter(Boolean))];
+      catFilter.innerHTML = `<option value="">All Categories</option>` + 
+        cats.map(c => `<option value="${escapeHtml(c)}" ${currentFilterCat === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
+
+      const filteredOpen = openTasks.filter(t => !currentFilterCat || t.category === currentFilterCat);
+      document.getElementById('rem-count').textContent = `${filteredOpen.length} left`;
+
+      renderMiniCalendar();
+
+      const pinnedNotes = Object.entries(notesStore)
+        .filter(([, n]) => n.pinned)
+        .map(([path, n]) => ({ path, ...n }));
+
+      const pinnedCard = document.getElementById('dash-pinned-card');
+      const pinnedGrid = document.getElementById('dash-pinned-grid');
+      document.getElementById('pinned-count').textContent = `${pinnedNotes.length}`;
+
+      if (pinnedNotes.length > 0) {
+        pinnedCard.classList.remove('hidden');
+        pinnedGrid.innerHTML = pinnedNotes.map(n => `
+          <div class="pinned-card" data-open-note="${escapeHtml(n.path)}">
+            <div class="note-card-title">${escapeHtml(n.title)}</div>
+            <div class="note-preview">${escapeHtml(formatPreview(n.body))}</div>
+          </div>
+        `).join('');
+        pinnedGrid.querySelectorAll('.pinned-card').forEach(el => {
+          el.addEventListener('click', () => {
+            switchTab('notes');
+            openNoteEditor(el.dataset.openNote);
+          });
+        });
+      } else {
+        pinnedCard.classList.add('hidden');
+      }
+
+      const remList = document.getElementById('rem-list');
+      remList.innerHTML = filteredOpen.length
+        ? filteredOpen.map(renderTaskRow).join('')
+        : '<p style="color:var(--muted);font-size:0.88rem;">No tasks found.</p>';
+
+      const doneList = document.getElementById('done-list');
+      doneList.innerHTML = doneTasks.length
+        ? doneTasks.map(renderTaskRow).join('')
+        : '<p style="color:var(--muted);font-size:0.88rem;">No completed tasks.</p>';
+
+      document.querySelectorAll('[data-toggle-task]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = tasks.find(t => t.id === btn.dataset.toggleTask);
+          if (target) {
+            target.done = !target.done;
+            debouncedSyncTasks();
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-edit-task]').forEach(btn => {
+        btn.addEventListener('click', () => openEditTaskModal(btn.dataset.editTask));
+      });
+
+      document.querySelectorAll('[data-del-task]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tasks = tasks.filter(t => t.id !== btn.dataset.delTask);
+          debouncedSyncTasks();
+        });
+      });
+    }
+
+    document.getElementById('filter-cat').addEventListener('change', (e) => {
+      currentFilterCat = e.target.value;
+      renderDashboard();
+    });
+
+    function renderTaskRow(t) {
+      const iso = normalizeIsoDate(t.due);
+      const indDate = formatIndianDate(iso);
+      const diff = daysUntil(iso);
+      let dueBadge = '';
+      if (!t.done && diff !== null) {
+        const label = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff}d left`;
+        dueBadge = `<span class="badge-due ${diff <= 3 ? 'soon' : ''}">${label}</span>`;
+      }
+      return `
+        <div class="task-item">
+          <div class="task-left">
+            <button class="check-btn ${t.done ? 'done' : ''}" data-toggle-task="${escapeHtml(t.id)}">${t.done ? '✓' : ''}</button>
+            <div>
+              <div class="task-title ${t.done ? 'done' : ''}">${escapeHtml(t.title)}</div>
+              <div class="task-meta">
+                ${t.category ? `<span class="badge-cat">${escapeHtml(t.category)}</span>` : ''}
+                ${indDate ? `<span class="badge-date">${escapeHtml(indDate)}</span>` : ''}
+                ${dueBadge}
+              </div>
+            </div>
+          </div>
+          <div class="task-actions">
+            <button class="btn btn-sm" data-edit-task="${escapeHtml(t.id)}">Edit</button>
+            <button class="btn btn-sm btn-danger" data-del-task="${escapeHtml(t.id)}">✕</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // --- 9. MINI CALENDAR ---
+    function renderMiniCalendar() {
+      const cur = new Date();
+      const y = cur.getFullYear();
+      const m = cur.getMonth();
+      const todayDay = cur.getDate();
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const label = document.getElementById('mini-cal-label');
+      const grid = document.getElementById('mini-cal-grid');
+      if (!label || !grid) return;
+
+      label.textContent = `${months[m]} ${y}`;
+      const firstDay = new Date(y, m, 1).getDay();
+      const totalDays = new Date(y, m + 1, 0).getDate();
+      const dows = ['S','M','T','W','T','F','S'];
+
+      let html = dows.map(d => `<div class="mini-dow">${d}</div>`).join('');
+      for (let i = 0; i < firstDay; i++) html += `<div class="mini-day empty"></div>`;
+
+      for (let day = 1; day <= totalDays; day++) {
+        const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const hasTask = tasks.some(t => normalizeIsoDate(t.due) === iso && !t.done);
+        const isToday = day === todayDay;
+        html += `<div class="mini-day ${isToday ? 'today' : ''} ${hasTask ? 'has-task' : ''}">${day}</div>`;
+      }
+      grid.innerHTML = html;
+    }
+
+    // --- 10. FULL CALENDAR ---
+    const calAddModal = document.getElementById('cal-add-modal');
+
+    function renderCalendar() {
+      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const labelEl = document.getElementById('cal-month-label');
+      const gridEl = document.getElementById('cal-grid');
+      if (!labelEl || !gridEl) return;
+
+      labelEl.textContent = `${monthNames[calMonth]} ${calYear}`;
+      const firstDay = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+      const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const todayRef = new Date();
+
+      let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+      for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const mm = String(calMonth + 1).padStart(2, '0');
+        const dd = String(day).padStart(2, '0');
+        const iso = `${calYear}-${mm}-${dd}`;
+        const isToday = calYear === todayRef.getFullYear() && calMonth === todayRef.getMonth() && day === todayRef.getDate();
+        const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
+
+        const maxChips = 3;
+        const chips = dayTasks.slice(0, maxChips).map(t =>
+          `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</div>`
+        ).join('');
+        const extra = dayTasks.length - maxChips;
+        const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
+
+        html += `
+          <div class="cal-cell ${isToday ? 'today' : ''}" data-cal-iso="${iso}">
+            <div class="cal-day-num"><span>${day}</span></div>
+            ${chips}
+            ${more}
+          </div>
+        `;
+      }
+      gridEl.innerHTML = html;
+
+      gridEl.querySelectorAll('.cal-cell[data-cal-iso]').forEach(cell => {
+        cell.addEventListener('click', () => {
+          openCalModal(cell.dataset.calIso);
+        });
+      });
+    }
+
+    function openCalModal(iso) {
+      selectedCalIso = iso;
+      document.getElementById('cal-modal-title').textContent = `Tasks for ${formatIndianDate(iso)}`;
+      document.getElementById('cal-task-title').value = '';
+      document.getElementById('cal-task-cat').value = '';
+      
+      const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
+      const taskContainer = document.getElementById('cal-modal-tasks');
+      
+      if (dayTasks.length > 0) {
+        taskContainer.innerHTML = dayTasks.map(t => `
+          <div class="task-item" style="padding: 6px 10px;">
+            <div class="task-left">
+              <button class="check-btn ${t.done ? 'done' : ''}" onclick="toggleCalTask('${t.id}')">${t.done ? '✓' : ''}</button>
+              <div class="task-title ${t.done ? 'done' : ''}" style="font-size:0.85rem;">${escapeHtml(t.title)}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        taskContainer.innerHTML = '<div style="font-size:0.8rem; color:var(--muted); padding:4px;">No tasks for this date.</div>';
+      }
+
+      calAddModal.classList.add('open');
+      document.getElementById('cal-task-title').focus();
+    }
+
+    window.toggleCalTask = function(id) {
+      const target = tasks.find(t => t.id === id);
+      if (target) {
+        target.done = !target.done;
+        openCalModal(selectedCalIso); 
+        debouncedSyncTasks(); 
+      }
+    };
+
+    document.getElementById('cal-cancel-btn').addEventListener('click', () => {
+      selectedCalIso = '';
+      calAddModal.classList.remove('open');
+    });
+
+    document.getElementById('cal-save-btn').addEventListener('click', () => {
+      const title = document.getElementById('cal-task-title').value.trim();
+      const cat = document.getElementById('cal-task-cat').value.trim();
+      if (!title || !selectedCalIso) return;
+
+      tasks.unshift({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        title,
+        category: cat,
+        due: selectedCalIso,
+        done: false
+      });
+
+      selectedCalIso = '';
+      calAddModal.classList.remove('open');
+      debouncedSyncTasks();
+    });
+
+    document.getElementById('prev-month').addEventListener('click', () => {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    });
+
+    document.getElementById('next-month').addEventListener('click', () => {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCalendar();
+    });
+
+    // --- 11. TASK ADD & EDIT ---
+    document.getElementById('task-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const titleEl = document.getElementById('task-title');
+      const catEl = document.getElementById('task-cat');
+      const dateEl = document.getElementById('task-date');
+      const quickEl = document.getElementById('task-quick-date');
+      const title = titleEl.value.trim();
+      if (!title) return;
+
+      const chosenDate = normalizeIsoDate(dateEl.value) || (quickEl.value !== '' ? offsetIsoDate(Number(quickEl.value)) : '');
+
+      tasks.unshift({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        title,
+        category: catEl.value.trim(),
+        due: chosenDate,
+        done: false
+      });
+
+      titleEl.value = '';
+      quickEl.value = '';
+      debouncedSyncTasks();
+    });
+
+    document.getElementById('clear-done-btn').addEventListener('click', () => {
+      tasks = tasks.filter(t => !t.done);
+      debouncedSyncTasks();
+    });
+
+    const editTaskModal = document.getElementById('edit-task-modal');
+    function openEditTaskModal(id) {
+      const target = tasks.find(t => t.id === id);
+      if (!target) return;
+      editingTaskId = id;
+      document.getElementById('edit-task-title').value = target.title || '';
+      document.getElementById('edit-task-cat').value = target.category || '';
+      document.getElementById('edit-task-quick-date').value = '';
+      document.getElementById('edit-task-date').value = normalizeIsoDate(target.due);
+      editTaskModal.classList.add('open');
+      document.getElementById('edit-task-title').focus();
+    }
+
+    document.getElementById('cancel-edit-task-btn').addEventListener('click', () => {
+      editingTaskId = null;
+      editTaskModal.classList.remove('open');
+    });
+
+    document.getElementById('save-edit-task-btn').addEventListener('click', () => {
+      if (!editingTaskId) return;
+      const target = tasks.find(t => t.id === editingTaskId);
+      if (!target) return;
+      const newTitle = document.getElementById('edit-task-title').value.trim();
+      if (!newTitle) return;
+
+      target.title = newTitle;
+      target.category = document.getElementById('edit-task-cat').value.trim();
+      target.due = normalizeIsoDate(document.getElementById('edit-task-date').value);
+
+      editingTaskId = null;
+      editTaskModal.classList.remove('open');
+      debouncedSyncTasks();
+    });
+
+    document.getElementById('edit-task-quick-date').addEventListener('change', e => {
+      if (e.target.value !== '') {
+        document.getElementById('edit-task-date').value = offsetIsoDate(Number(e.target.value));
+      }
+    });
+
+    document.getElementById('task-quick-date').addEventListener('change', e => {
+      if (e.target.value !== '') {
+        document.getElementById('task-date').value = offsetIsoDate(Number(e.target.value));
+      }
+    });
+
+    // --- 12. NOTES ---
+    function parseNoteMarkdown(filename, rawText) {
+      const baseTitle = filename.replace(/\.md$/i, '');
+      let pinned = false;
+      let title = baseTitle;
+      let body = rawText || '';
+
+      const fmMatch = body.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+      if (fmMatch) {
+        const fm = fmMatch[1];
+        const pinMatch = fm.match(/^pinned:\s*(true|false)\s*$/mi);
+        if (pinMatch) pinned = pinMatch[1].toLowerCase() === 'true';
+        const titleMatch = fm.match(/^title:\s*(.+)\s*$/mi);
+        if (titleMatch) title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
+        body = body.slice(fmMatch[0].length);
+      }
+      return { title: title || baseTitle, pinned, body };
+    }
+
+    function serializeNoteMarkdown({ title, pinned, body }) {
+      const cleanTitle = (title || 'Untitled').trim() || 'Untitled';
+      return ['---', `title: "${cleanTitle.replace(/"/g, '\\"')}"`, `pinned: ${Boolean(pinned)}`, '---', '', body || ''].join('\n');
+    }
+
+    function slugifyFilename(title) {
+      const cleaned = (title || 'untitled')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9._-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      return `${cleaned || 'untitled'}.md`;
+    }
+
+    function showNotesGrid() {
+      activeNotePath = null;
+      document.getElementById('notes-grid-view').classList.remove('hidden');
+      document.getElementById('notes-editor-view').classList.add('hidden');
+      renderNotesGrid();
+    }
+
+    async function persistPinChange(path, note) {
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      renderNotesGrid();
+      renderDashboard();
+      if (cfg.owner && cfg.repo && cfg.token) {
+        try {
+          setStatus(note.pinned ? 'Pinning note...' : 'Unpinning note...');
+          const res = await ghPutFile(path, serializeNoteMarkdown(note), `Pin=${note.pinned} for ${path}`, note.sha);
+          note.sha = res.content.sha;
+          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+          setStatus('Synced ✓');
+        } catch (err) {
+          setStatus(`Pin sync error: ${err.message}`);
+        }
+      }
+    }
+
+    function renderNotesGrid() {
+      const q = (document.getElementById('note-search').value || '').trim().toLowerCase();
+      const entries = Object.entries(notesStore)
+        .map(([path, n]) => ({ path, ...n }))
+        .filter(n => !q || n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q))
+        .sort((a, b) => Number(b.pinned) - Number(a.pinned) || a.title.localeCompare(b.title));
+
+      const grid = document.getElementById('notes-grid');
+      if (!entries.length) {
+        grid.innerHTML = '<p style="color:var(--muted);font-size:0.88rem;">No notes yet. Click "+ New Note".</p>';
+        return;
+      }
+
+      grid.innerHTML = entries.map(n => `
+        <div class="note-card" data-open-path="${escapeHtml(n.path)}">
+          <div>
+            <div class="note-card-top">
+              <div class="note-card-title">${escapeHtml(n.title)}</div>
+              <button class="pin-btn ${n.pinned ? 'pinned' : ''}" data-pin-path="${escapeHtml(n.path)}">${n.pinned ? '★ Pinned' : 'Pin'}</button>
+            </div>
+            <div class="note-preview">${escapeHtml(formatPreview(n.body))}</div>
+          </div>
+          <div class="note-card-foot">
+            <span style="font-size:0.73rem;color:var(--muted);">${n.pinned ? 'Pinned' : 'Note'}</span>
+            <button class="btn btn-danger btn-sm" data-del-note="${escapeHtml(n.path)}">Delete</button>
+          </div>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('.note-card').forEach(card => {
+        card.addEventListener('click', () => openNoteEditor(card.dataset.openPath));
+      });
+
+      grid.querySelectorAll('[data-pin-path]').forEach(btn => {
+        btn.addEventListener('click', async e => {
+          e.stopPropagation();
+          const p = btn.dataset.pinPath;
+          const note = notesStore[p];
+          if (!note) return;
+          note.pinned = !note.pinned;
+          await persistPinChange(p, note);
+        });
+      });
+
+      grid.querySelectorAll('[data-del-note]').forEach(btn => {
+        btn.addEventListener('click', async e => {
+          e.stopPropagation();
+          await deleteNoteByPath(btn.dataset.delNote);
+        });
+      });
+    }
+
+    document.getElementById('note-search').addEventListener('input', renderNotesGrid);
+
+    // --- 13. CHECKLIST & EDITOR LOGIC ---
+    function getNoteCheckboxItems() {
+      const text = document.getElementById('note-editor').value || '';
+      const out = [];
+      text.split('\n').forEach((line, idx) => {
+        const m = line.match(/^\s*-\s*\[([ xX])\]\s*(.*)$/);
+        if (m) out.push({ idx, checked: m[1].toLowerCase() === 'x', text: m[2] });
+      });
+      return out;
+    }
+
+    function updateEditorMode() {
+      const textarea = document.getElementById('note-editor');
+      const checklistCard = document.getElementById('keep-checklist-card');
+      const toggleBtn = document.getElementById('toggle-editor-mode-btn');
+      const items = getNoteCheckboxItems();
+
+      if (items.length === 0) {
+        isRawTextMode = true;
+        textarea.classList.remove('hidden');
+        checklistCard.classList.remove('open');
+        toggleBtn.classList.add('hidden');
+        return;
+      }
+
+      toggleBtn.classList.remove('hidden');
+      toggleBtn.textContent = isRawTextMode ? 'View Checklist' : 'Edit Raw Text';
+      
+      if (isRawTextMode) {
+        textarea.classList.remove('hidden');
+        checklistCard.classList.remove('open');
+      } else {
+        textarea.classList.add('hidden');
+        checklistCard.classList.add('open');
+        
+        const listEl = document.getElementById('keep-items-list');
+        listEl.innerHTML = items.map(it => `
+          <label class="keep-check-row ${it.checked ? 'checked' : ''}">
+            <input type="checkbox" ${it.checked ? 'checked' : ''} data-line-idx="${it.idx}" />
+            <span>${escapeHtml(it.text || 'Item')}</span>
+          </label>
+        `).join('');
+
+        listEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.addEventListener('change', () => {
+            const lines = textarea.value.split('\n');
+            const idx = Number(cb.dataset.lineIdx);
+            lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
+            textarea.value = lines.join('\n');
+            updateEditorMode();
+            debouncedAutoSave(); // Trigger auto-save on checkbox click
+          });
+        });
+      }
+    }
+
+    document.getElementById('toggle-editor-mode-btn').addEventListener('click', () => {
+      isRawTextMode = !isRawTextMode;
+      updateEditorMode();
+    });
+
+    document.getElementById('note-editor').addEventListener('input', () => {
+      if (!isRawTextMode) updateEditorMode(); 
+      debouncedAutoSave();
+    });
+
+    document.getElementById('note-title-input').addEventListener('input', () => {
+      debouncedAutoSave();
+    });
+
+    document.getElementById('new-check-item').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const val = e.target.value.trim();
+        if (!val) return;
+        const textarea = document.getElementById('note-editor');
+        textarea.value += `\n- [ ] ${val}`;
+        e.target.value = '';
+        updateEditorMode();
+        debouncedAutoSave();
+      }
+    });
+
+    // Checkbox insertion button
+    document.getElementById('add-checkbox-btn').addEventListener('click', () => {
+      const textarea = document.getElementById('note-editor');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+
+      if (start === end) {
+        const before = text.substring(0, start);
+        const after = text.substring(start);
+        const prefix = (before.length > 0 && !before.endsWith('\n')) ? '\n- [ ] ' : '- [ ] ';
+        textarea.value = before + prefix + after;
+        textarea.selectionStart = textarea.selectionEnd = start + prefix.length;
+      } else {
+        const selectedText = text.substring(start, end);
+        const lines = selectedText.split('\n');
+        const formatted = lines.map(line => {
+           if (/^- \[[ xX]\] /.test(line)) return line.replace(/^- \[[ xX]\] /, '- [ ] ');
+           return `- [ ] ${line}`;
+        }).join('\n');
+        textarea.value = text.substring(0, start) + formatted + text.substring(end);
+        textarea.selectionStart = start;
+        textarea.selectionEnd = start + formatted.length;
+      }
+      
+      textarea.focus();
+      updateEditorMode();
+      debouncedAutoSave();
+    });
+
+    function setEditorPinState(isPinned) {
+      const btn = document.getElementById('editor-pin-btn');
+      btn.dataset.pinned = isPinned ? '1' : '0';
+      btn.textContent = isPinned ? '★ Pinned' : 'Pin';
+      btn.classList.toggle('pinned', Boolean(isPinned));
+    }
+
+    document.getElementById('editor-pin-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('editor-pin-btn');
+      const nextPinned = btn.dataset.pinned !== '1';
+      setEditorPinState(nextPinned);
+
+      if (activeNotePath && notesStore[activeNotePath]) {
+        notesStore[activeNotePath].pinned = nextPinned;
+        await persistPinChange(activeNotePath, notesStore[activeNotePath]);
+        debouncedAutoSave();
+      } else {
+        renderDashboard();
+      }
+    });
+
+    document.getElementById('new-note-btn').addEventListener('click', () => {
+      activeNotePath = null;
+      isRawTextMode = false;
+      document.getElementById('notes-grid-view').classList.add('hidden');
+      document.getElementById('notes-editor-view').classList.remove('hidden');
+      document.getElementById('note-title-input').value = '';
+      document.getElementById('note-editor').value = '';
+      setEditorPinState(false);
+      document.getElementById('editor-delete-btn').classList.add('hidden');
+      updateEditorMode();
+      document.getElementById('note-title-input').focus();
+    });
+
+    function openNoteEditor(path) {
+      const note = notesStore[path];
+      if (!note) return;
+      activeNotePath = path;
+      isRawTextMode = false;
+      document.getElementById('notes-grid-view').classList.add('hidden');
+      document.getElementById('notes-editor-view').classList.remove('hidden');
+      document.getElementById('note-title-input').value = note.title;
+      document.getElementById('note-editor').value = note.body;
+      setEditorPinState(Boolean(note.pinned));
+      document.getElementById('editor-delete-btn').classList.remove('hidden');
+      updateEditorMode();
+    }
+
+    // Force Save before leaving
+    document.getElementById('back-to-notes-btn').addEventListener('click', async () => {
+      await saveActiveNote(false); 
+      showNotesGrid();
+    });
+
+    async function saveActiveNote(isAuto = false) {
+      const titleInput = document.getElementById('note-title-input').value.trim() || 'Untitled';
+      const bodyVal = document.getElementById('note-editor').value;
+      const pinnedVal = document.getElementById('editor-pin-btn').dataset.pinned === '1';
+
+      let oldPath = activeNotePath;
+      let newPath = oldPath;
+      
+      // Only rename on explicit save to avoid auto-save file chaos
+      if (!newPath || (!isAuto && slugifyFilename(titleInput) !== oldPath)) {
+        if (!isAuto && oldPath && slugifyFilename(titleInput) !== oldPath) {
+          newPath = slugifyFilename(titleInput);
+        } else if (!oldPath) {
+          newPath = slugifyFilename(titleInput);
+        }
+      }
+      
+      if (!newPath) newPath = slugifyFilename(titleInput);
+
+      const oldRecord = oldPath ? notesStore[oldPath] : null;
+      const record = {
+        name: newPath,
+        title: titleInput,
+        pinned: pinnedVal,
+        body: bodyVal,
+        sha: oldPath === newPath && oldRecord ? oldRecord.sha : null
+      };
+
+      notesStore[newPath] = record;
+      if (oldPath && oldPath !== newPath) delete notesStore[oldPath];
+      
+      activeNotePath = newPath;
+      document.getElementById('editor-delete-btn').classList.remove('hidden');
+      
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      renderDashboard();
+
+      if (cfg.owner && cfg.repo && cfg.token) {
+        try {
+          if (!isAuto) setStatus('Saving note...');
+          const putRes = await ghPutFile(newPath, serializeNoteMarkdown(record), `Save ${newPath}`, record.sha);
+          record.sha = putRes.content.sha;
+          if (oldPath && oldPath !== newPath && oldRecord?.sha) {
+            await ghDeleteFile(oldPath, oldRecord.sha, `Rename ${oldPath} to ${newPath}`);
+          }
+          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+          setStatus(isAuto ? 'Auto-saved ✓' : 'Synced ✓');
+        } catch (err) {
+          setStatus(`Note save error: ${err.message}`);
+        }
+      } else {
+        setStatus(isAuto ? 'Auto-saved locally' : 'Saved locally');
+      }
+      
+      renderNotesGrid();
+    }
+
+    // Auto-save logic (debounced)
+    const debouncedAutoSave = debounce(async () => {
+      // Don't auto-save if it's a completely empty new note
+      if (!activeNotePath && !document.getElementById('note-title-input').value.trim() && !document.getElementById('note-editor').value.trim()) {
+        return;
+      }
+      await saveActiveNote(true);
+    }, 1500);
+
+    document.getElementById('save-note-btn').addEventListener('click', async () => {
+      await saveActiveNote(false);
+    });
+
+    async function deleteNoteByPath(path) {
+      const note = notesStore[path];
+      if (!note) return;
+      if (!confirm(`Delete note "${note.title}"?`)) return;
+
+      if (cfg.owner && cfg.repo && cfg.token && note.sha) {
+        try {
+          setStatus('Deleting note...');
+          await ghDeleteFile(path, note.sha, `Delete ${path}`);
+          setStatus('Synced ✓');
+        } catch (err) {
+          setStatus(`Delete error: ${err.message}`);
+          return;
+        }
+      }
+
+      delete notesStore[path];
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      renderDashboard();
+      showNotesGrid();
+    }
+
+    document.getElementById('editor-delete-btn').addEventListener('click', async () => {
+      if (activeNotePath) await deleteNoteByPath(activeNotePath);
+    });
+
+    // --- 14. GITHUB CONFIG ---
+    const cfgModal = document.getElementById('config-modal');
+    document.getElementById('config-btn').addEventListener('click', () => {
+      document.getElementById('cfg-owner').value = cfg.owner;
+      document.getElementById('cfg-repo').value = cfg.repo;
+      document.getElementById('cfg-branch').value = cfg.branch;
+      document.getElementById('cfg-token').value = cfg.token;
+      cfgModal.classList.add('open');
+    });
+
+    document.getElementById('close-cfg-btn').addEventListener('click', () => cfgModal.classList.remove('open'));
+
+    document.getElementById('save-cfg-btn').addEventListener('click', async () => {
+      cfg = {
+        owner: document.getElementById('cfg-owner').value.trim(),
+        repo: document.getElementById('cfg-repo').value.trim() || 'mybrain',
+        branch: document.getElementById('cfg-branch').value.trim() || 'main',
+        token: document.getElementById('cfg-token').value.trim()
+      };
+      localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+      cfgModal.classList.remove('open');
+      await syncAll();
+    });
+
+    document.getElementById('sync-btn').addEventListener('click', syncAll);
+
+    // --- 15. BOOT ---
+    function init() {
+      applySettings();
+      renderDashboard();
+      renderCalendar();
+      syncAll();
+    }
+    init();
+  </script>
+</body>
+</html>
