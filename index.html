@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cozy Brain</title>
 
-  <!-- Site Icon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%238ab89a' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
 
   <style>
@@ -70,7 +69,7 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 20px 28px 48px;
+      padding: 18px 24px 44px;
       transition: background 0.2s ease, color 0.2s ease;
     }
 
@@ -81,31 +80,49 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 18px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    .brand h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
-    .status-line { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
-    .header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .brand-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .brand h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.02em; }
+    .status-line { font-size: 0.8rem; color: var(--muted); }
+
+    .header-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-clock {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .top-clock strong { color: var(--accent); font-weight: 600; }
 
     button, input, select, textarea { font-family: inherit; color: var(--text); }
 
     .btn {
       background: var(--surface-2);
       border: 1px solid var(--border);
-      padding: 8px 14px;
+      padding: 8px 13px;
       border-radius: var(--radius-pill);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 500;
       cursor: pointer;
     }
     .btn:hover { background: var(--surface-3); }
 
-    .btn-sm {
-      padding: 5px 10px;
-      font-size: 0.76rem;
-    }
+    .btn-sm { padding: 5px 10px; font-size: 0.75rem; }
 
     .btn-accent {
       background: var(--accent);
@@ -126,25 +143,25 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
     .tabs {
       display: inline-flex;
       background: var(--surface);
-      padding: 5px;
+      padding: 4px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border);
       gap: 4px;
     }
 
     .tab {
-      padding: 8px 18px;
+      padding: 7px 16px;
       border-radius: var(--radius-pill);
       border: none;
       background: transparent;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       color: var(--muted);
@@ -154,18 +171,18 @@
     .palette-bar {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       background: var(--surface);
-      padding: 7px 14px;
+      padding: 6px 12px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
     }
 
     .swatch {
-      width: 18px;
-      height: 18px;
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
       border: 2px solid transparent;
       cursor: pointer;
@@ -173,29 +190,43 @@
     .swatch.active { border-color: var(--text); transform: scale(1.15); }
 
     /* Dashboard */
-    .stats-grid {
+    .dash-main-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 18px;
+      grid-template-columns: 1.75fr 0.85fr;
+      gap: 18px;
+      align-items: start;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 18px 20px;
-      margin-bottom: 18px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
     }
 
-    .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px; }
-    .stat-value { font-size: 1.8rem; font-weight: 700; }
-
-    .add-form {
+    .stats-row {
       display: grid;
-      grid-template-columns: 2fr 1.15fr 0.95fr 0.95fr auto;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-top: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mini-stat {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+    }
+
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+    .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 2px; }
+
+    /* Minimal task bar */
+    .minimal-task-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       align-items: center;
     }
 
@@ -203,115 +234,47 @@
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 10px 12px;
-      font-size: 0.9rem;
+      padding: 8px 11px;
+      font-size: 0.88rem;
       outline: none;
-      width: 100%;
     }
     .field:focus { border-color: var(--accent); }
+    .field-grow { flex: 1 1 210px; min-width: 160px; }
+    .field-cat { width: 140px; }
+    .field-quick { width: 130px; }
+    .field-date { width: 145px; }
 
-    .dash-top-widgets {
-      display: grid;
-      grid-template-columns: 1.35fr 1fr;
-      gap: 18px;
-      margin-bottom: 18px;
-      align-items: stretch;
-    }
-
-    .clock-box {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 6px;
-      height: 100%;
-    }
-
-    .clock-time {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--accent);
-    }
-
-    .clock-sub {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .mini-cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-top: 10px;
-    }
-
-    .mini-dow {
-      text-align: center;
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .mini-day {
-      text-align: center;
-      padding: 6px 2px;
-      border-radius: 9px;
-      font-size: 0.78rem;
-      background: var(--surface-2);
-      border: 1px solid transparent;
-      position: relative;
-    }
-
-    .mini-day.empty { background: transparent; }
-    .mini-day.today { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
-    .mini-day.has-task::after {
-      content: '';
-      display: block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin: 2px auto 0;
-    }
-
-    .dash-split {
-      display: grid;
-      grid-template-columns: 1.45fr 1fr;
-      gap: 18px;
-      align-items: start;
-    }
-
-    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-    .section-title { font-size: 1.05rem; font-weight: 650; }
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .section-title { font-size: 1rem; font-weight: 650; }
 
     .pill {
-      font-size: 0.76rem;
-      padding: 4px 10px;
+      font-size: 0.74rem;
+      padding: 3px 9px;
       border-radius: var(--radius-pill);
       background: var(--surface-2);
       color: var(--muted);
       border: 1px solid var(--border);
     }
 
-    .task-list { display: flex; flex-direction: column; gap: 10px; }
+    .task-list { display: flex; flex-direction: column; gap: 9px; }
 
     .task-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 13px 15px;
+      padding: 11px 13px;
     }
 
-    .task-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
-    .task-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .task-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .task-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
 
     .check-btn {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       border: 2px solid var(--accent);
       background: transparent;
@@ -319,19 +282,19 @@
       flex-shrink: 0;
       display: grid;
       place-items: center;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--accent-contrast);
     }
     .check-btn.done { background: var(--sage); border-color: var(--sage); }
 
-    .task-title { font-weight: 600; font-size: 0.95rem; }
+    .task-title { font-weight: 600; font-size: 0.92rem; }
     .task-title.done { text-decoration: line-through; color: var(--muted); }
 
-    .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+    .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 
     .badge-cat {
-      font-size: 0.74rem;
-      padding: 2px 9px;
+      font-size: 0.72rem;
+      padding: 2px 8px;
       border-radius: var(--radius-pill);
       background: var(--accent-soft);
       color: var(--accent);
@@ -339,16 +302,16 @@
     }
 
     .badge-date {
-      font-size: 0.74rem;
-      padding: 2px 9px;
+      font-size: 0.72rem;
+      padding: 2px 8px;
       border-radius: var(--radius-pill);
       background: var(--surface-3);
       color: var(--muted);
     }
 
     .badge-due {
-      font-size: 0.74rem;
-      padding: 2px 9px;
+      font-size: 0.72rem;
+      padding: 2px 8px;
       border-radius: var(--radius-pill);
       background: rgba(229, 181, 103, 0.16);
       color: var(--warn);
@@ -356,22 +319,54 @@
     }
     .badge-due.soon { background: rgba(224, 108, 117, 0.18); color: var(--urgent); }
 
-    .pinned-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 12px;
-    }
+    /* Compact sidebar: Pinned Notes + Small Mini Calendar */
+    .pinned-stack { display: flex; flex-direction: column; gap: 9px; }
 
     .pinned-card {
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 13px 15px;
+      padding: 11px 13px;
       cursor: pointer;
     }
     .pinned-card:hover { border-color: var(--accent); }
 
-    /* Calendar Tab */
+    .mini-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      margin-top: 8px;
+    }
+
+    .mini-dow {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+
+    .mini-day {
+      text-align: center;
+      padding: 4px 1px;
+      border-radius: 7px;
+      font-size: 0.72rem;
+      background: var(--surface-2);
+      border: 1px solid transparent;
+    }
+    .mini-day.empty { background: transparent; }
+    .mini-day.today { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
+    .mini-day.has-task::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin: 1px auto 0;
+    }
+
+    /* Full Calendar Tab */
     .cal-header {
       display: flex;
       align-items: center;
@@ -394,7 +389,7 @@
     }
 
     .cal-cell {
-      min-height: 108px;
+      min-height: 104px;
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
@@ -402,9 +397,10 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      cursor: pointer;
     }
-
-    .cal-cell.empty { background: transparent; border-color: transparent; }
+    .cal-cell:not(.empty):hover { border-color: var(--accent); }
+    .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; }
     .cal-cell.today { border-color: var(--accent); background: var(--accent-soft); }
 
     .cal-day-num { font-size: 0.82rem; font-weight: 700; }
@@ -435,7 +431,7 @@
 
     .notes-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
       gap: 14px;
     }
 
@@ -453,20 +449,25 @@
     .note-card:hover { border-color: var(--accent); }
 
     .note-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-    .note-card-title { font-weight: 700; font-size: 1rem; }
+    .note-card-title { font-weight: 700; font-size: 0.98rem; }
 
     .pin-btn {
       background: transparent;
       border: 1px solid var(--border);
       border-radius: var(--radius-pill);
-      padding: 3px 9px;
-      font-size: 0.74rem;
+      padding: 4px 11px;
+      font-size: 0.78rem;
       color: var(--muted);
       cursor: pointer;
     }
-    .pin-btn.pinned { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .pin-btn.pinned {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
 
-    .note-preview { font-size: 0.85rem; color: var(--muted); white-space: pre-line; line-height: 1.45; margin-top: 8px; }
+    .note-preview { font-size: 0.84rem; color: var(--muted); white-space: pre-line; line-height: 1.45; margin-top: 8px; }
 
     .note-card-foot {
       display: flex;
@@ -491,21 +492,43 @@
     }
     .note-title-input:focus { border-color: var(--accent); outline: none; }
 
-    textarea.note-area { min-height: 280px; resize: vertical; line-height: 1.55; font-size: 0.94rem; }
+    textarea.note-area {
+      min-height: 250px;
+      resize: vertical;
+      line-height: 1.55;
+      font-size: 0.94rem;
+      width: 100%;
+    }
 
-    .checklist-panel {
+    /* Keep-style checklist block below note */
+    .keep-checklist-card {
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 12px 14px;
+      padding: 14px 16px;
       display: none;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
-    .checklist-panel.open { display: flex; }
+    .keep-checklist-card.open { display: flex; }
 
-    .check-row { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; }
-    .check-row.checked span { text-decoration: line-through; color: var(--muted); }
+    .keep-check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+    .keep-check-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .keep-check-row.checked span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
 
     /* Modal */
     .modal-backdrop {
@@ -521,40 +544,43 @@
 
     .modal {
       width: 100%;
-      max-width: 460px;
+      max-width: 440px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
     }
 
     .hidden { display: none !important; }
 
-    @media (max-width: 960px) {
-      .add-form { grid-template-columns: 1fr 1fr; }
-      .dash-top-widgets { grid-template-columns: 1fr; }
+    @media (max-width: 980px) {
+      .dash-main-grid { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 860px) {
-      .stats-grid { grid-template-columns: 1fr; }
-      .add-form { grid-template-columns: 1fr; }
-      .dash-split { grid-template-columns: 1fr; }
+    @media (max-width: 720px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .field-cat, .field-quick, .field-date { width: 100%; }
       .cal-grid { gap: 4px; }
-      .cal-cell { min-height: 78px; padding: 5px; }
+      .cal-cell { min-height: 76px; padding: 5px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="brand">
-        <h1>Cozy Brain</h1>
+      <div class="brand-row">
+        <div class="brand"><h1>Cozy Brain</h1></div>
         <div id="status-line" class="status-line">Ready</div>
       </div>
-      <div class="header-actions">
+
+      <div class="header-right">
+        <div class="top-clock" title="Indian Standard Time">
+          <strong id="clock-time">--:--</strong>
+          <span id="clock-date">--/--/----</span>
+        </div>
         <button id="theme-toggle" class="btn">☀️ Light</button>
         <button id="sync-btn" class="btn">Sync</button>
         <button id="config-btn" class="btn">Key / Repo</button>
@@ -581,95 +607,86 @@
       </div>
     </div>
 
-    <!-- DASHBOARD -->
+    <!-- DASHBOARD (Tasks & Pinned Notes first; Compact Mini Calendar on side) -->
     <section id="view-dashboard">
-      <div class="stats-grid">
-        <div class="card" style="margin-bottom:0">
-          <div class="stat-label">Work Left</div>
-          <div id="stat-left" class="stat-value">0</div>
-        </div>
-        <div class="card" style="margin-bottom:0">
-          <div class="stat-label">Due Today / ≤3 Days</div>
-          <div id="stat-due" class="stat-value">0</div>
-        </div>
-        <div class="card" style="margin-bottom:0">
-          <div class="stat-label">Completed</div>
-          <div id="stat-done" class="stat-value">0</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title">Add Work</div>
-        <form id="task-form" class="add-form">
-          <input id="task-title" class="field" type="text" placeholder="What needs to be done?" required />
-          <input id="task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (e.g. Exam, Study)" />
-          <datalist id="cat-suggestions">
-            <option value="Exam"></option>
-            <option value="Study"></option>
-            <option value="Project"></option>
-            <option value="Personal"></option>
-          </datalist>
-          <select id="task-quick-date" class="field" title="Quick date selector">
-            <option value="">Quick date...</option>
-            <option value="0">Today</option>
-            <option value="1">Tomorrow</option>
-            <option value="2">In 2 Days</option>
-            <option value="3">In 3 Days</option>
-            <option value="7">In 1 Week</option>
-          </select>
-          <input id="task-date" class="field" type="date" />
-          <button type="submit" class="btn btn-accent">Add</button>
-        </form>
-      </div>
-
-      <!-- Mini Calendar + Mini Clock -->
-      <div class="dash-top-widgets">
-        <div class="card" style="margin-bottom:0">
-          <div class="section-head" style="margin-bottom:6px;">
-            <div class="section-title">Mini Calendar</div>
-            <span id="mini-cal-label" class="pill"></span>
+      <div class="dash-main-grid">
+        <div>
+          <div class="stats-row">
+            <div class="mini-stat">
+              <div class="stat-label">Work Left</div>
+              <div id="stat-left" class="stat-value">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="stat-label">Due ≤3 Days</div>
+              <div id="stat-due" class="stat-value">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="stat-label">Completed</div>
+              <div id="stat-done" class="stat-value">0</div>
+            </div>
           </div>
-          <div id="mini-cal-grid" class="mini-cal-grid"></div>
-        </div>
 
-        <div class="card" style="margin-bottom:0">
-          <div class="clock-box">
-            <div class="stat-label">Live Clock (IST)</div>
-            <div id="mini-clock-time" class="clock-time">--:--:--</div>
-            <div id="mini-clock-date" class="clock-sub">--/--/----</div>
+          <div class="card">
+            <form id="task-form" class="minimal-task-bar">
+              <input id="task-title" class="field field-grow" type="text" placeholder="Add a task..." required />
+              <input id="task-cat" class="field field-cat" type="text" list="cat-suggestions" placeholder="Category" />
+              <datalist id="cat-suggestions">
+                <option value="Exam"></option>
+                <option value="Study"></option>
+                <option value="Project"></option>
+                <option value="Personal"></option>
+              </datalist>
+              <select id="task-quick-date" class="field field-quick" title="Quick date">
+                <option value="">Quick date...</option>
+                <option value="0">Today</option>
+                <option value="1">Tomorrow</option>
+                <option value="2">In 2 Days</option>
+                <option value="3">In 3 Days</option>
+                <option value="7">In 1 Week</option>
+              </select>
+              <input id="task-date" class="field field-date" type="date" />
+              <button type="submit" class="btn btn-accent">Add</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="section-head">
+              <div class="section-title">Remaining Tasks</div>
+              <span id="rem-count" class="pill">0 left</span>
+            </div>
+            <div id="rem-list" class="task-list"></div>
+          </div>
+
+          <div class="card" style="margin-bottom:0">
+            <div class="section-head">
+              <div class="section-title">Completed</div>
+              <button id="clear-done-btn" class="btn btn-sm">Clear done</button>
+            </div>
+            <div id="done-list" class="task-list"></div>
           </div>
         </div>
-      </div>
 
-      <!-- Pinned Notes -->
-      <div id="dash-pinned-card" class="card hidden">
-        <div class="section-head">
-          <div class="section-title">Pinned Notes</div>
-          <span id="pinned-count" class="pill">0 pinned</span>
-        </div>
-        <div id="dash-pinned-grid" class="pinned-grid"></div>
-      </div>
-
-      <div class="dash-split">
-        <div class="card" style="margin-bottom:0">
-          <div class="section-head">
-            <div class="section-title">Remaining Work</div>
-            <span id="rem-count" class="pill">0 left</span>
+        <div>
+          <div id="dash-pinned-card" class="card hidden">
+            <div class="section-head">
+              <div class="section-title">Pinned Notes</div>
+              <span id="pinned-count" class="pill">0</span>
+            </div>
+            <div id="dash-pinned-grid" class="pinned-stack"></div>
           </div>
-          <div id="rem-list" class="task-list"></div>
-        </div>
 
-        <div class="card" style="margin-bottom:0">
-          <div class="section-head">
-            <div class="section-title">Completed</div>
-            <button id="clear-done-btn" class="btn">Clear done</button>
+          <div class="card" style="margin-bottom:0">
+            <div class="section-head" style="margin-bottom:4px;">
+              <div class="section-title" style="font-size:0.92rem;">Mini Calendar</div>
+              <span id="mini-cal-label" class="pill"></span>
+            </div>
+            <div id="mini-cal-grid" class="mini-cal-grid"></div>
           </div>
-          <div id="done-list" class="task-list"></div>
         </div>
       </div>
     </section>
 
-    <!-- CALENDAR -->
+    <!-- FULL CALENDAR -->
     <section id="view-calendar" class="hidden">
       <div class="card">
         <div class="cal-header">
@@ -685,9 +702,9 @@
     <section id="view-notes" class="hidden">
       <div id="notes-grid-view" class="card">
         <div class="notes-top">
-          <div class="section-title">My Notes</div>
+          <div class="section-title">Notes</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <input id="note-search" class="field" type="search" placeholder="Search notes..." style="width:220px;" />
+            <input id="note-search" class="field" type="search" placeholder="Search notes..." style="width:210px;" />
             <button id="new-note-btn" class="btn btn-accent">+ New Note</button>
           </div>
         </div>
@@ -699,25 +716,38 @@
           <div class="editor-bar">
             <button id="back-to-notes-btn" class="btn">← All Notes</button>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button id="toggle-checklist-btn" class="btn hidden">Show Checkboxes</button>
-              <button id="editor-pin-btn" class="btn">Pin</button>
+              <button id="toggle-checklist-btn" class="btn hidden">Checklist</button>
+              <button id="editor-pin-btn" class="pin-btn">Pin</button>
               <button id="editor-delete-btn" class="btn btn-danger">Delete</button>
               <button id="save-note-btn" class="btn btn-accent">Save</button>
             </div>
           </div>
           <input id="note-title-input" class="note-title-input" type="text" placeholder="Note title..." />
-          <textarea id="note-editor" class="field note-area" placeholder="Write your note..."></textarea>
-          <div id="checklist-panel" class="checklist-panel"></div>
+          <textarea id="note-editor" class="field note-area" placeholder="Write your note... Use '- [ ] ' for Keep-style checkboxes"></textarea>
+          <div id="keep-checklist-card" class="keep-checklist-card"></div>
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- CALENDAR QUICK-ADD TASK MODAL -->
+  <div id="cal-add-modal" class="modal-backdrop">
+    <div class="modal">
+      <div id="cal-modal-title" class="section-title">Add Task</div>
+      <input id="cal-task-title" class="field" type="text" placeholder="Task title..." />
+      <input id="cal-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (optional)" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
+        <button id="cal-cancel-btn" class="btn">Cancel</button>
+        <button id="cal-save-btn" class="btn btn-accent">Add Task</button>
+      </div>
+    </div>
   </div>
 
   <!-- EDIT TASK MODAL -->
   <div id="edit-task-modal" class="modal-backdrop">
     <div class="modal">
       <div class="section-title">Edit Task</div>
-      <input id="edit-task-title" class="field" type="text" placeholder="Task name" />
+      <input id="edit-task-title" class="field" type="text" placeholder="Task title" />
       <input id="edit-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category" />
       <select id="edit-task-quick-date" class="field">
         <option value="">Quick date...</option>
@@ -728,25 +758,25 @@
         <option value="7">In 1 Week</option>
       </select>
       <input id="edit-task-date" class="field" type="date" />
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
         <button id="cancel-edit-task-btn" class="btn">Cancel</button>
-        <button id="save-edit-task-btn" class="btn btn-accent">Save Changes</button>
+        <button id="save-edit-task-btn" class="btn btn-accent">Save</button>
       </div>
     </div>
   </div>
 
-  <!-- CONFIG MODAL -->
+  <!-- GITHUB CONFIG MODAL -->
   <div id="config-modal" class="modal-backdrop">
     <div class="modal">
       <div class="section-title">GitHub Vault Settings</div>
-      <p style="font-size:0.84rem;color:var(--muted);">
-        Stored locally in this browser (<code>gh_vault</code>). Needs a Fine-Grained PAT with <strong>Contents: Read and write</strong> on your private repo.
+      <p style="font-size:0.82rem;color:var(--muted);">
+        Saved locally in <code>gh_vault</code>. Requires a Fine-Grained PAT with <strong>Contents: Read and write</strong> on your repo.
       </p>
-      <input id="cfg-owner" class="field" type="text" placeholder="GitHub username / owner (e.g. Ghostxsam)" />
-      <input id="cfg-repo" class="field" type="text" placeholder="Repository name (e.g. mybrain)" />
+      <input id="cfg-owner" class="field" type="text" placeholder="GitHub username / owner" />
+      <input id="cfg-repo" class="field" type="text" placeholder="Repository name (default: mybrain)" />
       <input id="cfg-branch" class="field" type="text" placeholder="Branch (default: main)" />
-      <input id="cfg-token" class="field" type="password" placeholder="Fine-Grained Personal Access Token (github_pat_...)" />
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
+      <input id="cfg-token" class="field" type="password" placeholder="Fine-Grained Personal Access Token" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
         <button id="close-cfg-btn" class="btn">Cancel</button>
         <button id="save-cfg-btn" class="btn btn-accent">Save & Sync</button>
       </div>
@@ -763,12 +793,13 @@
     let tasks = loadJson(TASKS_CACHE, []);
     let notesStore = loadJson(NOTES_CACHE, {});
     let activeNotePath = null;
-    let checklistOpen = false;
+    let checklistOpen = true;
     let editingTaskId = null;
+    let selectedCalIso = '';
 
-    const now = new Date();
-    let calYear = now.getFullYear();
-    let calMonth = now.getMonth();
+    const initNow = new Date();
+    let calYear = initNow.getFullYear();
+    let calMonth = initNow.getMonth();
 
     function loadCfg() {
       const saved = loadJson(CFG_KEY, {});
@@ -811,9 +842,8 @@
       return '';
     }
 
-    // Indian date format: DD/MM/YYYY
-    function formatIndianDate(isoOrRaw = '') {
-      const iso = normalizeIsoDate(isoOrRaw);
+    function formatIndianDate(val = '') {
+      const iso = normalizeIsoDate(val);
       if (!iso) return '';
       const [y, m, d] = iso.split('-');
       return `${d}/${m}/${y}`;
@@ -822,10 +852,7 @@
     function offsetIsoDate(daysOffset = 0) {
       const base = new Date();
       const target = new Date(base.getFullYear(), base.getMonth(), base.getDate() + Number(daysOffset || 0));
-      const y = target.getFullYear();
-      const m = String(target.getMonth() + 1).padStart(2, '0');
-      const d = String(target.getDate()).padStart(2, '0');
-      return `${y}-${m}-${d}`;
+      return `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}-${String(target.getDate()).padStart(2, '0')}`;
     }
 
     function daysUntil(dateStr) {
@@ -838,32 +865,32 @@
       return Math.round((target - today) / 86400000);
     }
 
-    // Mini Clock (IST)
+    // Header Clock (IST, DD/MM/YYYY)
     function updateClock() {
       const d = new Date();
-      const timeStr = d.toLocaleTimeString('en-IN', {
-        timeZone: 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      });
-      const dateStr = d.toLocaleDateString('en-IN', {
-        timeZone: 'Asia/Kolkata',
-        weekday: 'short',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
-      const tEl = document.getElementById('mini-clock-time');
-      const dEl = document.getElementById('mini-clock-date');
-      if (tEl) tEl.textContent = timeStr;
-      if (dEl) dEl.textContent = dateStr;
+      const tEl = document.getElementById('clock-time');
+      const dEl = document.getElementById('clock-date');
+      if (tEl) {
+        tEl.textContent = d.toLocaleTimeString('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        });
+      }
+      if (dEl) {
+        dEl.textContent = d.toLocaleDateString('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+      }
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Theme & Palette
+    // Theme & Swatches
     function initTheme() {
       const saved = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
       applyTheme(saved.light, saved.palette);
@@ -892,21 +919,21 @@
     });
 
     // Tabs
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+      document.getElementById('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
+      document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
+      document.getElementById('view-notes').classList.toggle('hidden', tab !== 'notes');
+      if (tab === 'dashboard') renderDashboard();
+      if (tab === 'calendar') renderCalendar();
+      if (tab === 'notes') showNotesGrid();
+    }
+
     document.querySelectorAll('.tab').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        const tab = btn.dataset.tab;
-        document.getElementById('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
-        document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
-        document.getElementById('view-notes').classList.toggle('hidden', tab !== 'notes');
-        if (tab === 'dashboard') renderDashboard();
-        if (tab === 'calendar') renderCalendar();
-        if (tab === 'notes') showNotesGrid();
-      });
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    // Quick Date Dropdown bindings
+    // Quick Date Dropdowns
     document.getElementById('task-quick-date').addEventListener('change', e => {
       if (e.target.value !== '') {
         document.getElementById('task-date').value = offsetIsoDate(Number(e.target.value));
@@ -919,7 +946,7 @@
       }
     });
 
-    // Notes Frontmatter (title + pinned, .md hidden in UI)
+    // Notes Frontmatter
     function parseNoteMarkdown(filename, rawText) {
       const baseTitle = filename.replace(/\.md$/i, '');
       let pinned = false;
@@ -1007,12 +1034,12 @@
       }
 
       if (!cfg.owner || !cfg.repo || !cfg.token) {
-        setStatus('Local cache only (set Key / Repo to sync)');
+        setStatus('Local cache');
         return;
       }
 
       try {
-        setStatus('Syncing with GitHub...');
+        setStatus('Syncing...');
         let remoteTasks = null;
         let tasksSha = null;
         try {
@@ -1054,7 +1081,7 @@
         renderNotesGrid();
         setStatus('Synced ✓');
       } catch (err) {
-        setStatus(`Sync issue: ${err.message}`);
+        setStatus(`Sync error: ${err.message}`);
       }
     }
 
@@ -1105,7 +1132,7 @@
       grid.innerHTML = html;
     }
 
-    // Dashboard & Tasks
+    // Dashboard
     function renderDashboard() {
       const openTasks = tasks.filter(t => !t.done);
       const doneTasks = tasks.filter(t => t.done);
@@ -1127,19 +1154,19 @@
 
       const pinnedCard = document.getElementById('dash-pinned-card');
       const pinnedGrid = document.getElementById('dash-pinned-grid');
-      document.getElementById('pinned-count').textContent = `${pinnedNotes.length} pinned`;
+      document.getElementById('pinned-count').textContent = `${pinnedNotes.length}`;
 
       if (pinnedNotes.length > 0) {
         pinnedCard.classList.remove('hidden');
         pinnedGrid.innerHTML = pinnedNotes.map(n => `
           <div class="pinned-card" data-open-note="${escapeHtml(n.path)}">
             <div class="note-card-title">${escapeHtml(n.title)}</div>
-            <div class="note-preview">${escapeHtml(n.body.slice(0, 120) || 'Empty note')}</div>
+            <div class="note-preview">${escapeHtml(n.body.slice(0, 95) || 'Empty note')}</div>
           </div>
         `).join('');
         pinnedGrid.querySelectorAll('.pinned-card').forEach(el => {
           el.addEventListener('click', () => {
-            document.querySelector('.tab[data-tab="notes"]').click();
+            switchTab('notes');
             openNoteEditor(el.dataset.openNote);
           });
         });
@@ -1150,12 +1177,12 @@
       const remList = document.getElementById('rem-list');
       remList.innerHTML = openTasks.length
         ? openTasks.map(renderTaskRow).join('')
-        : '<p style="color:var(--muted);font-size:0.9rem;">No remaining work.</p>';
+        : '<p style="color:var(--muted);font-size:0.88rem;">No remaining tasks.</p>';
 
       const doneList = document.getElementById('done-list');
       doneList.innerHTML = doneTasks.length
         ? doneTasks.map(renderTaskRow).join('')
-        : '<p style="color:var(--muted);font-size:0.9rem;">No completed tasks yet.</p>';
+        : '<p style="color:var(--muted);font-size:0.88rem;">No completed tasks.</p>';
 
       document.querySelectorAll('[data-toggle-task]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1185,7 +1212,7 @@
       const diff = daysUntil(iso);
       let dueBadge = '';
       if (!t.done && diff !== null) {
-        const label = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff} days left`;
+        const label = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff}d left`;
         dueBadge = `<span class="badge-due ${diff <= 3 ? 'soon' : ''}">${label}</span>`;
       }
       return `
@@ -1273,7 +1300,9 @@
       pushTasksToGitHub();
     });
 
-    // Calendar Tab (Restored clean monthly grid + inline chips)
+    // Calendar Tab + Click Date to Add Task
+    const calAddModal = document.getElementById('cal-add-modal');
+
     function renderCalendar() {
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       const labelEl = document.getElementById('cal-month-label');
@@ -1284,6 +1313,7 @@
       const firstDay = new Date(calYear, calMonth, 1).getDay();
       const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
       const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const todayRef = new Date();
 
       let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
       for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
@@ -1292,7 +1322,7 @@
         const mm = String(calMonth + 1).padStart(2, '0');
         const dd = String(day).padStart(2, '0');
         const iso = `${calYear}-${mm}-${dd}`;
-        const isToday = calYear === now.getFullYear() && calMonth === now.getMonth() && day === now.getDate();
+        const isToday = calYear === todayRef.getFullYear() && calMonth === todayRef.getMonth() && day === todayRef.getDate();
         const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
 
         const maxChips = 3;
@@ -1303,7 +1333,7 @@
         const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
 
         html += `
-          <div class="cal-cell ${isToday ? 'today' : ''}">
+          <div class="cal-cell ${isToday ? 'today' : ''}" data-cal-iso="${iso}" title="Click to add task on ${formatIndianDate(iso)}">
             <div class="cal-day-num">${day}</div>
             ${chips}
             ${more}
@@ -1311,7 +1341,41 @@
         `;
       }
       gridEl.innerHTML = html;
+
+      gridEl.querySelectorAll('.cal-cell[data-cal-iso]').forEach(cell => {
+        cell.addEventListener('click', () => {
+          selectedCalIso = cell.dataset.calIso;
+          document.getElementById('cal-modal-title').textContent = `Add Task — ${formatIndianDate(selectedCalIso)}`;
+          document.getElementById('cal-task-title').value = '';
+          document.getElementById('cal-task-cat').value = '';
+          calAddModal.classList.add('open');
+          document.getElementById('cal-task-title').focus();
+        });
+      });
     }
+
+    document.getElementById('cal-cancel-btn').addEventListener('click', () => {
+      selectedCalIso = '';
+      calAddModal.classList.remove('open');
+    });
+
+    document.getElementById('cal-save-btn').addEventListener('click', () => {
+      const title = document.getElementById('cal-task-title').value.trim();
+      const cat = document.getElementById('cal-task-cat').value.trim();
+      if (!title || !selectedCalIso) return;
+
+      tasks.unshift({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        title,
+        category: cat,
+        due: selectedCalIso,
+        done: false
+      });
+
+      selectedCalIso = '';
+      calAddModal.classList.remove('open');
+      pushTasksToGitHub();
+    });
 
     document.getElementById('prev-month').addEventListener('click', () => {
       calMonth--;
@@ -1325,12 +1389,29 @@
       renderCalendar();
     });
 
-    // Notes
+    // Notes + Pin + Keep Checklist
     function showNotesGrid() {
       activeNotePath = null;
       document.getElementById('notes-grid-view').classList.remove('hidden');
       document.getElementById('notes-editor-view').classList.add('hidden');
       renderNotesGrid();
+    }
+
+    async function persistPinChange(path, note) {
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      renderNotesGrid();
+      renderDashboard();
+      if (cfg.owner && cfg.repo && cfg.token) {
+        try {
+          setStatus(note.pinned ? 'Pinning note...' : 'Unpinning note...');
+          const res = await ghPutFile(path, serializeNoteMarkdown(note), `Pin=${note.pinned} for ${path}`, note.sha);
+          note.sha = res.content.sha;
+          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+          setStatus('Synced ✓');
+        } catch (err) {
+          setStatus(`Pin sync error: ${err.message}`);
+        }
+      }
     }
 
     function renderNotesGrid() {
@@ -1342,7 +1423,7 @@
 
       const grid = document.getElementById('notes-grid');
       if (!entries.length) {
-        grid.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;">No notes yet. Click "+ New Note" to create one.</p>';
+        grid.innerHTML = '<p style="color:var(--muted);font-size:0.88rem;">No notes yet. Click "+ New Note".</p>';
         return;
       }
 
@@ -1351,13 +1432,13 @@
           <div>
             <div class="note-card-top">
               <div class="note-card-title">${escapeHtml(n.title)}</div>
-              <button class="pin-btn ${n.pinned ? 'pinned' : ''}" data-pin-path="${escapeHtml(n.path)}">${n.pinned ? 'Pinned' : 'Pin'}</button>
+              <button class="pin-btn ${n.pinned ? 'pinned' : ''}" data-pin-path="${escapeHtml(n.path)}">${n.pinned ? '★ Pinned' : 'Pin'}</button>
             </div>
-            <div class="note-preview">${escapeHtml(n.body.slice(0, 160) || 'Empty note')}</div>
+            <div class="note-preview">${escapeHtml(n.body.slice(0, 150) || 'Empty note')}</div>
           </div>
           <div class="note-card-foot">
-            <span style="font-size:0.74rem;color:var(--muted);">${n.pinned ? '★ Pinned' : 'Note'}</span>
-            <button class="btn btn-danger" style="padding:4px 10px;font-size:0.76rem;" data-del-note="${escapeHtml(n.path)}">Delete</button>
+            <span style="font-size:0.73rem;color:var(--muted);">${n.pinned ? 'Pinned' : 'Note'}</span>
+            <button class="btn btn-danger btn-sm" data-del-note="${escapeHtml(n.path)}">Delete</button>
           </div>
         </div>
       `).join('');
@@ -1373,20 +1454,7 @@
           const note = notesStore[p];
           if (!note) return;
           note.pinned = !note.pinned;
-          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-          renderNotesGrid();
-          renderDashboard();
-          if (cfg.owner && cfg.repo && cfg.token) {
-            try {
-              setStatus('Updating pin...');
-              const res = await ghPutFile(p, serializeNoteMarkdown(note), `Update pin for ${p}`, note.sha);
-              note.sha = res.content.sha;
-              localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-              setStatus('Synced ✓');
-            } catch (err) {
-              setStatus(`Pin sync error: ${err.message}`);
-            }
-          }
+          await persistPinChange(p, note);
         });
       });
 
@@ -1400,44 +1468,6 @@
 
     document.getElementById('note-search').addEventListener('input', renderNotesGrid);
 
-    // Checkbox panel below editor stays HIDDEN unless explicitly opened
-    function applyChecklistVisibility() {
-      const panel = document.getElementById('checklist-panel');
-      const btn = document.getElementById('toggle-checklist-btn');
-      const items = getNoteCheckboxItems();
-
-      if (!items.length) {
-        btn.classList.add('hidden');
-        panel.classList.remove('open');
-        panel.innerHTML = '';
-        return;
-      }
-
-      btn.classList.remove('hidden');
-      btn.textContent = checklistOpen ? 'Hide Checkboxes' : 'Show Checkboxes';
-      panel.classList.toggle('open', checklistOpen);
-
-      if (checklistOpen) {
-        panel.innerHTML = items.map(it => `
-          <label class="check-row ${it.checked ? 'checked' : ''}">
-            <input type="checkbox" ${it.checked ? 'checked' : ''} data-line-idx="${it.idx}" />
-            <span>${escapeHtml(it.text || 'Checkbox item')}</span>
-          </label>
-        `).join('');
-
-        panel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-          cb.addEventListener('change', () => {
-            const ta = document.getElementById('note-editor');
-            const lines = ta.value.split('\n');
-            const idx = Number(cb.dataset.lineIdx);
-            lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
-            ta.value = lines.join('\n');
-            applyChecklistVisibility();
-          });
-        });
-      }
-    }
-
     function getNoteCheckboxItems() {
       const text = document.getElementById('note-editor').value || '';
       const out = [];
@@ -1448,26 +1478,80 @@
       return out;
     }
 
+    function renderKeepChecklist() {
+      const card = document.getElementById('keep-checklist-card');
+      const btn = document.getElementById('toggle-checklist-btn');
+      const items = getNoteCheckboxItems();
+
+      if (!items.length) {
+        btn.classList.add('hidden');
+        card.classList.remove('open');
+        card.innerHTML = '';
+        return;
+      }
+
+      btn.classList.remove('hidden');
+      btn.textContent = checklistOpen ? 'Hide List' : 'Show List';
+      card.classList.toggle('open', checklistOpen);
+
+      if (checklistOpen) {
+        card.innerHTML = items.map(it => `
+          <label class="keep-check-row ${it.checked ? 'checked' : ''}">
+            <input type="checkbox" ${it.checked ? 'checked' : ''} data-line-idx="${it.idx}" />
+            <span>${escapeHtml(it.text || 'Item')}</span>
+          </label>
+        `).join('');
+
+        card.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.addEventListener('change', () => {
+            const ta = document.getElementById('note-editor');
+            const lines = ta.value.split('\n');
+            const idx = Number(cb.dataset.lineIdx);
+            lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
+            ta.value = lines.join('\n');
+            renderKeepChecklist();
+          });
+        });
+      }
+    }
+
     document.getElementById('toggle-checklist-btn').addEventListener('click', () => {
       checklistOpen = !checklistOpen;
-      applyChecklistVisibility();
+      renderKeepChecklist();
     });
 
-    document.getElementById('note-editor').addEventListener('input', () => {
-      if (!getNoteCheckboxItems().length) checklistOpen = false;
-      applyChecklistVisibility();
+    document.getElementById('note-editor').addEventListener('input', renderKeepChecklist);
+
+    function setEditorPinState(isPinned) {
+      const btn = document.getElementById('editor-pin-btn');
+      btn.dataset.pinned = isPinned ? '1' : '0';
+      btn.textContent = isPinned ? '★ Pinned' : 'Pin';
+      btn.classList.toggle('pinned', Boolean(isPinned));
+    }
+
+    document.getElementById('editor-pin-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('editor-pin-btn');
+      const nextPinned = btn.dataset.pinned !== '1';
+      setEditorPinState(nextPinned);
+
+      if (activeNotePath && notesStore[activeNotePath]) {
+        notesStore[activeNotePath].pinned = nextPinned;
+        await persistPinChange(activeNotePath, notesStore[activeNotePath]);
+      } else {
+        renderDashboard();
+      }
     });
 
     document.getElementById('new-note-btn').addEventListener('click', () => {
       activeNotePath = null;
-      checklistOpen = false;
+      checklistOpen = true;
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = '';
       document.getElementById('note-editor').value = '';
-      updateEditorPinLabel(false);
+      setEditorPinState(false);
       document.getElementById('editor-delete-btn').classList.add('hidden');
-      applyChecklistVisibility();
+      renderKeepChecklist();
       document.getElementById('note-title-input').focus();
     });
 
@@ -1475,27 +1559,15 @@
       const note = notesStore[path];
       if (!note) return;
       activeNotePath = path;
-      checklistOpen = false;
+      checklistOpen = true;
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = note.title;
       document.getElementById('note-editor').value = note.body;
-      updateEditorPinLabel(Boolean(note.pinned));
+      setEditorPinState(Boolean(note.pinned));
       document.getElementById('editor-delete-btn').classList.remove('hidden');
-      applyChecklistVisibility();
+      renderKeepChecklist();
     }
-
-    function updateEditorPinLabel(isPinned) {
-      const btn = document.getElementById('editor-pin-btn');
-      btn.dataset.pinned = isPinned ? '1' : '0';
-      btn.textContent = isPinned ? '★ Pinned' : 'Pin';
-      btn.classList.toggle('pinned', isPinned);
-    }
-
-    document.getElementById('editor-pin-btn').addEventListener('click', () => {
-      const next = document.getElementById('editor-pin-btn').dataset.pinned !== '1';
-      updateEditorPinLabel(next);
-    });
 
     document.getElementById('back-to-notes-btn').addEventListener('click', showNotesGrid);
 
