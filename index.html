@@ -196,7 +196,7 @@
     /* Dashboard Stats */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       margin-bottom: 14px;
     }
@@ -325,6 +325,9 @@
     .pinned-card .note-preview { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
 
     /* Mini Calendar */
+    .mini-cal-card { cursor: pointer; transition: border-color 0.2s; }
+    .mini-cal-card:hover { border-color: var(--accent); }
+
     .mini-cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -383,7 +386,7 @@
     }
 
     .cal-cell {
-      min-height: 70px; /* Made smaller */
+      min-height: 70px;
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
@@ -398,9 +401,7 @@
     .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; }
     .cal-cell.today { border-color: var(--accent); background: var(--accent-soft); }
 
-    .cal-day-num { font-size: 0.8rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-    .cal-plus { font-size: 0.9rem; color: var(--accent); opacity: 0.4; font-weight: bold; }
-    .cal-cell:hover .cal-plus { opacity: 1; }
+    .cal-day-num { font-size: 0.8rem; font-weight: 700; }
 
     .cal-chip {
       font-size: 0.68rem;
@@ -628,9 +629,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- ========================================================= -->
-    <!-- HEADER                                                    -->
-    <!-- ========================================================= -->
+    <!-- HEADER -->
     <header>
       <div class="brand-row">
         <div class="brand"><h1>Cozy Brain</h1></div>
@@ -647,9 +646,7 @@
       </div>
     </header>
 
-    <!-- ========================================================= -->
-    <!-- TABS TOOLBAR                                              -->
-    <!-- ========================================================= -->
+    <!-- TABS TOOLBAR -->
     <div class="toolbar">
       <div class="tabs">
         <button class="tab active" data-tab="dashboard">Dashboard</button>
@@ -659,9 +656,7 @@
       </div>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- DASHBOARD VIEW                                            -->
-    <!-- ========================================================= -->
+    <!-- DASHBOARD VIEW -->
     <section id="view-dashboard">
       <div class="dash-main-grid">
         <div>
@@ -677,10 +672,6 @@
             <div class="mini-stat">
               <div class="stat-label">Completed</div>
               <div id="stat-done" class="stat-value">0</div>
-            </div>
-            <div class="mini-stat">
-              <div class="stat-label">Time on Screen</div>
-              <div id="stat-time" class="stat-value" style="font-size:1.1rem;">00:00:00</div>
             </div>
           </div>
 
@@ -739,7 +730,8 @@
             <div id="dash-pinned-grid" class="pinned-stack"></div>
           </div>
 
-          <div class="card" style="margin-bottom:0">
+          <!-- Mini Calendar (Clickable) -->
+          <div id="mini-cal-card" class="card mini-cal-card" style="margin-bottom:0" title="Click to open full calendar">
             <div class="section-head" style="margin-bottom:4px;">
               <div class="section-title" style="font-size:0.92rem;">Mini Calendar</div>
               <span id="mini-cal-label" class="pill"></span>
@@ -750,9 +742,7 @@
       </div>
     </section>
 
-    <!-- ========================================================= -->
-    <!-- CALENDAR VIEW                                             -->
-    <!-- ========================================================= -->
+    <!-- CALENDAR VIEW -->
     <section id="view-calendar" class="hidden">
       <div class="card">
         <div class="cal-header">
@@ -764,9 +754,7 @@
       </div>
     </section>
 
-    <!-- ========================================================= -->
-    <!-- NOTES VIEW                                                -->
-    <!-- ========================================================= -->
+    <!-- NOTES VIEW -->
     <section id="view-notes" class="hidden">
       <div id="notes-grid-view" class="card">
         <div class="notes-top">
@@ -784,6 +772,7 @@
           <div class="editor-bar">
             <button id="back-to-notes-btn" class="btn">← All Notes</button>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button id="add-checkbox-btn" class="btn" title="Add checkbox to selected text or insert a new one">☑️ Checkbox</button>
               <button id="toggle-editor-mode-btn" class="btn hidden">Edit Raw Text</button>
               <button id="editor-pin-btn" class="pin-btn">Pin</button>
               <button id="editor-delete-btn" class="btn btn-danger">Delete</button>
@@ -792,8 +781,7 @@
           </div>
           <input id="note-title-input" class="note-title-input" type="text" placeholder="Note title..." />
           
-          <!-- Raw Markdown Textarea -->
-          <textarea id="note-editor" class="field note-area" placeholder="Write your note... Use '- [ ] ' for Keep-style checkboxes"></textarea>
+          <textarea id="note-editor" class="field note-area" placeholder="Write your note..."></textarea>
           
           <!-- Keep-style checklist (Interactive Mode) -->
           <div id="keep-checklist-card" class="keep-checklist-card">
@@ -804,15 +792,12 @@
       </div>
     </section>
 
-    <!-- ========================================================= -->
-    <!-- SETTINGS VIEW                                             -->
-    <!-- ========================================================= -->
+    <!-- SETTINGS VIEW -->
     <section id="view-settings" class="hidden">
       <div class="card">
         <div class="section-title" style="margin-bottom:16px;">App Settings</div>
         
         <div class="settings-grid">
-          <!-- Theme Setting -->
           <div class="setting-item">
             <div>
               <div class="setting-label">Appearance</div>
@@ -821,7 +806,6 @@
             <button id="theme-toggle" class="btn">☀️ Light</button>
           </div>
 
-          <!-- Time Format Setting -->
           <div class="setting-item">
             <div>
               <div class="setting-label">Time Format</div>
@@ -833,7 +817,6 @@
             </select>
           </div>
 
-          <!-- Colors Setting -->
           <div class="setting-item" style="flex-direction:column; align-items:flex-start; gap:12px;">
             <div>
               <div class="setting-label">Accent Color</div>
@@ -858,24 +841,16 @@
     </section>
   </div>
 
-  <!-- ========================================================= -->
-  <!-- MODALS                                                    -->
-  <!-- ========================================================= -->
-  
-  <!-- CALENDAR MODAL -->
+  <!-- MODALS -->
   <div id="cal-add-modal" class="modal-backdrop">
     <div class="modal">
       <div id="cal-modal-title" class="section-title">Tasks for Date</div>
-      
-      <!-- Existing tasks for the date -->
       <div id="cal-modal-tasks" class="cal-modal-tasks"></div>
-
       <div style="border-top: 1px solid var(--border); margin: 8px 0; padding-top: 12px;">
         <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">Add New Task</div>
         <input id="cal-task-title" class="field" type="text" placeholder="Task title..." style="margin-bottom:8px;" />
         <input id="cal-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (optional)" />
       </div>
-      
       <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
         <button id="cal-cancel-btn" class="btn">Close</button>
         <button id="cal-save-btn" class="btn btn-accent">Add Task</button>
@@ -883,7 +858,6 @@
     </div>
   </div>
 
-  <!-- EDIT TASK MODAL -->
   <div id="edit-task-modal" class="modal-backdrop">
     <div class="modal">
       <div class="section-title">Edit Task</div>
@@ -905,7 +879,6 @@
     </div>
   </div>
 
-  <!-- GITHUB CONFIG MODAL -->
   <div id="config-modal" class="modal-backdrop">
     <div class="modal">
       <div class="section-title">GitHub Vault Settings</div>
@@ -923,9 +896,7 @@
     </div>
   </div>
 
-  <!-- ========================================================= -->
-  <!-- JAVASCRIPT LOGIC                                          -->
-  <!-- ========================================================= -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     // --- 1. STATE & VARIABLES ---
     const CFG_KEY = 'gh_vault';
@@ -937,17 +908,14 @@
     let tasks = loadJson(TASKS_CACHE, []);
     let notesStore = loadJson(NOTES_CACHE, {});
     
-    // Settings
     let settings = loadJson(SETTINGS_KEY, { light: false, palette: 'terracotta', timeFormat: '12h' });
 
-    // UI State
     let activeNotePath = null;
     let editingTaskId = null;
     let selectedCalIso = '';
-    let isRawTextMode = false; // Toggles between checklist view and textarea
+    let isRawTextMode = false;
     let currentFilterCat = '';
 
-    // Calendar State
     const initNow = new Date();
     let calYear = initNow.getFullYear();
     let calMonth = initNow.getMonth();
@@ -1017,7 +985,6 @@
       return Math.round((target - today) / 86400000);
     }
 
-    // Debounce utility to prevent API spam
     function debounce(func, wait) {
       let timeout;
       return function executedFunction(...args) {
@@ -1030,12 +997,21 @@
       };
     }
 
-    // --- 3. CLOCK & SCREEN TIME ---
-    let sessionStart = Date.now();
+    // Clean up Markdown for previews
+    function formatPreview(body) {
+      if (!body) return 'Empty note';
+      let text = body
+        .replace(/^---[\s\S]*?---/, '') // remove frontmatter
+        .replace(/^- \[[ xX]\] /gm, '') // remove checkbox markdown
+        .replace(/^-\s*\[[ xX]\]\s*/gm, '') // alternative checkbox spacing
+        .replace(/[#*`_~]/g, ''); // remove basic markdown chars
+      return text.slice(0, 150).trim() || 'Empty note';
+    }
+
+    // --- 3. CLOCK ---
     function updateClock() {
       const d = new Date();
       const is24h = settings.timeFormat === '24h';
-      
       const tEl = document.getElementById('clock-time');
       const dEl = document.getElementById('clock-date');
       
@@ -1055,16 +1031,6 @@
           year: 'numeric'
         });
       }
-
-      // Time on Screen Update
-      const timeEl = document.getElementById('stat-time');
-      if (timeEl) {
-        const diff = Math.floor((Date.now() - sessionStart) / 1000);
-        const h = String(Math.floor(diff / 3600)).padStart(2, '0');
-        const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
-        const s = String(diff % 60).padStart(2, '0');
-        timeEl.textContent = is24h ? `${h}:${m}:${s}` : `${h}h ${m}m ${s}s`;
-      }
     }
     setInterval(updateClock, 1000);
     updateClock();
@@ -1082,7 +1048,7 @@
       });
       
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-      updateClock(); // Refresh clock immediately
+      updateClock();
     }
 
     document.getElementById('theme-toggle').addEventListener('click', () => {
@@ -1118,6 +1084,11 @@
 
     document.querySelectorAll('.tab').forEach(btn => {
       btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // Mini-calendar click navigation
+    document.getElementById('mini-cal-card').addEventListener('click', () => {
+      switchTab('calendar');
     });
 
     // --- 6. GITHUB API LOGIC ---
@@ -1164,7 +1135,7 @@
       return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'DELETE', body: JSON.stringify({ message, sha, branch: cfg.branch }) });
     }
 
-    // --- 7. SYNCING (EFFICIENT) ---
+    // --- 7. SYNCING ---
     async function syncAll() {
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
       localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
@@ -1183,8 +1154,6 @@
 
       try {
         setStatus('Syncing...');
-        
-        // 1. Sync Tasks
         let remoteTasks = null;
         let tasksSha = null;
         try {
@@ -1202,7 +1171,6 @@
           await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', tasksSha);
         }
 
-        // 2. Sync Notes (Parallel fetching for speed)
         const dirItems = await ghFetch(`contents?ref=${encodeURIComponent(cfg.branch)}`);
         const mdFiles = Array.isArray(dirItems) ? dirItems.filter(f => f.type === 'file' && /\.md$/i.test(f.name)) : [];
         
@@ -1256,9 +1224,9 @@
       } catch (err) {
         setStatus(`Save error: ${err.message}`);
       }
-    }, 2000); // Wait 2 seconds after last click to save
+    }, 2000);
 
-    // --- 8. DASHBOARD RENDERING ---
+    // --- 8. DASHBOARD ---
     function renderDashboard() {
       const openTasks = tasks.filter(t => !t.done);
       const doneTasks = tasks.filter(t => t.done);
@@ -1271,19 +1239,16 @@
       document.getElementById('stat-due').textContent = dueSoon.length;
       document.getElementById('stat-done').textContent = doneTasks.length;
       
-      // Update Category Filter Options
       const catFilter = document.getElementById('filter-cat');
       const cats = [...new Set(tasks.map(t => t.category).filter(Boolean))];
       catFilter.innerHTML = `<option value="">All Categories</option>` + 
         cats.map(c => `<option value="${escapeHtml(c)}" ${currentFilterCat === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
 
-      // Apply Filter
       const filteredOpen = openTasks.filter(t => !currentFilterCat || t.category === currentFilterCat);
       document.getElementById('rem-count').textContent = `${filteredOpen.length} left`;
 
       renderMiniCalendar();
 
-      // Pinned Notes
       const pinnedNotes = Object.entries(notesStore)
         .filter(([, n]) => n.pinned)
         .map(([path, n]) => ({ path, ...n }));
@@ -1297,7 +1262,7 @@
         pinnedGrid.innerHTML = pinnedNotes.map(n => `
           <div class="pinned-card" data-open-note="${escapeHtml(n.path)}">
             <div class="note-card-title">${escapeHtml(n.title)}</div>
-            <div class="note-preview">${escapeHtml(n.body.slice(0, 95) || 'Empty note')}</div>
+            <div class="note-preview">${escapeHtml(formatPreview(n.body))}</div>
           </div>
         `).join('');
         pinnedGrid.querySelectorAll('.pinned-card').forEach(el => {
@@ -1310,7 +1275,6 @@
         pinnedCard.classList.add('hidden');
       }
 
-      // Render Lists
       const remList = document.getElementById('rem-list');
       remList.innerHTML = filteredOpen.length
         ? filteredOpen.map(renderTaskRow).join('')
@@ -1321,13 +1285,12 @@
         ? doneTasks.map(renderTaskRow).join('')
         : '<p style="color:var(--muted);font-size:0.88rem;">No completed tasks.</p>';
 
-      // Bind Task Actions
       document.querySelectorAll('[data-toggle-task]').forEach(btn => {
         btn.addEventListener('click', () => {
           const target = tasks.find(t => t.id === btn.dataset.toggleTask);
           if (target) {
             target.done = !target.done;
-            debouncedSyncTasks(); // Efficient sync
+            debouncedSyncTasks();
           }
         });
       });
@@ -1441,10 +1404,7 @@
 
         html += `
           <div class="cal-cell ${isToday ? 'today' : ''}" data-cal-iso="${iso}">
-            <div class="cal-day-num">
-              <span>${day}</span>
-              <span class="cal-plus">+</span>
-            </div>
+            <div class="cal-day-num"><span>${day}</span></div>
             ${chips}
             ${more}
           </div>
@@ -1465,7 +1425,6 @@
       document.getElementById('cal-task-title').value = '';
       document.getElementById('cal-task-cat').value = '';
       
-      // Render existing tasks inside the modal
       const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
       const taskContainer = document.getElementById('cal-modal-tasks');
       
@@ -1490,8 +1449,8 @@
       const target = tasks.find(t => t.id === id);
       if (target) {
         target.done = !target.done;
-        openCalModal(selectedCalIso); // Refresh modal UI
-        debouncedSyncTasks(); // Save
+        openCalModal(selectedCalIso); 
+        debouncedSyncTasks(); 
       }
     };
 
@@ -1560,7 +1519,6 @@
       debouncedSyncTasks();
     });
 
-    // Edit Task Modal
     const editTaskModal = document.getElementById('edit-task-modal');
     function openEditTaskModal(id) {
       const target = tasks.find(t => t.id === id);
@@ -1607,7 +1565,7 @@
       }
     });
 
-    // --- 12. NOTES LOGIC ---
+    // --- 12. NOTES ---
     function parseNoteMarkdown(filename, rawText) {
       const baseTitle = filename.replace(/\.md$/i, '');
       let pinned = false;
@@ -1684,7 +1642,7 @@
               <div class="note-card-title">${escapeHtml(n.title)}</div>
               <button class="pin-btn ${n.pinned ? 'pinned' : ''}" data-pin-path="${escapeHtml(n.path)}">${n.pinned ? '★ Pinned' : 'Pin'}</button>
             </div>
-            <div class="note-preview">${escapeHtml(n.body.slice(0, 150) || 'Empty note')}</div>
+            <div class="note-preview">${escapeHtml(formatPreview(n.body))}</div>
           </div>
           <div class="note-card-foot">
             <span style="font-size:0.73rem;color:var(--muted);">${n.pinned ? 'Pinned' : 'Note'}</span>
@@ -1736,7 +1694,6 @@
       const items = getNoteCheckboxItems();
 
       if (items.length === 0) {
-        // No checkboxes, force raw text mode
         isRawTextMode = true;
         textarea.classList.remove('hidden');
         checklistCard.classList.remove('open');
@@ -1769,6 +1726,7 @@
             lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
             textarea.value = lines.join('\n');
             updateEditorMode();
+            debouncedAutoSave(); // Trigger auto-save on checkbox click
           });
         });
       }
@@ -1780,7 +1738,12 @@
     });
 
     document.getElementById('note-editor').addEventListener('input', () => {
-      if (!isRawTextMode) updateEditorMode(); // Update checklist if editing raw text dynamically
+      if (!isRawTextMode) updateEditorMode(); 
+      debouncedAutoSave();
+    });
+
+    document.getElementById('note-title-input').addEventListener('input', () => {
+      debouncedAutoSave();
     });
 
     document.getElementById('new-check-item').addEventListener('keypress', (e) => {
@@ -1791,7 +1754,38 @@
         textarea.value += `\n- [ ] ${val}`;
         e.target.value = '';
         updateEditorMode();
+        debouncedAutoSave();
       }
+    });
+
+    // Checkbox insertion button
+    document.getElementById('add-checkbox-btn').addEventListener('click', () => {
+      const textarea = document.getElementById('note-editor');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+
+      if (start === end) {
+        const before = text.substring(0, start);
+        const after = text.substring(start);
+        const prefix = (before.length > 0 && !before.endsWith('\n')) ? '\n- [ ] ' : '- [ ] ';
+        textarea.value = before + prefix + after;
+        textarea.selectionStart = textarea.selectionEnd = start + prefix.length;
+      } else {
+        const selectedText = text.substring(start, end);
+        const lines = selectedText.split('\n');
+        const formatted = lines.map(line => {
+           if (/^- \[[ xX]\] /.test(line)) return line.replace(/^- \[[ xX]\] /, '- [ ] ');
+           return `- [ ] ${line}`;
+        }).join('\n');
+        textarea.value = text.substring(0, start) + formatted + text.substring(end);
+        textarea.selectionStart = start;
+        textarea.selectionEnd = start + formatted.length;
+      }
+      
+      textarea.focus();
+      updateEditorMode();
+      debouncedAutoSave();
     });
 
     function setEditorPinState(isPinned) {
@@ -1809,6 +1803,7 @@
       if (activeNotePath && notesStore[activeNotePath]) {
         notesStore[activeNotePath].pinned = nextPinned;
         await persistPinChange(activeNotePath, notesStore[activeNotePath]);
+        debouncedAutoSave();
       } else {
         renderDashboard();
       }
@@ -1841,20 +1836,34 @@
       updateEditorMode();
     }
 
-    document.getElementById('back-to-notes-btn').addEventListener('click', showNotesGrid);
+    // Force Save before leaving
+    document.getElementById('back-to-notes-btn').addEventListener('click', async () => {
+      await saveActiveNote(false); 
+      showNotesGrid();
+    });
 
-    document.getElementById('save-note-btn').addEventListener('click', async () => {
+    async function saveActiveNote(isAuto = false) {
       const titleInput = document.getElementById('note-title-input').value.trim() || 'Untitled';
       const bodyVal = document.getElementById('note-editor').value;
       const pinnedVal = document.getElementById('editor-pin-btn').dataset.pinned === '1';
 
-      const oldPath = activeNotePath;
-      const oldRecord = oldPath ? notesStore[oldPath] : null;
-      const newFilename = slugifyFilename(titleInput);
-      const newPath = newFilename;
+      let oldPath = activeNotePath;
+      let newPath = oldPath;
+      
+      // Only rename on explicit save to avoid auto-save file chaos
+      if (!newPath || (!isAuto && slugifyFilename(titleInput) !== oldPath)) {
+        if (!isAuto && oldPath && slugifyFilename(titleInput) !== oldPath) {
+          newPath = slugifyFilename(titleInput);
+        } else if (!oldPath) {
+          newPath = slugifyFilename(titleInput);
+        }
+      }
+      
+      if (!newPath) newPath = slugifyFilename(titleInput);
 
+      const oldRecord = oldPath ? notesStore[oldPath] : null;
       const record = {
-        name: newFilename,
+        name: newPath,
         title: titleInput,
         pinned: pinnedVal,
         body: bodyVal,
@@ -1863,29 +1872,44 @@
 
       notesStore[newPath] = record;
       if (oldPath && oldPath !== newPath) delete notesStore[oldPath];
+      
+      activeNotePath = newPath;
+      document.getElementById('editor-delete-btn').classList.remove('hidden');
+      
       localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
       renderDashboard();
 
       if (cfg.owner && cfg.repo && cfg.token) {
         try {
-          setStatus('Saving note...');
+          if (!isAuto) setStatus('Saving note...');
           const putRes = await ghPutFile(newPath, serializeNoteMarkdown(record), `Save ${newPath}`, record.sha);
           record.sha = putRes.content.sha;
           if (oldPath && oldPath !== newPath && oldRecord?.sha) {
             await ghDeleteFile(oldPath, oldRecord.sha, `Rename ${oldPath} to ${newPath}`);
           }
           localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-          setStatus('Synced ✓');
+          setStatus(isAuto ? 'Auto-saved ✓' : 'Synced ✓');
         } catch (err) {
           setStatus(`Note save error: ${err.message}`);
         }
       } else {
-        setStatus('Saved locally');
+        setStatus(isAuto ? 'Auto-saved locally' : 'Saved locally');
       }
-
-      activeNotePath = newPath;
-      document.getElementById('editor-delete-btn').classList.remove('hidden');
+      
       renderNotesGrid();
+    }
+
+    // Auto-save logic (debounced)
+    const debouncedAutoSave = debounce(async () => {
+      // Don't auto-save if it's a completely empty new note
+      if (!activeNotePath && !document.getElementById('note-title-input').value.trim() && !document.getElementById('note-editor').value.trim()) {
+        return;
+      }
+      await saveActiveNote(true);
+    }, 1500);
+
+    document.getElementById('save-note-btn').addEventListener('click', async () => {
+      await saveActiveNote(false);
     });
 
     async function deleteNoteByPath(path) {
@@ -1914,7 +1938,7 @@
       if (activeNotePath) await deleteNoteByPath(activeNotePath);
     });
 
-    // --- 14. GITHUB CONFIG MODAL ---
+    // --- 14. GITHUB CONFIG ---
     const cfgModal = document.getElementById('config-modal');
     document.getElementById('config-btn').addEventListener('click', () => {
       document.getElementById('cfg-owner').value = cfg.owner;
@@ -1940,7 +1964,7 @@
 
     document.getElementById('sync-btn').addEventListener('click', syncAll);
 
-    // --- 15. BOOT SEQUENCE ---
+    // --- 15. BOOT ---
     function init() {
       applySettings();
       renderDashboard();
