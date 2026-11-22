@@ -4,8 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cozy Brain</title>
+
+  <!-- =====================================================================
+       1. SITE FAVICON (Inline SVG Browser Tab Icon)
+       ===================================================================== -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%2393b59c' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
+
   <style>
+    /* =====================================================================
+       2. THEME VARIABLES & NEUTRAL DARK / LIGHT PALETTES
+       ===================================================================== */
     :root {
       --bg: #111214;
       --surface: #18191c;
@@ -36,6 +44,9 @@
       --border: rgba(20, 22, 25, 0.1);
     }
 
+    /* =====================================================================
+       3. COZY ACCENT COLOR SWATCHES (8 Colors x Dark & Light)
+       ===================================================================== */
     body[data-palette="terracotta"] { --accent: #e08e6d; --accent-soft: rgba(224, 142, 109, 0.18); }
     body.light[data-palette="terracotta"] { --accent: #c96d49; --accent-soft: rgba(201, 109, 73, 0.15); }
 
@@ -60,6 +71,9 @@
     body[data-palette="bubblegum"] { --accent: #ff77b7; --accent-soft: rgba(255, 119, 183, 0.2); }
     body.light[data-palette="bubblegum"] { --accent: #d4438a; --accent-soft: rgba(212, 67, 138, 0.15); }
 
+    /* =====================================================================
+       4. GLOBAL LAYOUT, HEADER & NAVIGATION TABS
+       ===================================================================== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -199,6 +213,9 @@
       transform: scale(1.18);
     }
 
+    /* =====================================================================
+       5. DASHBOARD CARDS, TASKS & PINNED NOTES STYLES
+       ===================================================================== */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -394,7 +411,9 @@
 
     .pinned-card:hover { border-color: var(--accent); }
 
-    /* Calendar */
+    /* =====================================================================
+       6. CALENDAR GRID & INLINE TASK CHIP STYLES
+       ===================================================================== */
     .cal-header {
       display: flex;
       align-items: center;
@@ -425,11 +444,18 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .cal-cell:not(.empty):hover {
+      border-color: var(--accent);
     }
 
     .cal-cell.empty {
       background: transparent;
       border-color: transparent;
+      cursor: default;
     }
 
     .cal-cell.today {
@@ -464,7 +490,9 @@
       padding-left: 4px;
     }
 
-    /* Notes */
+    /* =====================================================================
+       7. NOTES GRID, EDITOR & COLLAPSIBLE CHECKLIST STYLES
+       ===================================================================== */
     .notes-top {
       display: flex;
       flex-wrap: wrap;
@@ -598,7 +626,9 @@
       color: var(--muted);
     }
 
-    /* Modal */
+    /* =====================================================================
+       8. MODALS & RESPONSIVE BREAKPOINTS
+       ===================================================================== */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -636,6 +666,10 @@
 </head>
 <body>
   <div class="container">
+
+    <!-- =====================================================================
+         SECTION A: HEADER & TOP TOOLBAR (Theme Toggle, Sync, Vault, Swatches)
+         ===================================================================== -->
     <header>
       <div class="brand">
         <h1>Cozy Brain</h1>
@@ -668,7 +702,9 @@
       </div>
     </div>
 
-    <!-- DASHBOARD VIEW -->
+    <!-- =====================================================================
+         SECTION B: DASHBOARD VIEW (Stats, Add Work, Pinned Notes, Task Lists)
+         ===================================================================== -->
     <section id="view-dashboard">
       <div class="stats-grid">
         <div class="card" style="margin-bottom:0">
@@ -728,7 +764,9 @@
       </div>
     </section>
 
-    <!-- CALENDAR VIEW -->
+    <!-- =====================================================================
+         SECTION C: CALENDAR VIEW (Monthly Grid + Click Date to Add Task)
+         ===================================================================== -->
     <section id="view-calendar" class="hidden">
       <div class="card">
         <div class="cal-header">
@@ -740,7 +778,9 @@
       </div>
     </section>
 
-    <!-- NOTES VIEW -->
+    <!-- =====================================================================
+         SECTION D: NOTES VIEW (Google Keep Cards + Markdown Editor)
+         ===================================================================== -->
     <section id="view-notes" class="hidden">
       <div id="notes-grid-view" class="card">
         <div class="notes-top">
@@ -772,7 +812,9 @@
     </section>
   </div>
 
-  <!-- CONFIG MODAL -->
+  <!-- =====================================================================
+       SECTION E: MODALS (GitHub Vault Config & Calendar Date Quick-Add)
+       ===================================================================== -->
   <div id="config-modal" class="modal-backdrop">
     <div class="modal">
       <div class="section-title">GitHub Vault Settings</div>
@@ -790,7 +832,23 @@
     </div>
   </div>
 
+  <div id="cal-add-modal" class="modal-backdrop">
+    <div class="modal">
+      <div id="cal-modal-date-title" class="section-title">Add Task</div>
+      <input id="cal-task-title" class="field" type="text" placeholder="What needs to be done on this date?" />
+      <input id="cal-task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (e.g. Exam, Study, Project)" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
+        <button id="cal-cancel-btn" class="btn">Cancel</button>
+        <button id="cal-save-btn" class="btn btn-accent">Add to Date</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    /* =====================================================================
+       JS SECTION 1: STATE, STORAGE KEYS & HELPER UTILITIES
+       - Manages localStorage keys, date normalization, HTML escaping
+       ===================================================================== */
     const CFG_KEY = 'gh_vault';
     const TASKS_CACHE = 'cozy_tasks_cache_v1';
     const NOTES_CACHE = 'cozy_notes_cache_v1';
@@ -801,6 +859,7 @@
     let notesStore = loadJson(NOTES_CACHE, {});
     let activeNotePath = null;
     let checklistHiddenByUser = false;
+    let selectedCalDate = '';
     let calYear, calMonth;
 
     const now = new Date();
@@ -842,7 +901,14 @@
       return String(dateStr || '').trim().slice(0, 10);
     }
 
-    // Theme & Palette
+    function getTaskDate(t) {
+      return normalizeDate(t?.due || t?.date || t?.dueDate || '');
+    }
+
+    /* =====================================================================
+       JS SECTION 2: THEME, COLOR SWATCHES & TAB SWITCHING
+       - Handles dark/light toggle, 8 accent palettes, and view routing
+       ===================================================================== */
     function initTheme() {
       const saved = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
       applyTheme(saved.light, saved.palette);
@@ -870,7 +936,6 @@
       });
     });
 
-    // Tabs
     document.querySelectorAll('.tab').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -885,7 +950,10 @@
       });
     });
 
-    // Note frontmatter parsing (supports pinned + title without showing .md)
+    /* =====================================================================
+       JS SECTION 3: MARKDOWN FRONTMATTER & GITHUB REST API SYNC
+       - Parses title/pinned metadata, encodes UTF-8 Base64, syncs tasks & notes
+       ===================================================================== */
     function parseNoteMarkdown(filename, rawText) {
       const baseTitle = filename.replace(/\.md$/i, '');
       let pinned = false;
@@ -920,7 +988,6 @@
       return `${cleaned || 'untitled'}.md`;
     }
 
-    // GitHub API
     async function ghFetch(endpoint, options = {}) {
       if (!cfg.owner || !cfg.repo || !cfg.token) {
         throw new Error('Missing GitHub owner, repo, or token');
@@ -1057,7 +1124,10 @@
       }
     }
 
-    // Dashboard & Tasks
+    /* =====================================================================
+       JS SECTION 4: DASHBOARD RENDERING & TASK CRUD
+       - Updates stats, pinned notes preview, remaining & completed tasks
+       ===================================================================== */
     function daysUntil(dateStr) {
       const norm = normalizeDate(dateStr);
       if (!norm) return null;
@@ -1072,7 +1142,7 @@
       const openTasks = tasks.filter(t => !t.done);
       const doneTasks = tasks.filter(t => t.done);
       const dueSoon = openTasks.filter(t => {
-        const diff = daysUntil(t.due);
+        const diff = daysUntil(getTaskDate(t));
         return diff !== null && diff <= 3;
       });
 
@@ -1138,7 +1208,8 @@
     }
 
     function renderTaskRow(t) {
-      const diff = daysUntil(t.due);
+      const taskDate = getTaskDate(t);
+      const diff = daysUntil(taskDate);
       let dueBadge = '';
       if (!t.done && diff !== null) {
         const label = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff} days left`;
@@ -1152,7 +1223,7 @@
               <div class="task-title ${t.done ? 'done' : ''}">${escapeHtml(t.title)}</div>
               <div class="task-meta">
                 ${t.category ? `<span class="badge-cat">${escapeHtml(t.category)}</span>` : ''}
-                ${t.due ? `<span class="badge-date">${escapeHtml(normalizeDate(t.due))}</span>` : ''}
+                ${taskDate ? `<span class="badge-date">${escapeHtml(taskDate)}</span>` : ''}
                 ${dueBadge}
               </div>
             </div>
@@ -1185,7 +1256,12 @@
       pushTasksToGitHub();
     });
 
-    // Calendar
+    /* =====================================================================
+       JS SECTION 5: INTERACTIVE CALENDAR & DATE-CLICK TASK CREATION
+       - Renders month cells, displays inline task chips, opens quick-add modal
+       ===================================================================== */
+    const calModal = document.getElementById('cal-add-modal');
+
     function renderCalendar() {
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       const labelEl = document.getElementById('cal-month-label');
@@ -1208,7 +1284,7 @@
         const dd = String(day).padStart(2, '0');
         const iso = `${calYear}-${mm}-${dd}`;
         const isToday = calYear === now.getFullYear() && calMonth === now.getMonth() && day === now.getDate();
-        const dayTasks = tasks.filter(t => normalizeDate(t.due) === iso);
+        const dayTasks = tasks.filter(t => getTaskDate(t) === iso);
 
         const maxChips = 3;
         const chips = dayTasks.slice(0, maxChips).map(t =>
@@ -1218,7 +1294,7 @@
         const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
 
         html += `
-          <div class="cal-cell ${isToday ? 'today' : ''}">
+          <div class="cal-cell ${isToday ? 'today' : ''}" data-date="${iso}" title="Click to add task on ${iso}">
             <div class="cal-day-num">${day}</div>
             ${chips}
             ${more}
@@ -1227,7 +1303,40 @@
       }
 
       gridEl.innerHTML = html;
+
+      gridEl.querySelectorAll('.cal-cell[data-date]').forEach(cell => {
+        cell.addEventListener('click', () => {
+          selectedCalDate = cell.dataset.date;
+          document.getElementById('cal-modal-date-title').textContent = `Add Task — ${selectedCalDate}`;
+          document.getElementById('cal-task-title').value = '';
+          document.getElementById('cal-task-cat').value = '';
+          calModal.classList.add('open');
+          document.getElementById('cal-task-title').focus();
+        });
+      });
     }
+
+    document.getElementById('cal-cancel-btn').addEventListener('click', () => {
+      calModal.classList.remove('open');
+    });
+
+    document.getElementById('cal-save-btn').addEventListener('click', () => {
+      const titleEl = document.getElementById('cal-task-title');
+      const catEl = document.getElementById('cal-task-cat');
+      const title = titleEl.value.trim();
+      if (!title || !selectedCalDate) return;
+
+      tasks.unshift({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        title,
+        category: catEl.value.trim(),
+        due: selectedCalDate,
+        done: false
+      });
+
+      calModal.classList.remove('open');
+      pushTasksToGitHub();
+    });
 
     document.getElementById('prev-month').addEventListener('click', () => {
       calMonth--;
@@ -1241,7 +1350,10 @@
       renderCalendar();
     });
 
-    // Notes
+    /* =====================================================================
+       JS SECTION 6: NOTES GRID, TITLE RENAMING, PINNING & CHECKLIST TOGGLE
+       - Hides .md extensions, renames files on title change, toggles checklist
+       ===================================================================== */
     function showNotesGrid() {
       activeNotePath = null;
       document.getElementById('notes-grid-view').classList.remove('hidden');
@@ -1498,7 +1610,10 @@
       if (activeNotePath) await deleteNoteByPath(activeNotePath);
     });
 
-    // Config Modal
+    /* =====================================================================
+       JS SECTION 7: VAULT SETTINGS MODAL & INITIAL APP BOOT
+       - Saves GitHub credentials in localStorage and runs initial sync
+       ===================================================================== */
     const modal = document.getElementById('config-modal');
     document.getElementById('config-btn').addEventListener('click', () => {
       document.getElementById('cfg-owner').value = cfg.owner;
