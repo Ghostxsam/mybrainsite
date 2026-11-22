@@ -4,36 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cozy Brain</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%231e1b18'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%2393b59c' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%2393b59c' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
   <style>
     :root {
-      --bg: #141210;
-      --surface: #1e1b18;
-      --surface-2: #282420;
-      --surface-3: #332e29;
-      --text: #f5efe6;
-      --muted: #b3a89a;
+      --bg: #111214;
+      --surface: #18191c;
+      --surface-2: #202226;
+      --surface-3: #2a2d32;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
       --accent: #e08e6d;
-      --accent-contrast: #16120f;
+      --accent-contrast: #111214;
       --accent-soft: rgba(224, 142, 109, 0.16);
       --sage: #8ab89a;
       --warn: #e5b567;
       --urgent: #e06c75;
-      --border: rgba(245, 239, 230, 0.1);
+      --border: rgba(243, 244, 246, 0.1);
       --radius-lg: 20px;
       --radius-md: 14px;
       --radius-pill: 999px;
     }
 
     body.light {
-      --bg: #faf7f2;
+      --bg: #f6f7f9;
       --surface: #ffffff;
-      --surface-2: #f2ece2;
-      --surface-3: #e8dfd1;
-      --text: #1e1a16;
-      --muted: #6c6258;
+      --surface-2: #eef0f4;
+      --surface-3: #e2e6ec;
+      --text: #141619;
+      --muted: #5f6672;
       --accent-contrast: #ffffff;
-      --border: rgba(30, 26, 22, 0.1);
+      --border: rgba(20, 22, 25, 0.1);
     }
 
     body[data-palette="terracotta"] { --accent: #e08e6d; --accent-soft: rgba(224, 142, 109, 0.18); }
@@ -757,7 +757,8 @@
         <div class="editor-box">
           <div class="editor-bar">
             <button id="back-to-notes-btn" class="btn">← All Notes</button>
-            <div style="display:flex;gap:8px;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button id="toggle-checklist-btn" class="btn">Hide Checklist</button>
               <button id="editor-pin-btn" class="btn">Pin</button>
               <button id="editor-delete-btn" class="btn btn-danger">Delete</button>
               <button id="save-note-btn" class="btn btn-accent">Save</button>
@@ -797,8 +798,9 @@
 
     let cfg = loadCfg();
     let tasks = loadJson(TASKS_CACHE, []);
-    let notesStore = loadJson(NOTES_CACHE, {}); // { [path]: { name, title, pinned, body, sha } }
+    let notesStore = loadJson(NOTES_CACHE, {});
     let activeNotePath = null;
+    let checklistHiddenByUser = false;
     let calYear, calMonth;
 
     const now = new Date();
@@ -834,6 +836,10 @@
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+    }
+
+    function normalizeDate(dateStr = '') {
+      return String(dateStr || '').trim().slice(0, 10);
     }
 
     // Theme & Palette
@@ -974,7 +980,7 @@
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
       localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
       renderDashboard();
-      if (!document.getElementById('view-calendar').classList.contains('hidden')) renderCalendar();
+      renderCalendar();
       if (!document.getElementById('view-notes').classList.contains('hidden') &&
           !document.getElementById('notes-grid-view').classList.contains('hidden')) {
         renderNotesGrid();
@@ -1024,8 +1030,8 @@
         notesStore = nextNotes;
         localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
         renderDashboard();
-        renderNotesGrid();
         renderCalendar();
+        renderNotesGrid();
         setStatus('Synced ✓');
       } catch (err) {
         setStatus(`Sync issue: ${err.message}`);
@@ -1053,8 +1059,9 @@
 
     // Dashboard & Tasks
     function daysUntil(dateStr) {
-      if (!dateStr) return null;
-      const [y, m, d] = dateStr.split('-').map(Number);
+      const norm = normalizeDate(dateStr);
+      if (!norm) return null;
+      const [y, m, d] = norm.split('-').map(Number);
       if (!y || !m || !d) return null;
       const target = new Date(y, m - 1, d);
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -1074,7 +1081,6 @@
       document.getElementById('stat-done').textContent = doneTasks.length;
       document.getElementById('rem-count').textContent = `${openTasks.length} left`;
 
-      // Pinned notes in dashboard
       const pinnedNotes = Object.entries(notesStore)
         .filter(([, n]) => n.pinned)
         .map(([path, n]) => ({ path, ...n }));
@@ -1146,7 +1152,7 @@
               <div class="task-title ${t.done ? 'done' : ''}">${escapeHtml(t.title)}</div>
               <div class="task-meta">
                 ${t.category ? `<span class="badge-cat">${escapeHtml(t.category)}</span>` : ''}
-                ${t.due ? `<span class="badge-date">${escapeHtml(t.due)}</span>` : ''}
+                ${t.due ? `<span class="badge-date">${escapeHtml(normalizeDate(t.due))}</span>` : ''}
                 ${dueBadge}
               </div>
             </div>
@@ -1167,7 +1173,7 @@
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
         title,
         category: catEl.value.trim(),
-        due: dateEl.value || '',
+        due: normalizeDate(dateEl.value),
         done: false
       });
       titleEl.value = '';
@@ -1182,7 +1188,11 @@
     // Calendar
     function renderCalendar() {
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      document.getElementById('cal-month-label').textContent = `${monthNames[calMonth]} ${calYear}`;
+      const labelEl = document.getElementById('cal-month-label');
+      const gridEl = document.getElementById('cal-grid');
+      if (!labelEl || !gridEl) return;
+
+      labelEl.textContent = `${monthNames[calMonth]} ${calYear}`;
 
       const firstDay = new Date(calYear, calMonth, 1).getDay();
       const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
@@ -1198,7 +1208,7 @@
         const dd = String(day).padStart(2, '0');
         const iso = `${calYear}-${mm}-${dd}`;
         const isToday = calYear === now.getFullYear() && calMonth === now.getMonth() && day === now.getDate();
-        const dayTasks = tasks.filter(t => t.due === iso);
+        const dayTasks = tasks.filter(t => normalizeDate(t.due) === iso);
 
         const maxChips = 3;
         const chips = dayTasks.slice(0, maxChips).map(t =>
@@ -1216,7 +1226,7 @@
         `;
       }
 
-      document.getElementById('cal-grid').innerHTML = html;
+      gridEl.innerHTML = html;
     }
 
     document.getElementById('prev-month').addEventListener('click', () => {
@@ -1306,8 +1316,21 @@
 
     document.getElementById('note-search').addEventListener('input', renderNotesGrid);
 
+    function syncChecklistToggleLabel() {
+      const btn = document.getElementById('toggle-checklist-btn');
+      btn.textContent = checklistHiddenByUser ? 'Show Checklist' : 'Hide Checklist';
+    }
+
+    document.getElementById('toggle-checklist-btn').addEventListener('click', () => {
+      checklistHiddenByUser = !checklistHiddenByUser;
+      syncChecklistToggleLabel();
+      renderNoteChecklist();
+    });
+
     document.getElementById('new-note-btn').addEventListener('click', () => {
       activeNotePath = null;
+      checklistHiddenByUser = false;
+      syncChecklistToggleLabel();
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = '';
@@ -1322,6 +1345,8 @@
       const note = notesStore[path];
       if (!note) return;
       activeNotePath = path;
+      checklistHiddenByUser = false;
+      syncChecklistToggleLabel();
       document.getElementById('notes-grid-view').classList.add('hidden');
       document.getElementById('notes-editor-view').classList.remove('hidden');
       document.getElementById('note-title-input').value = note.title;
@@ -1345,9 +1370,9 @@
 
     document.getElementById('back-to-notes-btn').addEventListener('click', showNotesGrid);
 
-    // Only show checklist panel when checkbox lines exist in note
     function renderNoteChecklist() {
       const panel = document.getElementById('checklist-panel');
+      const toggleBtn = document.getElementById('toggle-checklist-btn');
       const text = document.getElementById('note-editor').value;
       const lines = text.split('\n');
       const items = [];
@@ -1360,8 +1385,15 @@
       });
 
       if (!items.length) {
+        toggleBtn.classList.add('hidden');
         panel.classList.remove('visible');
         panel.innerHTML = '';
+        return;
+      }
+
+      toggleBtn.classList.remove('hidden');
+      if (checklistHiddenByUser) {
+        panel.classList.remove('visible');
         return;
       }
 
@@ -1495,6 +1527,7 @@
     // Boot
     initTheme();
     renderDashboard();
+    renderCalendar();
     syncAll();
   </script>
 </body>
