@@ -1,91 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cozy Brain — Dashboard, Calendar & Notes</title>
+  <title>Cozy Brain</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%231e1b18'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%2393b59c' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
   <style>
     :root {
-      --bg: #171513;
-      --surface: #211e1b;
-      --surface-2: #2b2723;
-      --surface-3: #35302b;
-      --text: #f3ede4;
+      --bg: #141210;
+      --surface: #1e1b18;
+      --surface-2: #282420;
+      --surface-3: #332e29;
+      --text: #f5efe6;
       --muted: #b3a89a;
-      --accent: #e09f7d;
-      --accent-contrast: #191411;
-      --accent-soft: rgba(224, 159, 125, 0.16);
-      --sage: #9ec1a3;
+      --accent: #e08e6d;
+      --accent-contrast: #16120f;
+      --accent-soft: rgba(224, 142, 109, 0.16);
+      --sage: #8ab89a;
       --warn: #e5b567;
-      --urgent: #e07a7a;
-      --border: rgba(243, 237, 228, 0.1);
-      --radius: 20px;
-      --radius-sm: 12px;
+      --urgent: #e06c75;
+      --border: rgba(245, 239, 230, 0.1);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-pill: 999px;
     }
 
-    /* Light Mode Base */
     body.light {
-      --bg: #f6f2eb;
-      --surface: #fffdf9;
-      --surface-2: #f0ebe1;
-      --surface-3: #e6dfd2;
-      --text: #221d18;
-      --muted: #6b6054;
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --surface-2: #f2ece2;
+      --surface-3: #e8dfd1;
+      --text: #1e1a16;
+      --muted: #6c6258;
       --accent-contrast: #ffffff;
-      --border: rgba(34, 29, 24, 0.11);
+      --border: rgba(30, 26, 22, 0.1);
     }
 
-    /* Cozy Palette Themes */
-    body[data-palette="terracotta"] {
-      --accent: #e09f7d;
-      --accent-soft: rgba(224, 159, 125, 0.18);
-    }
-    body.light[data-palette="terracotta"] {
-      --accent: #c86d44;
-      --accent-soft: rgba(200, 109, 68, 0.15);
-    }
+    body[data-palette="terracotta"] { --accent: #e08e6d; --accent-soft: rgba(224, 142, 109, 0.18); }
+    body.light[data-palette="terracotta"] { --accent: #c96d49; --accent-soft: rgba(201, 109, 73, 0.15); }
 
-    body[data-palette="sage"] {
-      --accent: #8fbc94;
-      --accent-soft: rgba(143, 188, 148, 0.18);
-    }
-    body.light[data-palette="sage"] {
-      --accent: #4f8a5b;
-      --accent-soft: rgba(79, 138, 91, 0.15);
-    }
+    body[data-palette="sage"] { --accent: #8ab89a; --accent-soft: rgba(138, 184, 154, 0.18); }
+    body.light[data-palette="sage"] { --accent: #4f8a66; --accent-soft: rgba(79, 138, 102, 0.15); }
 
-    body[data-palette="latte"] {
-      --accent: #dfb679;
-      --accent-soft: rgba(223, 182, 121, 0.18);
-    }
-    body.light[data-palette="latte"] {
-      --accent: #b37d2e;
-      --accent-soft: rgba(179, 125, 46, 0.15);
-    }
+    body[data-palette="latte"] { --accent: #ddb46b; --accent-soft: rgba(221, 180, 107, 0.18); }
+    body.light[data-palette="latte"] { --accent: #b88428; --accent-soft: rgba(184, 132, 40, 0.15); }
 
-    body[data-palette="sky"] {
-      --accent: #8cb8d9;
-      --accent-soft: rgba(140, 184, 217, 0.18);
-    }
-    body.light[data-palette="sky"] {
-      --accent: #3d76a3;
-      --accent-soft: rgba(61, 118, 163, 0.15);
-    }
+    body[data-palette="sky"] { --accent: #86b6e0; --accent-soft: rgba(134, 182, 224, 0.18); }
+    body.light[data-palette="sky"] { --accent: #3d7ab3; --accent-soft: rgba(61, 122, 179, 0.15); }
 
-    * { box-sizing: border-box; }
+    body[data-palette="lilac"] { --accent: #c8b6ff; --accent-soft: rgba(200, 182, 255, 0.2); }
+    body.light[data-palette="lilac"] { --accent: #8566e6; --accent-soft: rgba(133, 102, 230, 0.15); }
+
+    body[data-palette="mango"] { --accent: #ffb84d; --accent-soft: rgba(255, 184, 77, 0.2); }
+    body.light[data-palette="mango"] { --accent: #d4820a; --accent-soft: rgba(212, 130, 10, 0.15); }
+
+    body[data-palette="periwinkle"] { --accent: #9db4ff; --accent-soft: rgba(157, 180, 255, 0.2); }
+    body.light[data-palette="periwinkle"] { --accent: #5272db; --accent-soft: rgba(82, 114, 219, 0.15); }
+
+    body[data-palette="bubblegum"] { --accent: #ff77b7; --accent-soft: rgba(255, 119, 183, 0.2); }
+    body.light[data-palette="bubblegum"] { --accent: #d4438a; --accent-soft: rgba(212, 67, 138, 0.15); }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
-      padding: 20px 24px 72px;
+      min-height: 100vh;
+      padding: 20px 28px 48px;
       transition: background 0.2s ease, color 0.2s ease;
-    }
-
-    @media (max-width: 640px) {
-      body { padding: 14px 12px 64px; }
     }
 
     .container {
@@ -94,78 +77,112 @@
       margin: 0 auto;
     }
 
-    .topbar {
+    header {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 18px;
     }
 
     .brand h1 {
-      margin: 0;
-      font-size: 1.45rem;
-      font-weight: 750;
+      font-size: 1.5rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
     }
 
-    .brand p {
-      margin: 2px 0 0;
+    .status-line {
       font-size: 0.82rem;
       color: var(--muted);
+      margin-top: 2px;
     }
 
-    .top-actions {
+    .header-actions {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
-    .nav-bar {
+    button, input, select, textarea {
+      font-family: inherit;
+      color: var(--text);
+    }
+
+    .btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .btn:hover { background: var(--surface-3); }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    .btn-accent:hover { opacity: 0.92; background: var(--accent); }
+
+    .btn-danger {
+      background: rgba(224, 108, 117, 0.14);
+      border-color: rgba(224, 108, 117, 0.35);
+      color: var(--urgent);
+    }
+
+    .toolbar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .tabs {
       display: inline-flex;
       background: var(--surface);
       padding: 5px;
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
       border: 1px solid var(--border);
       gap: 4px;
     }
 
-    .tab-btn {
-      background: transparent;
-      color: var(--muted);
+    .tab {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
       border: none;
-      padding: 9px 18px;
-      border-radius: 999px;
-      font-size: 0.92rem;
-      font-weight: 650;
+      background: transparent;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.18s ease;
+      color: var(--muted);
     }
 
-    .tab-btn.active {
+    .tab.active {
       background: var(--accent);
       color: var(--accent-contrast);
     }
 
-    .palette-row {
+    .palette-bar {
       display: flex;
       align-items: center;
       gap: 8px;
       background: var(--surface);
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
       border: 1px solid var(--border);
-      padding: 6px 12px;
-      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     .swatch {
@@ -173,129 +190,88 @@
       height: 18px;
       border-radius: 50%;
       border: 2px solid transparent;
-      padding: 0;
       cursor: pointer;
+      transition: transform 0.14s ease;
     }
-    .swatch.active { border-color: var(--text); transform: scale(1.12); }
+
+    .swatch.active {
+      border-color: var(--text);
+      transform: scale(1.18);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-
-    .card-title {
-      margin: 0 0 14px;
-      font-size: 1.02rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    input, select, textarea, button {
-      font-family: inherit;
-      color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 13px;
-      font-size: 0.92rem;
-      outline: none;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
-    }
-
-    button {
-      cursor: pointer;
-      font-weight: 600;
-      transition: transform 0.08s ease, opacity 0.15s ease, background 0.15s ease;
-    }
-
-    button:active { transform: scale(0.98); }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--accent-contrast);
-      border: none;
-    }
-
-    .btn-ghost {
-      background: var(--surface-2);
-      color: var(--text);
-    }
-
-    .btn-danger {
-      background: rgba(224, 122, 122, 0.16);
-      color: var(--urgent);
-      border: 1px solid rgba(224, 122, 122, 0.28);
-    }
-
-    .btn-sm {
-      padding: 7px 12px;
-      font-size: 0.82rem;
-      border-radius: 999px;
-    }
-
-    /* Dashboard Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    @media (max-width: 680px) {
-      .stats-grid { grid-template-columns: 1fr; }
-    }
-
-    .stat-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 18px;
     }
 
     .stat-label {
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-weight: 600;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 6px;
     }
 
-    .stat-val {
-      font-size: 1.65rem;
-      font-weight: 750;
-      margin-top: 4px;
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
     }
+
+    .add-form {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1fr auto;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .field {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .field:focus { border-color: var(--accent); }
 
     .dash-split {
       display: grid;
       grid-template-columns: 1.45fr 1fr;
-      gap: 16px;
+      gap: 18px;
       align-items: start;
     }
 
-    @media (max-width: 960px) {
-      .dash-split { grid-template-columns: 1fr; }
-    }
-
-    .grid-form {
-      display: grid;
-      grid-template-columns: 2fr 1.1fr 1.1fr auto;
-      gap: 10px;
+    .section-head {
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
     }
 
-    @media (max-width: 720px) {
-      .grid-form { grid-template-columns: 1fr; }
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 650;
+    }
+
+    .pill {
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
     }
 
     .task-list {
@@ -311,8 +287,8 @@
       gap: 12px;
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      padding: 13px 15px;
     }
 
     .task-left {
@@ -320,21 +296,20 @@
       align-items: center;
       gap: 12px;
       min-width: 0;
-      flex: 1;
     }
 
     .check-btn {
-      width: 24px;
-      height: 24px;
-      min-width: 24px;
-      border-radius: 999px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
       border: 2px solid var(--accent);
       background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
       display: grid;
       place-items: center;
-      padding: 0;
+      font-size: 0.78rem;
       color: var(--accent-contrast);
-      font-size: 0.8rem;
     }
 
     .check-btn.done {
@@ -344,11 +319,10 @@
 
     .task-title {
       font-weight: 600;
-      font-size: 0.96rem;
-      word-break: break-word;
+      font-size: 0.95rem;
     }
 
-    .task-item.completed .task-title {
+    .task-title.done {
       text-decoration: line-through;
       color: var(--muted);
     }
@@ -358,106 +332,122 @@
       flex-wrap: wrap;
       gap: 6px;
       margin-top: 5px;
-      align-items: center;
     }
 
-    .pill {
+    .badge-cat {
       font-size: 0.74rem;
-      font-weight: 650;
-      padding: 3px 9px;
-      border-radius: 999px;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .badge-date {
+      font-size: 0.74rem;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
       background: var(--surface-3);
       color: var(--muted);
     }
 
-    .pill.cat {
-      background: var(--accent-soft);
-      color: var(--accent);
+    .badge-due {
+      font-size: 0.74rem;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(229, 181, 103, 0.16);
+      color: var(--warn);
+      font-weight: 600;
     }
 
-    .pill.days-ok { color: var(--sage); background: rgba(158, 193, 163, 0.16); }
-    .pill.days-soon { color: var(--warn); background: rgba(229, 181, 103, 0.18); }
-    .pill.days-late { color: var(--urgent); background: rgba(224, 122, 122, 0.18); }
+    .badge-due.soon {
+      background: rgba(224, 108, 117, 0.18);
+      color: var(--urgent);
+    }
 
-    .del-btn {
+    .icon-x {
       background: transparent;
       border: none;
       color: var(--muted);
-      padding: 6px 8px;
-      font-size: 0.85rem;
+      font-size: 1.05rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 8px;
     }
-    .del-btn:hover { color: var(--urgent); }
 
-    /* Calendar Grid */
+    .icon-x:hover { background: var(--surface-3); color: var(--text); }
+
+    .pinned-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .pinned-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 13px 15px;
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+    }
+
+    .pinned-card:hover { border-color: var(--accent); }
+
+    /* Calendar */
     .cal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .cal-grid {
       display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
+      grid-template-columns: repeat(7, 1fr);
       gap: 8px;
     }
 
     .cal-dow {
       text-align: center;
-      font-size: 0.76rem;
+      font-size: 0.78rem;
+      font-weight: 600;
       color: var(--muted);
-      font-weight: 650;
-      padding: 4px 0;
+      padding-bottom: 6px;
     }
 
-    .cal-day {
+    .cal-cell {
       min-height: 108px;
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 15px;
+      border-radius: var(--radius-md);
       padding: 8px;
-      cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      min-width: 0;
-      transition: border-color 0.15s ease, background 0.15s ease;
+      gap: 4px;
     }
 
-    .cal-day.empty {
+    .cal-cell.empty {
       background: transparent;
       border-color: transparent;
-      cursor: default;
-      min-height: 54px;
     }
 
-    .cal-day.today { border-color: var(--accent); }
-    .cal-day.selected {
-      background: var(--accent-soft);
+    .cal-cell.today {
       border-color: var(--accent);
+      background: var(--accent-soft);
     }
 
-    .cal-num {
-      font-size: 0.84rem;
+    .cal-day-num {
+      font-size: 0.82rem;
       font-weight: 700;
-    }
-
-    .cal-chips {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      width: 100%;
-      min-width: 0;
     }
 
     .cal-chip {
       font-size: 0.72rem;
-      line-height: 1.25;
-      padding: 3px 6px;
+      padding: 3px 7px;
       border-radius: 7px;
-      background: var(--accent-soft);
-      color: var(--text);
-      border-left: 2.5px solid var(--accent);
+      background: var(--surface-3);
+      border-left: 3px solid var(--accent);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -466,763 +456,928 @@
     .cal-chip.done {
       opacity: 0.55;
       text-decoration: line-through;
-      background: rgba(158, 193, 163, 0.14);
-      border-left-color: var(--sage);
-      color: var(--muted);
     }
 
     .cal-more {
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       color: var(--muted);
-      font-weight: 600;
-      padding-left: 3px;
+      padding-left: 4px;
     }
 
-    @media (max-width: 640px) {
-      .cal-grid { gap: 4px; }
-      .cal-day { min-height: 78px; padding: 5px; border-radius: 10px; }
-      .cal-chip { font-size: 0.62rem; padding: 2px 4px; }
-    }
-
-    /* Google Keep Style Notes Grid & Editor */
-    .notes-toolbar {
+    /* Notes */
+    .notes-top {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       margin-bottom: 16px;
     }
 
     .notes-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
       gap: 14px;
     }
 
-    .keep-card {
+    .note-card {
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: var(--radius-md);
       padding: 15px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 12px;
       cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.15s ease;
+      transition: border-color 0.15s ease;
     }
 
-    .keep-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent);
+    .note-card:hover { border-color: var(--accent); }
+
+    .note-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
     }
 
-    .keep-title {
+    .note-card-title {
       font-weight: 700;
       font-size: 1rem;
-      margin: 0 0 8px;
-      word-break: break-word;
     }
 
-    .keep-preview {
+    .pin-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 3px 9px;
+      font-size: 0.74rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .pin-btn.pinned {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .note-preview {
       font-size: 0.85rem;
       color: var(--muted);
       white-space: pre-line;
-      max-height: 150px;
-      overflow: hidden;
+      line-height: 1.45;
+      margin-top: 8px;
     }
 
-    .keep-checklist-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 4px;
-      font-size: 0.84rem;
-    }
-
-    .keep-checklist-item.checked {
-      text-decoration: line-through;
-      opacity: 0.65;
-    }
-
-    .keep-footer {
+    .note-card-foot {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      padding-top: 8px;
       border-top: 1px solid var(--border);
-      padding-top: 10px;
     }
 
-    .checklist-editor-box {
+    .editor-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .editor-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .note-title-input {
+      font-size: 1.15rem;
+      font-weight: 700;
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      width: 100%;
+    }
+
+    .note-title-input:focus { border-color: var(--accent); outline: none; }
+
+    textarea.note-area {
+      min-height: 260px;
+      resize: vertical;
+      line-height: 1.55;
+      font-size: 0.94rem;
+    }
+
+    .checklist-panel {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
       padding: 12px 14px;
-      margin-top: 12px;
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 8px;
     }
 
+    .checklist-panel.visible { display: flex; }
+
     .check-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
+      font-size: 0.88rem;
     }
 
-    .check-row label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-      cursor: pointer;
-      font-size: 0.92rem;
-    }
-
-    .check-row input[type="checkbox"] {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-
-    .check-row .done-text {
+    .check-row.checked span {
       text-decoration: line-through;
       color: var(--muted);
     }
 
-    textarea.md-area {
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      place-items: center;
+      padding: 16px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open { display: grid; }
+
+    .modal {
       width: 100%;
-      min-height: 280px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      line-height: 1.6;
-      margin-top: 12px;
-    }
-
-    .empty-state {
-      text-align: center;
-      color: var(--muted);
-      padding: 24px 12px;
-      font-size: 0.9rem;
-    }
-
-    .auth-row {
+      max-width: 460px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .auth-row input { flex: 1 1 160px; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 860px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .add-form { grid-template-columns: 1fr; }
+      .dash-split { grid-template-columns: 1fr; }
+      .cal-grid { gap: 4px; }
+      .cal-cell { min-height: 78px; padding: 5px; }
+    }
   </style>
 </head>
-<body data-palette="terracotta">
+<body>
   <div class="container">
-    <div class="topbar">
+    <header>
       <div class="brand">
         <h1>Cozy Brain</h1>
-        <p id="status-text">Ready</p>
+        <div id="status-line" class="status-line">Ready</div>
       </div>
-      <div class="top-actions">
-        <button class="btn-ghost btn-sm" id="mode-btn" onclick="toggleDarkLight()">☀️ Light</button>
-        <button class="btn-ghost btn-sm" onclick="syncAll(true)">Sync</button>
-        <button class="btn-ghost btn-sm" onclick="logout()">Key / Repo</button>
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn">☀️ Light</button>
+        <button id="sync-btn" class="btn">Sync</button>
+        <button id="config-btn" class="btn">Key / Repo</button>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="tab active" data-tab="dashboard">Dashboard</button>
+        <button class="tab" data-tab="calendar">Calendar</button>
+        <button class="tab" data-tab="notes">Notes</button>
+      </div>
+
+      <div class="palette-bar">
+        <span>Color</span>
+        <button class="swatch active" data-p="terracotta" style="background:#e08e6d" title="Terracotta"></button>
+        <button class="swatch" data-p="sage" style="background:#8ab89a" title="Sage"></button>
+        <button class="swatch" data-p="latte" style="background:#ddb46b" title="Latte"></button>
+        <button class="swatch" data-p="sky" style="background:#86b6e0" title="Sky"></button>
+        <button class="swatch" data-p="lilac" style="background:#c8b6ff" title="Lilac"></button>
+        <button class="swatch" data-p="mango" style="background:#ffb84d" title="Mango"></button>
+        <button class="swatch" data-p="periwinkle" style="background:#9db4ff" title="Periwinkle"></button>
+        <button class="swatch" data-p="bubblegum" style="background:#ff77b7" title="Bubblegum"></button>
       </div>
     </div>
 
-    <div id="auth-card" class="card" style="display:none;">
-      <div class="card-title">Connect GitHub Vault</div>
-      <div class="auth-row">
-        <input id="gh-owner" placeholder="Username (e.g. Ghostxsam)" />
-        <input id="gh-repo" placeholder="Repo (e.g. mybrain)" />
-        <input id="gh-branch" value="main" placeholder="Branch" style="max-width:110px;" />
-        <input id="gh-token" type="password" placeholder="Personal Access Token" />
-        <button class="btn-primary" onclick="saveConfig()">Connect</button>
-      </div>
-    </div>
-
-    <div id="main-shell" style="display:none;">
-      <div class="nav-bar">
-        <div class="tabs">
-          <button id="tab-dash" class="tab-btn active" onclick="switchTab('dash')">Dashboard</button>
-          <button id="tab-cal" class="tab-btn" onclick="switchTab('cal')">Calendar</button>
-          <button id="tab-notes" class="tab-btn" onclick="switchTab('notes')">Notes</button>
+    <!-- DASHBOARD VIEW -->
+    <section id="view-dashboard">
+      <div class="stats-grid">
+        <div class="card" style="margin-bottom:0">
+          <div class="stat-label">Work Left</div>
+          <div id="stat-left" class="stat-value">0</div>
         </div>
-
-        <div class="palette-row" title="Cozy accent color">
-          <span class="pill" style="background:transparent; padding:0 4px 0 0;">Color</span>
-          <button class="swatch active" data-p="terracotta" style="background:#e09f7d;" onclick="setPalette('terracotta')"></button>
-          <button class="swatch" data-p="sage" style="background:#8fbc94;" onclick="setPalette('sage')"></button>
-          <button class="swatch" data-p="latte" style="background:#dfb679;" onclick="setPalette('latte')"></button>
-          <button class="swatch" data-p="sky" style="background:#8cb8d9;" onclick="setPalette('sky')"></button>
+        <div class="card" style="margin-bottom:0">
+          <div class="stat-label">Due Today / ≤3 Days</div>
+          <div id="stat-due" class="stat-value">0</div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="stat-label">Completed</div>
+          <div id="stat-done" class="stat-value">0</div>
         </div>
       </div>
 
-      <!-- TAB 1: DASHBOARD -->
-      <section id="view-dash">
-        <div class="stats-grid">
-          <div class="stat-box">
-            <div class="stat-label">Work Left</div>
-            <div class="stat-val" id="stat-left">0</div>
+      <div class="card">
+        <div class="section-title">Add Work</div>
+        <form id="task-form" class="add-form">
+          <input id="task-title" class="field" type="text" placeholder="What needs to be done?" required />
+          <input id="task-cat" class="field" type="text" list="cat-suggestions" placeholder="Category (e.g. Exam, Study, Project)" />
+          <datalist id="cat-suggestions">
+            <option value="Exam"></option>
+            <option value="Study"></option>
+            <option value="Project"></option>
+            <option value="Personal"></option>
+          </datalist>
+          <input id="task-date" class="field" type="date" />
+          <button type="submit" class="btn btn-accent">Add</button>
+        </form>
+      </div>
+
+      <div id="dash-pinned-card" class="card hidden">
+        <div class="section-head">
+          <div class="section-title">Pinned Notes</div>
+          <span id="pinned-count" class="pill">0 pinned</span>
+        </div>
+        <div id="dash-pinned-grid" class="pinned-grid"></div>
+      </div>
+
+      <div class="dash-split">
+        <div class="card" style="margin-bottom:0">
+          <div class="section-head">
+            <div class="section-title">Remaining Work</div>
+            <span id="rem-count" class="pill">0 left</span>
           </div>
-          <div class="stat-box">
-            <div class="stat-label">Due Today / ≤3 Days</div>
-            <div class="stat-val" id="stat-soon">0</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">Completed</div>
-            <div class="stat-val" id="stat-done">0</div>
-          </div>
+          <div id="rem-list" class="task-list"></div>
         </div>
 
-        <div class="card">
-          <div class="card-title">Add Work</div>
-          <form class="grid-form" onsubmit="addTask(event)">
-            <input id="task-title" placeholder="What needs to be done?" required />
-            <input id="task-category" list="cat-suggestions" placeholder="Category (e.g. Exam, Study, Project)" />
-            <datalist id="cat-suggestions">
-              <option value="Exam"></option>
-              <option value="Study"></option>
-              <option value="Project"></option>
-              <option value="Design"></option>
-              <option value="Personal"></option>
-            </datalist>
-            <input id="task-date" type="date" required />
-            <button type="submit" class="btn-primary">Add</button>
-          </form>
-        </div>
-
-        <div class="dash-split">
-          <div class="card">
-            <div class="card-title">
-              <span>Remaining Work</span>
-              <span id="remaining-count" class="pill">0 left</span>
-            </div>
-            <div id="remaining-list" class="task-list"></div>
+        <div class="card" style="margin-bottom:0">
+          <div class="section-head">
+            <div class="section-title">Completed</div>
+            <button id="clear-done-btn" class="btn">Clear done</button>
           </div>
+          <div id="done-list" class="task-list"></div>
+        </div>
+      </div>
+    </section>
 
-          <div class="card">
-            <div class="card-title">
-              <span>Completed</span>
-              <button class="btn-ghost btn-sm" onclick="clearCompleted()">Clear done</button>
-            </div>
-            <div id="completed-list" class="task-list"></div>
+    <!-- CALENDAR VIEW -->
+    <section id="view-calendar" class="hidden">
+      <div class="card">
+        <div class="cal-header">
+          <button id="prev-month" class="btn">←</button>
+          <h2 id="cal-month-label" style="font-size:1.15rem;"></h2>
+          <button id="next-month" class="btn">→</button>
+        </div>
+        <div id="cal-grid" class="cal-grid"></div>
+      </div>
+    </section>
+
+    <!-- NOTES VIEW -->
+    <section id="view-notes" class="hidden">
+      <div id="notes-grid-view" class="card">
+        <div class="notes-top">
+          <div class="section-title">My Notes</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input id="note-search" class="field" type="search" placeholder="Search notes..." style="width:220px;" />
+            <button id="new-note-btn" class="btn btn-accent">+ New Note</button>
           </div>
         </div>
-      </section>
+        <div id="notes-grid" class="notes-grid"></div>
+      </div>
 
-      <!-- TAB 2: CALENDAR -->
-      <section id="view-cal" style="display:none;">
-        <div class="card">
-          <div class="cal-header">
-            <button class="btn-ghost btn-sm" onclick="changeMonth(-1)">←</button>
-            <strong id="cal-month-label"></strong>
-            <button class="btn-ghost btn-sm" onclick="changeMonth(1)">→</button>
-          </div>
-          <div class="cal-grid" id="cal-grid"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">
-            <span id="selected-day-title">Selected Day</span>
-            <span id="selected-day-countdown" class="pill"></span>
-          </div>
-          <form class="grid-form" style="margin-bottom:14px;" onsubmit="addTaskFromCal(event)">
-            <input id="cal-task-title" placeholder="Add work for this day..." required />
-            <input id="cal-task-cat" list="cat-suggestions" placeholder="Category" />
-            <button type="submit" class="btn-primary">Add to Day</button>
-          </form>
-          <div id="cal-day-tasks" class="task-list"></div>
-        </div>
-      </section>
-
-      <!-- TAB 3: GOOGLE KEEP STYLE NOTES -->
-      <section id="view-notes" style="display:none;">
-        <div id="notes-list-view" class="card">
-          <div class="notes-toolbar">
-            <div class="card-title" style="margin:0;">My Notes</div>
-            <div class="top-actions">
-              <input id="note-search" placeholder="Search notes..." oninput="renderNotesGrid()" style="min-width:190px;" />
-              <button class="btn-primary btn-sm" onclick="createNewNoteFlow()">+ New Note</button>
+      <div id="notes-editor-view" class="card hidden">
+        <div class="editor-box">
+          <div class="editor-bar">
+            <button id="back-to-notes-btn" class="btn">← All Notes</button>
+            <div style="display:flex;gap:8px;">
+              <button id="editor-pin-btn" class="btn">Pin</button>
+              <button id="editor-delete-btn" class="btn btn-danger">Delete</button>
+              <button id="save-note-btn" class="btn btn-accent">Save</button>
             </div>
           </div>
-          <div id="notes-grid" class="notes-grid"></div>
+          <input id="note-title-input" class="note-title-input" type="text" placeholder="Note title..." />
+          <textarea id="note-editor" class="field note-area" placeholder="Write your note... Use '- [ ] ' for checkboxes"></textarea>
+          <div id="checklist-panel" class="checklist-panel"></div>
         </div>
+      </div>
+    </section>
+  </div>
 
-        <div id="note-detail-view" class="card" style="display:none;">
-          <div class="card-title">
-            <div class="top-actions">
-              <button class="btn-ghost btn-sm" onclick="backToNotesList()">← All Notes</button>
-              <strong id="active-note-name"></strong>
-            </div>
-            <div class="top-actions">
-              <button class="btn-ghost btn-sm" onclick="addCheckboxToNote()">☑ Add Checkbox</button>
-              <button class="btn-danger btn-sm" onclick="deleteCurrentNote()">Delete</button>
-              <button class="btn-primary btn-sm" onclick="saveCurrentNote()">Save</button>
-            </div>
-          </div>
-
-          <div id="note-checklist-panel" class="checklist-editor-box" style="display:none;"></div>
-
-          <textarea id="note-editor" class="md-area" placeholder="Write note text or use '- [ ] item' for checkboxes..." oninput="renderNoteChecklist()"></textarea>
-        </div>
-      </section>
+  <!-- CONFIG MODAL -->
+  <div id="config-modal" class="modal-backdrop">
+    <div class="modal">
+      <div class="section-title">GitHub Vault Settings</div>
+      <p style="font-size:0.84rem;color:var(--muted);">
+        Stored locally in this browser (<code>gh_vault</code>). Needs a Fine-Grained PAT with <strong>Contents: Read and write</strong> on your private repo.
+      </p>
+      <input id="cfg-owner" class="field" type="text" placeholder="GitHub username / owner (e.g. Ghostxsam)" />
+      <input id="cfg-repo" class="field" type="text" placeholder="Repository name (e.g. mybrain)" />
+      <input id="cfg-branch" class="field" type="text" placeholder="Branch (default: main)" />
+      <input id="cfg-token" class="field" type="password" placeholder="Fine-Grained Personal Access Token (github_pat_...)" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
+        <button id="close-cfg-btn" class="btn">Cancel</button>
+        <button id="save-cfg-btn" class="btn btn-accent">Save & Sync</button>
+      </div>
     </div>
   </div>
 
   <script>
-    const TASKS_FILE = 'tasks.json';
+    const CFG_KEY = 'gh_vault';
     const TASKS_CACHE = 'cozy_tasks_cache_v1';
     const NOTES_CACHE = 'cozy_notes_cache_v1';
     const THEME_KEY = 'cozy_theme_v1';
 
-    let cfg = JSON.parse(localStorage.getItem('gh_vault') || 'null');
-    let tasks = JSON.parse(localStorage.getItem(TASKS_CACHE) || '[]');
-    let notesStore = JSON.parse(localStorage.getItem(NOTES_CACHE) || '{}'); // { [path]: { content, sha } }
-    let tasksSha = null;
-
-    let calYear, calMonth;
-    let selectedDateStr = todayISO();
+    let cfg = loadCfg();
+    let tasks = loadJson(TASKS_CACHE, []);
+    let notesStore = loadJson(NOTES_CACHE, {}); // { [path]: { name, title, pinned, body, sha } }
     let activeNotePath = null;
+    let calYear, calMonth;
 
+    const now = new Date();
+    calYear = now.getFullYear();
+    calMonth = now.getMonth();
+
+    function loadCfg() {
+      const saved = loadJson(CFG_KEY, {});
+      return {
+        owner: saved.owner || '',
+        repo: saved.repo || 'mybrain',
+        branch: saved.branch || 'main',
+        token: saved.token || ''
+      };
+    }
+
+    function loadJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function setStatus(msg) {
+      document.getElementById('status-line').textContent = msg;
+    }
+
+    function escapeHtml(str = '') {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Theme & Palette
     function initTheme() {
-      const saved = JSON.parse(localStorage.getItem(THEME_KEY) || '{"light":false,"palette":"terracotta"}');
+      const saved = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
       applyTheme(saved.light, saved.palette);
     }
 
     function applyTheme(isLight, palette) {
-      document.body.classList.toggle('light', !!isLight);
+      document.body.classList.toggle('light', Boolean(isLight));
       document.body.setAttribute('data-palette', palette || 'terracotta');
-      document.getElementById('mode-btn').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+      document.getElementById('theme-toggle').textContent = isLight ? '🌙 Dark' : '☀️ Light';
       document.querySelectorAll('.swatch').forEach(s => {
         s.classList.toggle('active', s.dataset.p === palette);
       });
-      localStorage.setItem(THEME_KEY, JSON.stringify({ light: !!isLight, palette }));
+      localStorage.setItem(THEME_KEY, JSON.stringify({ light: Boolean(isLight), palette }));
     }
 
-    function toggleDarkLight() {
-      const current = JSON.parse(localStorage.getItem(THEME_KEY) || '{"light":false,"palette":"terracotta"}');
-      applyTheme(!current.light, current.palette);
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const cur = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
+      applyTheme(!cur.light, cur.palette);
+    });
+
+    document.querySelectorAll('.swatch').forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        const cur = loadJson(THEME_KEY, { light: false, palette: 'terracotta' });
+        applyTheme(cur.light, swatch.dataset.p);
+      });
+    });
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        document.getElementById('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
+        document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
+        document.getElementById('view-notes').classList.toggle('hidden', tab !== 'notes');
+        if (tab === 'calendar') renderCalendar();
+        if (tab === 'notes') showNotesGrid();
+        if (tab === 'dashboard') renderDashboard();
+      });
+    });
+
+    // Note frontmatter parsing (supports pinned + title without showing .md)
+    function parseNoteMarkdown(filename, rawText) {
+      const baseTitle = filename.replace(/\.md$/i, '');
+      let pinned = false;
+      let title = baseTitle;
+      let body = rawText || '';
+
+      const fmMatch = body.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+      if (fmMatch) {
+        const fm = fmMatch[1];
+        const pinMatch = fm.match(/^pinned:\s*(true|false)\s*$/mi);
+        if (pinMatch) pinned = pinMatch[1].toLowerCase() === 'true';
+        const titleMatch = fm.match(/^title:\s*(.+)\s*$/mi);
+        if (titleMatch) title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
+        body = body.slice(fmMatch[0].length);
+      }
+
+      return { title: title || baseTitle, pinned, body };
     }
 
-    function setPalette(palette) {
-      const current = JSON.parse(localStorage.getItem(THEME_KEY) || '{"light":false,"palette":"terracotta"}');
-      applyTheme(current.light, palette);
+    function serializeNoteMarkdown({ title, pinned, body }) {
+      const cleanTitle = (title || 'Untitled').trim() || 'Untitled';
+      const lines = ['---', `title: "${cleanTitle.replace(/"/g, '\\"')}"`, `pinned: ${Boolean(pinned)}`, '---', ''];
+      return lines.join('\n') + (body || '');
     }
 
-    function todayISO() {
-      const d = new Date();
-      const off = d.getTimezoneOffset();
-      const local = new Date(d.getTime() - off * 60000);
-      return local.toISOString().slice(0, 10);
+    function slugifyFilename(title) {
+      const cleaned = (title || 'untitled')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9._-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      return `${cleaned || 'untitled'}.md`;
     }
 
-    function daysLeft(dateStr) {
-      if (!dateStr) return null;
-      const [y, m, day] = dateStr.split('-').map(Number);
-      const target = new Date(y, m - 1, day);
-      const now = new Date();
-      const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      return Math.round((target - startToday) / 86400000);
-    }
-
-    function formatDaysPill(dateStr, done) {
-      if (done) return `<span class="pill days-ok">Done</span>`;
-      const diff = daysLeft(dateStr);
-      if (diff === null) return '';
-      if (diff < 0) return `<span class="pill days-late">${Math.abs(diff)}d overdue</span>`;
-      if (diff === 0) return `<span class="pill days-soon">Due today</span>`;
-      if (diff === 1) return `<span class="pill days-soon">1 day left</span>`;
-      const cls = diff <= 3 ? 'days-soon' : 'days-ok';
-      return `<span class="pill ${cls}">${diff} days left</span>`;
-    }
-
-    function setStatus(msg) {
-      document.getElementById('status-text').textContent = msg;
-    }
-
-    const toBase64 = str => btoa(unescape(encodeURIComponent(str)));
-    const fromBase64 = b64 => decodeURIComponent(escape(atob(b64.replace(/\n/g, ''))));
-
-    function saveConfig() {
-      cfg = {
-        owner: document.getElementById('gh-owner').value.trim(),
-        repo: document.getElementById('gh-repo').value.trim(),
-        branch: (document.getElementById('gh-branch').value || 'main').trim(),
-        token: document.getElementById('gh-token').value.trim()
-      };
-      if (!cfg.owner || !cfg.repo || !cfg.token) return alert('Fill in username, repo, and token.');
-      localStorage.setItem('gh_vault', JSON.stringify(cfg));
-      startApp();
-    }
-
-    function logout() {
-      localStorage.removeItem('gh_vault');
-      cfg = null;
-      document.getElementById('main-shell').style.display = 'none';
-      document.getElementById('auth-card').style.display = 'block';
-    }
-
+    // GitHub API
     async function ghFetch(endpoint, options = {}) {
-      const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/${endpoint}`, {
+      if (!cfg.owner || !cfg.repo || !cfg.token) {
+        throw new Error('Missing GitHub owner, repo, or token');
+      }
+      const url = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/${endpoint}`;
+      const res = await fetch(url, {
         ...options,
         headers: {
-          'Authorization': `Bearer ${cfg.token}`,
-          'Accept': 'application/vnd.github+json',
+          Authorization: `Bearer ${cfg.token}`,
+          Accept: 'application/vnd.github+json',
           'Content-Type': 'application/json',
           ...(options.headers || {})
         }
       });
-      if (res.status === 404 && options.allow404) return null;
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${data.message || 'Error'}`);
-      return data;
-    }
-
-    async function startApp() {
-      document.getElementById('auth-card').style.display = 'none';
-      document.getElementById('main-shell').style.display = 'block';
-      document.getElementById('task-date').value = todayISO();
-
-      const now = new Date();
-      calYear = now.getFullYear();
-      calMonth = now.getMonth();
-
-      renderAll();
-      renderNotesGrid();
-      await syncAll(false);
-    }
-
-    async function syncAll(showMsg = true) {
-      if (!cfg) return;
-      if (showMsg) setStatus('Syncing...');
-      try {
-        await syncTasksOnly();
-        await syncNotesListOnly();
-        setStatus('Synced ✓');
-      } catch (e) {
-        setStatus(`Sync error: ${e.message}`);
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`GitHub ${res.status}: ${errText.slice(0, 120)}`);
       }
+      return res.json();
     }
 
-    async function syncTasksOnly() {
-      const file = await ghFetch(`contents/${TASKS_FILE}?ref=${cfg.branch}&t=${Date.now()}`, { allow404: true });
-      if (file) {
-        tasksSha = file.sha;
-        tasks = JSON.parse(fromBase64(file.content) || '[]');
-        localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
-        renderAll();
+    function b64EncodeUtf8(str) {
+      const bytes = new TextEncoder().encode(str);
+      let bin = '';
+      bytes.forEach(b => { bin += String.fromCharCode(b); });
+      return btoa(bin);
+    }
+
+    function b64DecodeUtf8(b64) {
+      const bin = atob(b64.replace(/\n/g, ''));
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder().decode(bytes);
+    }
+
+    async function ghPutFile(path, contentStr, message, sha = null) {
+      const body = {
+        message,
+        content: b64EncodeUtf8(contentStr),
+        branch: cfg.branch
+      };
+      if (sha) body.sha = sha;
+      return ghFetch(`contents/${encodeURIComponent(path)}`, {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      });
+    }
+
+    async function ghDeleteFile(path, sha, message) {
+      return ghFetch(`contents/${encodeURIComponent(path)}`, {
+        method: 'DELETE',
+        body: JSON.stringify({ message, sha, branch: cfg.branch })
+      });
+    }
+
+    async function syncAll() {
+      localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      renderDashboard();
+      if (!document.getElementById('view-calendar').classList.contains('hidden')) renderCalendar();
+      if (!document.getElementById('view-notes').classList.contains('hidden') &&
+          !document.getElementById('notes-grid-view').classList.contains('hidden')) {
+        renderNotesGrid();
+      }
+
+      if (!cfg.owner || !cfg.repo || !cfg.token) {
+        setStatus('Local cache only (set Key / Repo to sync)');
+        return;
+      }
+
+      try {
+        setStatus('Syncing with GitHub...');
+        let remoteTasks = null;
+        let tasksSha = null;
+        try {
+          const tFile = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
+          tasksSha = tFile.sha;
+          remoteTasks = JSON.parse(b64DecodeUtf8(tFile.content));
+        } catch (err) {
+          if (!String(err.message).includes('404')) throw err;
+        }
+
+        if (Array.isArray(remoteTasks)) {
+          tasks = remoteTasks;
+          localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
+        } else {
+          await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', tasksSha);
+        }
+
+        const dirItems = await ghFetch(`contents?ref=${encodeURIComponent(cfg.branch)}`);
+        const mdFiles = Array.isArray(dirItems) ? dirItems.filter(f => f.type === 'file' && /\.md$/i.test(f.name)) : [];
+        const nextNotes = {};
+
+        for (const item of mdFiles) {
+          const fileData = await ghFetch(`contents/${encodeURIComponent(item.path)}?ref=${encodeURIComponent(cfg.branch)}`);
+          const raw = b64DecodeUtf8(fileData.content);
+          const parsed = parseNoteMarkdown(item.name, raw);
+          nextNotes[item.path] = {
+            name: item.name,
+            title: parsed.title,
+            pinned: parsed.pinned,
+            body: parsed.body,
+            sha: fileData.sha
+          };
+        }
+
+        notesStore = nextNotes;
+        localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+        renderDashboard();
+        renderNotesGrid();
+        renderCalendar();
+        setStatus('Synced ✓');
+      } catch (err) {
+        setStatus(`Sync issue: ${err.message}`);
       }
     }
 
     async function pushTasksToGitHub() {
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
-      renderAll();
-      if (!cfg) return;
-      setStatus('Saving tasks...');
+      renderDashboard();
+      renderCalendar();
+      if (!cfg.owner || !cfg.repo || !cfg.token) return;
       try {
-        if (!tasksSha) {
-          const existing = await ghFetch(`contents/${TASKS_FILE}?ref=${cfg.branch}&t=${Date.now()}`, { allow404: true });
-          if (existing) tasksSha = existing.sha;
-        }
-        const body = {
-          message: 'Update tasks.json',
-          content: toBase64(JSON.stringify(tasks, null, 2)),
-          branch: cfg.branch
-        };
-        if (tasksSha) body.sha = tasksSha;
-        const res = await ghFetch(`contents/${TASKS_FILE}`, { method: 'PUT', body: JSON.stringify(body) });
-        tasksSha = res.content.sha;
-        setStatus('Saved ✓');
-      } catch (e) {
-        tasksSha = null;
-        setStatus(`Save issue: ${e.message}`);
+        setStatus('Saving tasks...');
+        let sha = null;
+        try {
+          const existing = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
+          sha = existing.sha;
+        } catch {}
+        await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Update tasks.json', sha);
+        setStatus('Synced ✓');
+      } catch (err) {
+        setStatus(`Save error: ${err.message}`);
       }
     }
 
-    function addTask(e) {
-      e.preventDefault();
-      const title = document.getElementById('task-title').value.trim();
-      const category = (document.getElementById('task-category').value || 'General').trim();
-      const dueDate = document.getElementById('task-date').value || todayISO();
-      if (!title) return;
-      tasks.push({
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-        title, category, dueDate, done: false
+    // Dashboard & Tasks
+    function daysUntil(dateStr) {
+      if (!dateStr) return null;
+      const [y, m, d] = dateStr.split('-').map(Number);
+      if (!y || !m || !d) return null;
+      const target = new Date(y, m - 1, d);
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      return Math.round((target - today) / 86400000);
+    }
+
+    function renderDashboard() {
+      const openTasks = tasks.filter(t => !t.done);
+      const doneTasks = tasks.filter(t => t.done);
+      const dueSoon = openTasks.filter(t => {
+        const diff = daysUntil(t.due);
+        return diff !== null && diff <= 3;
       });
-      document.getElementById('task-title').value = '';
-      pushTasksToGitHub();
-    }
 
-    function addTaskFromCal(e) {
-      e.preventDefault();
-      const title = document.getElementById('cal-task-title').value.trim();
-      const category = (document.getElementById('cal-task-cat').value || 'General').trim();
-      if (!title) return;
-      tasks.push({
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-        title, category, dueDate: selectedDateStr, done: false
+      document.getElementById('stat-left').textContent = openTasks.length;
+      document.getElementById('stat-due').textContent = dueSoon.length;
+      document.getElementById('stat-done').textContent = doneTasks.length;
+      document.getElementById('rem-count').textContent = `${openTasks.length} left`;
+
+      // Pinned notes in dashboard
+      const pinnedNotes = Object.entries(notesStore)
+        .filter(([, n]) => n.pinned)
+        .map(([path, n]) => ({ path, ...n }));
+
+      const pinnedCard = document.getElementById('dash-pinned-card');
+      const pinnedGrid = document.getElementById('dash-pinned-grid');
+      document.getElementById('pinned-count').textContent = `${pinnedNotes.length} pinned`;
+
+      if (pinnedNotes.length > 0) {
+        pinnedCard.classList.remove('hidden');
+        pinnedGrid.innerHTML = pinnedNotes.map(n => `
+          <div class="pinned-card" data-open-note="${escapeHtml(n.path)}">
+            <div class="note-card-title">${escapeHtml(n.title)}</div>
+            <div class="note-preview">${escapeHtml(n.body.slice(0, 120) || 'Empty note')}</div>
+          </div>
+        `).join('');
+        pinnedGrid.querySelectorAll('.pinned-card').forEach(el => {
+          el.addEventListener('click', () => {
+            document.querySelector('.tab[data-tab="notes"]').click();
+            openNoteEditor(el.dataset.openNote);
+          });
+        });
+      } else {
+        pinnedCard.classList.add('hidden');
+      }
+
+      const remList = document.getElementById('rem-list');
+      remList.innerHTML = openTasks.length
+        ? openTasks.map(renderTaskRow).join('')
+        : '<p style="color:var(--muted);font-size:0.9rem;">No remaining work.</p>';
+
+      const doneList = document.getElementById('done-list');
+      doneList.innerHTML = doneTasks.length
+        ? doneTasks.map(renderTaskRow).join('')
+        : '<p style="color:var(--muted);font-size:0.9rem;">No completed tasks yet.</p>';
+
+      document.querySelectorAll('[data-toggle-task]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.toggleTask;
+          const target = tasks.find(t => t.id === id);
+          if (target) {
+            target.done = !target.done;
+            pushTasksToGitHub();
+          }
+        });
       });
-      document.getElementById('cal-task-title').value = '';
-      pushTasksToGitHub();
+
+      document.querySelectorAll('[data-del-task]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.delTask;
+          tasks = tasks.filter(t => t.id !== id);
+          pushTasksToGitHub();
+        });
+      });
     }
 
-    function toggleTask(id) {
-      tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
-      pushTasksToGitHub();
-    }
-
-    function deleteTask(id) {
-      tasks = tasks.filter(t => t.id !== id);
-      pushTasksToGitHub();
-    }
-
-    function clearCompleted() {
-      tasks = tasks.filter(t => !t.done);
-      pushTasksToGitHub();
-    }
-
-    function renderTaskItem(t) {
+    function renderTaskRow(t) {
+      const diff = daysUntil(t.due);
+      let dueBadge = '';
+      if (!t.done && diff !== null) {
+        const label = diff < 0 ? `${Math.abs(diff)}d overdue` : diff === 0 ? 'Due today' : `${diff} days left`;
+        dueBadge = `<span class="badge-due ${diff <= 3 ? 'soon' : ''}">${label}</span>`;
+      }
       return `
-        <div class="task-item ${t.done ? 'completed' : ''}">
+        <div class="task-item">
           <div class="task-left">
-            <button class="check-btn ${t.done ? 'done' : ''}" onclick="toggleTask('${t.id}')" title="Toggle complete">
-              ${t.done ? '✓' : ''}
-            </button>
+            <button class="check-btn ${t.done ? 'done' : ''}" data-toggle-task="${escapeHtml(t.id)}">${t.done ? '✓' : ''}</button>
             <div>
-              <div class="task-title">${escapeHtml(t.title)}</div>
+              <div class="task-title ${t.done ? 'done' : ''}">${escapeHtml(t.title)}</div>
               <div class="task-meta">
-                <span class="pill cat">${escapeHtml(t.category || 'General')}</span>
-                <span class="pill">${t.dueDate || ''}</span>
-                ${formatDaysPill(t.dueDate, t.done)}
+                ${t.category ? `<span class="badge-cat">${escapeHtml(t.category)}</span>` : ''}
+                ${t.due ? `<span class="badge-date">${escapeHtml(t.due)}</span>` : ''}
+                ${dueBadge}
               </div>
             </div>
           </div>
-          <button class="del-btn" onclick="deleteTask('${t.id}')" title="Delete">✕</button>
+          <button class="icon-x" data-del-task="${escapeHtml(t.id)}" title="Delete">✕</button>
         </div>
       `;
     }
 
-    function renderAll() {
-      const remaining = tasks
-        .filter(t => !t.done)
-        .sort((a, b) => (a.dueDate || '9999').localeCompare(b.dueDate || '9999'));
-      const completed = tasks.filter(t => t.done);
-      const soonCount = remaining.filter(t => {
-        const d = daysLeft(t.dueDate);
-        return d !== null && d <= 3;
-      }).length;
-
-      document.getElementById('stat-left').textContent = remaining.length;
-      document.getElementById('stat-soon').textContent = soonCount;
-      document.getElementById('stat-done').textContent = completed.length;
-
-      document.getElementById('remaining-count').textContent = `${remaining.length} left`;
-      document.getElementById('remaining-list').innerHTML = remaining.length
-        ? remaining.map(renderTaskItem).join('')
-        : `<div class="empty-state">All caught up. Enjoy the calm.</div>`;
-
-      document.getElementById('completed-list').innerHTML = completed.length
-        ? completed.map(renderTaskItem).join('')
-        : `<div class="empty-state">No completed tasks yet.</div>`;
-
-      renderCalendar();
-    }
-
-    function switchTab(tab) {
-      ['dash', 'cal', 'notes'].forEach(name => {
-        document.getElementById(`view-${name}`).style.display = name === tab ? 'block' : 'none';
-        document.getElementById(`tab-${name}`).classList.toggle('active', name === tab);
+    document.getElementById('task-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const titleEl = document.getElementById('task-title');
+      const catEl = document.getElementById('task-cat');
+      const dateEl = document.getElementById('task-date');
+      const title = titleEl.value.trim();
+      if (!title) return;
+      tasks.unshift({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        title,
+        category: catEl.value.trim(),
+        due: dateEl.value || '',
+        done: false
       });
-      if (tab === 'notes') {
-        backToNotesList();
-        syncNotesListOnly().catch(() => {});
-      }
-    }
+      titleEl.value = '';
+      pushTasksToGitHub();
+    });
 
-    function changeMonth(delta) {
-      calMonth += delta;
-      if (calMonth < 0) { calMonth = 11; calYear--; }
-      if (calMonth > 11) { calMonth = 0; calYear++; }
-      renderCalendar();
-    }
+    document.getElementById('clear-done-btn').addEventListener('click', () => {
+      tasks = tasks.filter(t => !t.done);
+      pushTasksToGitHub();
+    });
 
+    // Calendar
     function renderCalendar() {
-      const grid = document.getElementById('cal-grid');
-      if (!grid) return;
-
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       document.getElementById('cal-month-label').textContent = `${monthNames[calMonth]} ${calYear}`;
 
       const firstDay = new Date(calYear, calMonth, 1).getDay();
       const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-      const dows = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
       let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
-      for (let i = 0; i < firstDay; i++) html += `<div class="cal-day empty"></div>`;
+      for (let i = 0; i < firstDay; i++) {
+        html += `<div class="cal-cell empty"></div>`;
+      }
 
-      const today = todayISO();
       for (let day = 1; day <= daysInMonth; day++) {
         const mm = String(calMonth + 1).padStart(2, '0');
         const dd = String(day).padStart(2, '0');
         const iso = `${calYear}-${mm}-${dd}`;
-        const dayTasks = tasks.filter(t => t.dueDate === iso);
+        const isToday = calYear === now.getFullYear() && calMonth === now.getMonth() && day === now.getDate();
+        const dayTasks = tasks.filter(t => t.due === iso);
 
         const maxChips = 3;
-        const visibleChips = dayTasks.slice(0, maxChips).map(t =>
+        const chips = dayTasks.slice(0, maxChips).map(t =>
           `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</div>`
         ).join('');
-        const extraCount = dayTasks.length - maxChips;
-        const moreLabel = extraCount > 0 ? `<div class="cal-more">+${extraCount} more</div>` : '';
+        const extra = dayTasks.length - maxChips;
+        const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
 
         html += `
-          <div class="cal-day ${iso === today ? 'today' : ''} ${iso === selectedDateStr ? 'selected' : ''}" onclick="selectDay('${iso}')">
-            <div class="cal-num">${day}</div>
-            <div class="cal-chips">${visibleChips}${moreLabel}</div>
+          <div class="cal-cell ${isToday ? 'today' : ''}">
+            <div class="cal-day-num">${day}</div>
+            ${chips}
+            ${more}
           </div>
         `;
       }
 
-      grid.innerHTML = html;
-      renderSelectedDay();
+      document.getElementById('cal-grid').innerHTML = html;
     }
 
-    function selectDay(iso) {
-      selectedDateStr = iso;
+    document.getElementById('prev-month').addEventListener('click', () => {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
       renderCalendar();
-    }
+    });
 
-    function renderSelectedDay() {
-      document.getElementById('selected-day-title').textContent = `Work on ${selectedDateStr}`;
-      const diff = daysLeft(selectedDateStr);
-      const pill = document.getElementById('selected-day-countdown');
-      if (diff === 0) pill.textContent = 'Today';
-      else if (diff > 0) pill.textContent = `${diff} days from today`;
-      else pill.textContent = `${Math.abs(diff)} days ago`;
+    document.getElementById('next-month').addEventListener('click', () => {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCalendar();
+    });
 
-      const dayTasks = tasks.filter(t => t.dueDate === selectedDateStr);
-      document.getElementById('cal-day-tasks').innerHTML = dayTasks.length
-        ? dayTasks.map(renderTaskItem).join('')
-        : `<div class="empty-state">Nothing scheduled for this day.</div>`;
-    }
-
-    // --- GOOGLE KEEP STYLE NOTES ---
-    async function syncNotesListOnly() {
-      const tree = await ghFetch(`git/trees/${cfg.branch}?recursive=1`);
-      const mdFiles = (tree.tree || []).filter(f => f.type === 'blob' && f.path.endsWith('.md') && f.path !== TASKS_FILE);
-
-      // Keep cached content if sha matches, fetch content for new/changed notes
-      const nextStore = {};
-      for (const f of mdFiles) {
-        if (notesStore[f.path] && notesStore[f.path].sha === f.sha && typeof notesStore[f.path].content === 'string') {
-          nextStore[f.path] = notesStore[f.path];
-        } else {
-          const data = await ghFetch(`contents/${f.path}?ref=${cfg.branch}&t=${Date.now()}`);
-          nextStore[f.path] = { content: fromBase64(data.content), sha: data.sha };
-        }
-      }
-      notesStore = nextStore;
-      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+    // Notes
+    function showNotesGrid() {
+      activeNotePath = null;
+      document.getElementById('notes-grid-view').classList.remove('hidden');
+      document.getElementById('notes-editor-view').classList.add('hidden');
       renderNotesGrid();
     }
 
     function renderNotesGrid() {
-      const q = (document.getElementById('note-search')?.value || '').toLowerCase().trim();
-      const paths = Object.keys(notesStore).filter(p => {
-        if (!q) return true;
-        return p.toLowerCase().includes(q) || (notesStore[p].content || '').toLowerCase().includes(q);
-      });
+      const q = (document.getElementById('note-search').value || '').trim().toLowerCase();
+      const entries = Object.entries(notesStore)
+        .map(([path, n]) => ({ path, ...n }))
+        .filter(n => !q || n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q))
+        .sort((a, b) => Number(b.pinned) - Number(a.pinned) || a.title.localeCompare(b.title));
 
       const grid = document.getElementById('notes-grid');
-      if (!grid) return;
-
-      if (!paths.length) {
-        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">No notes yet. Click "+ New Note" to start.</div>`;
+      if (!entries.length) {
+        grid.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;">No notes yet. Click "+ New Note" to create one.</p>';
         return;
       }
 
-      grid.innerHTML = paths.map(path => {
-        const text = notesStore[path].content || '';
-        const lines = text.split('\n').slice(0, 7);
-        const previewHtml = lines.map(line => {
-          const matchDone = line.match(/^\s*-\s*\[[xX]\]\s*(.*)$/);
-          const matchOpen = line.match(/^\s*-\s*\[\s*\]\s*(.*)$/);
-          if (matchDone) return `<div class="keep-checklist-item checked">☑ <span>${escapeHtml(matchDone[1])}</span></div>`;
-          if (matchOpen) return `<div class="keep-checklist-item">☐ <span>${escapeHtml(matchOpen[1])}</span></div>`;
-          return `<div>${escapeHtml(line)}</div>`;
-        }).join('');
-
-        return `
-          <div class="keep-card" onclick="openNoteEditor('${escapeAttr(path)}')">
-            <div>
-              <div class="keep-title">${escapeHtml(path.replace(/\.md$/i, ''))}</div>
-              <div class="keep-preview">${previewHtml || '<span style="opacity:0.5;">Empty note</span>'}</div>
+      grid.innerHTML = entries.map(n => `
+        <div class="note-card" data-open-path="${escapeHtml(n.path)}">
+          <div>
+            <div class="note-card-top">
+              <div class="note-card-title">${escapeHtml(n.title)}</div>
+              <button class="pin-btn ${n.pinned ? 'pinned' : ''}" data-pin-path="${escapeHtml(n.path)}">${n.pinned ? 'Pinned' : 'Pin'}</button>
             </div>
-            <div class="keep-footer" onclick="event.stopPropagation()">
-              <span class="pill">${escapeHtml(path)}</span>
-              <button class="btn-danger btn-sm" onclick="deleteNoteByPath('${escapeAttr(path)}')">Delete</button>
-            </div>
+            <div class="note-preview">${escapeHtml(n.body.slice(0, 160) || 'Empty note')}</div>
           </div>
-        `;
-      }).join('');
-    }
+          <div class="note-card-foot">
+            <span style="font-size:0.74rem;color:var(--muted);">${n.pinned ? '★ Pinned' : 'Note'}</span>
+            <button class="btn btn-danger" style="padding:4px 10px;font-size:0.76rem;" data-del-note="${escapeHtml(n.path)}">Delete</button>
+          </div>
+        </div>
+      `).join('');
 
-    function backToNotesList() {
-      activeNotePath = null;
-      document.getElementById('note-detail-view').style.display = 'none';
-      document.getElementById('notes-list-view').style.display = 'block';
-      renderNotesGrid();
-    }
-
-    function openNoteEditor(path) {
-      activeNotePath = path;
-      const item = notesStore[path] || { content: '', sha: null };
-      document.getElementById('notes-list-view').style.display = 'none';
-      document.getElementById('note-detail-view').style.display = 'block';
-      document.getElementById('active-note-name').textContent = path;
-      document.getElementById('note-editor').value = item.content || '';
-      renderNoteChecklist();
-    }
-
-    function addCheckboxToNote() {
-      const label = prompt('Checkbox item text:');
-      if (!label) return;
-      const ta = document.getElementById('note-editor');
-      const prefix = ta.value && !ta.value.endsWith('\n') ? '\n' : '';
-      ta.value = `${ta.value}${prefix}- [ ] ${label.trim()}`;
-      renderNoteChecklist();
-    }
-
-    function renderNoteChecklist() {
-      const panel = document.getElementById('note-checklist-panel');
-      const lines = document.getElementById('note-editor').value.split('\n');
-      const checkIndices = [];
-      lines.forEach((line, idx) => {
-        if (/^\s*-\s*\[[ xX]\]\s*/.test(line)) checkIndices.push(idx);
+      grid.querySelectorAll('.note-card').forEach(card => {
+        card.addEventListener('click', () => openNoteEditor(card.dataset.openPath));
       });
 
-      if (!checkIndices.length) {
-        panel.style.display = 'none';
+      grid.querySelectorAll('[data-pin-path]').forEach(btn => {
+        btn.addEventListener('click', async e => {
+          e.stopPropagation();
+          const p = btn.dataset.pinPath;
+          const note = notesStore[p];
+          if (!note) return;
+          note.pinned = !note.pinned;
+          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+          renderNotesGrid();
+          renderDashboard();
+          if (cfg.owner && cfg.repo && cfg.token) {
+            try {
+              setStatus('Updating pin...');
+              const res = await ghPutFile(p, serializeNoteMarkdown(note), `Update pin for ${p}`, note.sha);
+              note.sha = res.content.sha;
+              localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+              setStatus('Synced ✓');
+            } catch (err) {
+              setStatus(`Pin sync error: ${err.message}`);
+            }
+          }
+        });
+      });
+
+      grid.querySelectorAll('[data-del-note]').forEach(btn => {
+        btn.addEventListener('click', async e => {
+          e.stopPropagation();
+          await deleteNoteByPath(btn.dataset.delNote);
+        });
+      });
+    }
+
+    document.getElementById('note-search').addEventListener('input', renderNotesGrid);
+
+    document.getElementById('new-note-btn').addEventListener('click', () => {
+      activeNotePath = null;
+      document.getElementById('notes-grid-view').classList.add('hidden');
+      document.getElementById('notes-editor-view').classList.remove('hidden');
+      document.getElementById('note-title-input').value = '';
+      document.getElementById('note-editor').value = '';
+      updateEditorPinLabel(false);
+      document.getElementById('editor-delete-btn').classList.add('hidden');
+      renderNoteChecklist();
+      document.getElementById('note-title-input').focus();
+    });
+
+    function openNoteEditor(path) {
+      const note = notesStore[path];
+      if (!note) return;
+      activeNotePath = path;
+      document.getElementById('notes-grid-view').classList.add('hidden');
+      document.getElementById('notes-editor-view').classList.remove('hidden');
+      document.getElementById('note-title-input').value = note.title;
+      document.getElementById('note-editor').value = note.body;
+      updateEditorPinLabel(Boolean(note.pinned));
+      document.getElementById('editor-delete-btn').classList.remove('hidden');
+      renderNoteChecklist();
+    }
+
+    function updateEditorPinLabel(isPinned) {
+      const btn = document.getElementById('editor-pin-btn');
+      btn.dataset.pinned = isPinned ? '1' : '0';
+      btn.textContent = isPinned ? '★ Pinned' : 'Pin';
+      btn.classList.toggle('pinned', isPinned);
+    }
+
+    document.getElementById('editor-pin-btn').addEventListener('click', () => {
+      const next = document.getElementById('editor-pin-btn').dataset.pinned !== '1';
+      updateEditorPinLabel(next);
+    });
+
+    document.getElementById('back-to-notes-btn').addEventListener('click', showNotesGrid);
+
+    // Only show checklist panel when checkbox lines exist in note
+    function renderNoteChecklist() {
+      const panel = document.getElementById('checklist-panel');
+      const text = document.getElementById('note-editor').value;
+      const lines = text.split('\n');
+      const items = [];
+
+      lines.forEach((line, idx) => {
+        const m = line.match(/^\s*-\s*\[([ xX])\]\s*(.*)$/);
+        if (m) {
+          items.push({ idx, checked: m[1].toLowerCase() === 'x', text: m[2] });
+        }
+      });
+
+      if (!items.length) {
+        panel.classList.remove('visible');
         panel.innerHTML = '';
         return;
       }
 
-      panel.style.display = 'flex';
-      panel.innerHTML = checkIndices.map(idx => {
-        const line = lines[idx];
-        const isChecked = /^\s*-\s*\[[xX]\]/.test(line);
-        const text = line.replace(/^\s*-\s*\[[ xX]\]\s*/, '');
-        return `
-          <div class="check-row">
-            <label>
-              <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleNoteCheckboxLine(${idx}, this.checked)" />
-              <span class="${isChecked ? 'done-text' : ''}">${escapeHtml(text)}</span>
-            </label>
-          </div>
-        `;
-      }).join('');
+      panel.classList.add('visible');
+      panel.innerHTML = items.map(it => `
+        <label class="check-row ${it.checked ? 'checked' : ''}">
+          <input type="checkbox" ${it.checked ? 'checked' : ''} data-line-idx="${it.idx}" />
+          <span>${escapeHtml(it.text || 'Checkbox item')}</span>
+        </label>
+      `).join('');
+
+      panel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          toggleNoteCheckboxLine(Number(cb.dataset.lineIdx), cb.checked);
+        });
+      });
     }
 
     function toggleNoteCheckboxLine(lineIdx, checked) {
@@ -1233,102 +1388,114 @@
       renderNoteChecklist();
     }
 
-    async function saveCurrentNote() {
-      if (!activeNotePath) return;
-      const content = document.getElementById('note-editor').value;
-      setStatus(`Saving ${activeNotePath}...`);
-      try {
-        let sha = notesStore[activeNotePath]?.sha || null;
-        if (!sha) {
-          const existing = await ghFetch(`contents/${activeNotePath}?ref=${cfg.branch}&t=${Date.now()}`, { allow404: true });
-          if (existing) sha = existing.sha;
+    document.getElementById('note-editor').addEventListener('input', renderNoteChecklist);
+
+    document.getElementById('save-note-btn').addEventListener('click', async () => {
+      const titleInput = document.getElementById('note-title-input').value.trim() || 'Untitled';
+      const bodyVal = document.getElementById('note-editor').value;
+      const pinnedVal = document.getElementById('editor-pin-btn').dataset.pinned === '1';
+
+      const oldPath = activeNotePath;
+      const oldRecord = oldPath ? notesStore[oldPath] : null;
+      const newFilename = slugifyFilename(titleInput);
+      const newPath = newFilename;
+
+      const record = {
+        name: newFilename,
+        title: titleInput,
+        pinned: pinnedVal,
+        body: bodyVal,
+        sha: oldPath === newPath && oldRecord ? oldRecord.sha : null
+      };
+
+      notesStore[newPath] = record;
+      if (oldPath && oldPath !== newPath) {
+        delete notesStore[oldPath];
+      }
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      renderDashboard();
+
+      if (cfg.owner && cfg.repo && cfg.token) {
+        try {
+          setStatus('Saving note...');
+          const mdContent = serializeNoteMarkdown(record);
+          const putRes = await ghPutFile(newPath, mdContent, `Save ${newPath}`, record.sha);
+          record.sha = putRes.content.sha;
+
+          if (oldPath && oldPath !== newPath && oldRecord?.sha) {
+            await ghDeleteFile(oldPath, oldRecord.sha, `Rename ${oldPath} to ${newPath}`);
+          }
+
+          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+          setStatus('Synced ✓');
+        } catch (err) {
+          setStatus(`Note save error: ${err.message}`);
         }
-        const body = {
-          message: `Update ${activeNotePath}`,
-          content: toBase64(content),
-          branch: cfg.branch
-        };
-        if (sha) body.sha = sha;
-
-        const res = await ghFetch(`contents/${activeNotePath}`, { method: 'PUT', body: JSON.stringify(body) });
-        notesStore[activeNotePath] = { content, sha: res.content.sha };
-        localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-        setStatus(`Saved ${activeNotePath} ✓`);
-      } catch (e) {
-        setStatus(`Save error: ${e.message}`);
+      } else {
+        setStatus('Saved locally');
       }
-    }
 
-    async function createNewNoteFlow() {
-      const rawName = prompt('Note title or filename (e.g. shopping-list):');
-      if (!rawName) return;
-      const clean = rawName.trim().replace(/\.md$/i, '');
-      if (!clean) return;
-      const path = `${clean}.md`;
-      setStatus(`Creating ${path}...`);
-      try {
-        const res = await ghFetch(`contents/${path}`, {
-          method: 'PUT',
-          body: JSON.stringify({
-            message: `Create ${path}`,
-            content: toBase64(`# ${clean}\n- [ ] `),
-            branch: cfg.branch
-          })
-        });
-        notesStore[path] = { content: `# ${clean}\n- [ ] `, sha: res.content.sha };
-        localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-        setStatus(`Created ${path} ✓`);
-        openNoteEditor(path);
-      } catch (e) {
-        setStatus(`Create error: ${e.message}`);
-      }
-    }
+      activeNotePath = newPath;
+      document.getElementById('editor-delete-btn').classList.remove('hidden');
+      renderNotesGrid();
+    });
 
     async function deleteNoteByPath(path) {
-      if (!confirm(`Delete "${path}" from GitHub?`)) return;
-      setStatus(`Deleting ${path}...`);
-      try {
-        let sha = notesStore[path]?.sha;
-        if (!sha) {
-          const existing = await ghFetch(`contents/${path}?ref=${cfg.branch}&t=${Date.now()}`, { allow404: true });
-          sha = existing?.sha;
+      const note = notesStore[path];
+      if (!note) return;
+      if (!confirm(`Delete note "${note.title}"?`)) return;
+
+      if (cfg.owner && cfg.repo && cfg.token && note.sha) {
+        try {
+          setStatus('Deleting note...');
+          await ghDeleteFile(path, note.sha, `Delete ${path}`);
+          setStatus('Synced ✓');
+        } catch (err) {
+          setStatus(`Delete error: ${err.message}`);
+          return;
         }
-        if (!sha) throw new Error('File SHA not found');
-        await ghFetch(`contents/${path}`, {
-          method: 'DELETE',
-          body: JSON.stringify({ message: `Delete ${path}`, sha, branch: cfg.branch })
-        });
-        delete notesStore[path];
-        localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-        if (activeNotePath === path) backToNotesList();
-        else renderNotesGrid();
-        setStatus(`Deleted ${path} ✓`);
-      } catch (e) {
-        setStatus(`Delete error: ${e.message}`);
       }
+
+      delete notesStore[path];
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      renderDashboard();
+      showNotesGrid();
     }
 
-    async function deleteCurrentNote() {
-      if (!activeNotePath) return;
-      await deleteNoteByPath(activeNotePath);
-    }
+    document.getElementById('editor-delete-btn').addEventListener('click', async () => {
+      if (activeNotePath) await deleteNoteByPath(activeNotePath);
+    });
 
-    function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, s => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[s]));
-    }
+    // Config Modal
+    const modal = document.getElementById('config-modal');
+    document.getElementById('config-btn').addEventListener('click', () => {
+      document.getElementById('cfg-owner').value = cfg.owner;
+      document.getElementById('cfg-repo').value = cfg.repo;
+      document.getElementById('cfg-branch').value = cfg.branch;
+      document.getElementById('cfg-token').value = cfg.token;
+      modal.classList.add('open');
+    });
 
-    function escapeAttr(str) {
-      return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-    }
+    document.getElementById('close-cfg-btn').addEventListener('click', () => modal.classList.remove('open'));
 
+    document.getElementById('save-cfg-btn').addEventListener('click', async () => {
+      cfg = {
+        owner: document.getElementById('cfg-owner').value.trim(),
+        repo: document.getElementById('cfg-repo').value.trim() || 'mybrain',
+        branch: document.getElementById('cfg-branch').value.trim() || 'main',
+        token: document.getElementById('cfg-token').value.trim()
+      };
+      localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+      modal.classList.remove('open');
+      await syncAll();
+    });
+
+    document.getElementById('sync-btn').addEventListener('click', syncAll);
+
+    // Boot
     initTheme();
-    if (cfg) {
-      startApp();
-    } else {
-      document.getElementById('auth-card').style.display = 'block';
-    }
+    renderDashboard();
+    syncAll();
   </script>
 </body>
 </html>
