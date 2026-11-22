@@ -7,9 +7,6 @@
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2318191c'/%3E%3Ccircle cx='24' cy='31' r='11' fill='none' stroke='%23e08e6d' stroke-width='4'/%3E%3Ccircle cx='40' cy='31' r='11' fill='none' stroke='%238ab89a' stroke-width='4'/%3E%3Ccircle cx='32' cy='23' r='8' fill='%23e08e6d' fill-opacity='0.25'/%3E%3C/svg%3E" />
 
-  <!-- ========================================================= -->
-  <!-- CSS STYLES                                                -->
-  <!-- ========================================================= -->
   <style>
     :root {
       --bg: #111214;
@@ -59,7 +56,6 @@
     body[data-palette="bubblegum"] { --accent: #ff77b7; --accent-soft: rgba(255, 119, 183, 0.2); }
     body.light[data-palette="bubblegum"] { --accent: #d4438a; --accent-soft: rgba(212, 67, 138, 0.15); }
     
-    /* New Colors */
     body[data-palette="rose"] { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.18); }
     body.light[data-palette="rose"] { --accent: #be123c; --accent-soft: rgba(190, 18, 60, 0.15); }
     body[data-palette="mint"] { --accent: #2dd4bf; --accent-soft: rgba(45, 212, 191, 0.18); }
@@ -80,7 +76,6 @@
 
     .container { width: 100%; max-width: 1320px; margin: 0 auto; }
 
-    /* Header */
     header {
       display: flex;
       flex-wrap: wrap;
@@ -117,7 +112,6 @@
 
     button, input, select, textarea { font-family: inherit; color: var(--text); }
 
-    /* Buttons */
     .btn {
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -146,7 +140,6 @@
       color: var(--urgent);
     }
 
-    /* Toolbar / Tabs */
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -177,7 +170,6 @@
     }
     .tab.active { background: var(--accent); color: var(--accent-contrast); }
 
-    /* Cards & Layout */
     .dash-main-grid {
       display: grid;
       grid-template-columns: 1.75fr 0.85fr;
@@ -193,7 +185,6 @@
       margin-bottom: 16px;
     }
 
-    /* Dashboard Stats */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -211,7 +202,6 @@
     .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
     .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 2px; }
 
-    /* Forms & Fields */
     .minimal-task-bar {
       display: flex;
       flex-wrap: wrap;
@@ -246,7 +236,6 @@
       border: 1px solid var(--border);
     }
 
-    /* Task List */
     .task-list { display: flex; flex-direction: column; gap: 9px; }
 
     .task-item {
@@ -310,7 +299,6 @@
     }
     .badge-due.soon { background: rgba(224, 108, 117, 0.18); color: var(--urgent); }
 
-    /* Pinned Notes */
     .pinned-stack { display: flex; flex-direction: column; gap: 9px; }
 
     .pinned-card {
@@ -322,9 +310,8 @@
     }
     .pinned-card:hover { border-color: var(--accent); }
     .pinned-card .note-card-title { font-weight: 700; font-size: 0.95rem; }
-    .pinned-card .note-preview { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+    .pinned-card .note-preview { font-size: 0.82rem; color: var(--muted); margin-top: 4px; line-height: 1.4; }
 
-    /* Mini Calendar */
     .mini-cal-card { cursor: pointer; transition: border-color 0.2s; }
     .mini-cal-card:hover { border-color: var(--accent); }
 
@@ -363,7 +350,6 @@
       margin: 1px auto 0;
     }
 
-    /* Full Calendar */
     .cal-header {
       display: flex;
       align-items: center;
@@ -417,7 +403,6 @@
 
     .cal-more { font-size: 0.65rem; color: var(--muted); padding-left: 2px; }
 
-    /* Notes */
     .notes-top {
       display: flex;
       flex-wrap: wrap;
@@ -498,7 +483,6 @@
       width: 100%;
     }
 
-    /* Keep-style checklist block */
     .keep-checklist-card {
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -539,7 +523,6 @@
     }
     .add-check-item-input:focus { border-bottom-color: var(--accent); }
 
-    /* Settings View */
     .settings-grid {
       display: flex;
       flex-direction: column;
@@ -577,7 +560,6 @@
     .swatch:hover { transform: scale(1.1); }
     .swatch.active { border-color: var(--text); transform: scale(1.1); }
 
-    /* Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -629,7 +611,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- HEADER -->
     <header>
       <div class="brand-row">
         <div class="brand"><h1>Cozy Brain</h1></div>
@@ -646,7 +627,6 @@
       </div>
     </header>
 
-    <!-- TABS TOOLBAR -->
     <div class="toolbar">
       <div class="tabs">
         <button class="tab active" data-tab="dashboard">Dashboard</button>
@@ -656,7 +636,6 @@
       </div>
     </div>
 
-    <!-- DASHBOARD VIEW -->
     <section id="view-dashboard">
       <div class="dash-main-grid">
         <div>
@@ -730,7 +709,6 @@
             <div id="dash-pinned-grid" class="pinned-stack"></div>
           </div>
 
-          <!-- Mini Calendar (Clickable) -->
           <div id="mini-cal-card" class="card mini-cal-card" style="margin-bottom:0" title="Click to open full calendar">
             <div class="section-head" style="margin-bottom:4px;">
               <div class="section-title" style="font-size:0.92rem;">Mini Calendar</div>
@@ -742,7 +720,6 @@
       </div>
     </section>
 
-    <!-- CALENDAR VIEW -->
     <section id="view-calendar" class="hidden">
       <div class="card">
         <div class="cal-header">
@@ -754,7 +731,6 @@
       </div>
     </section>
 
-    <!-- NOTES VIEW -->
     <section id="view-notes" class="hidden">
       <div id="notes-grid-view" class="card">
         <div class="notes-top">
@@ -783,7 +759,6 @@
           
           <textarea id="note-editor" class="field note-area" placeholder="Write your note..."></textarea>
           
-          <!-- Keep-style checklist (Interactive Mode) -->
           <div id="keep-checklist-card" class="keep-checklist-card">
             <div id="keep-items-list"></div>
             <input id="new-check-item" class="add-check-item-input" type="text" placeholder="+ Add new checklist item and press Enter..." />
@@ -792,11 +767,9 @@
       </div>
     </section>
 
-    <!-- SETTINGS VIEW -->
     <section id="view-settings" class="hidden">
       <div class="card">
         <div class="section-title" style="margin-bottom:16px;">App Settings</div>
-        
         <div class="settings-grid">
           <div class="setting-item">
             <div>
@@ -841,7 +814,6 @@
     </section>
   </div>
 
-  <!-- MODALS -->
   <div id="cal-add-modal" class="modal-backdrop">
     <div class="modal">
       <div id="cal-modal-title" class="section-title">Tasks for Date</div>
@@ -896,7 +868,6 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
   <script>
     // --- 1. STATE & VARIABLES ---
     const CFG_KEY = 'gh_vault';
@@ -907,7 +878,9 @@
     let cfg = loadCfg();
     let tasks = loadJson(TASKS_CACHE, []);
     let notesStore = loadJson(NOTES_CACHE, {});
-    
+    let tasksSha = null; // Cached version ID for tasks.json
+    let isTasksSyncing = false; // Prevents concurrent saves
+
     let settings = loadJson(SETTINGS_KEY, { light: false, palette: 'terracotta', timeFormat: '12h' });
 
     let activeNotePath = null;
@@ -997,15 +970,16 @@
       };
     }
 
-    // Clean up Markdown for previews
     function formatPreview(body) {
       if (!body) return 'Empty note';
       let text = body
-        .replace(/^---[\s\S]*?---/, '') // remove frontmatter
-        .replace(/^- \[[ xX]\] /gm, '') // remove checkbox markdown
-        .replace(/^-\s*\[[ xX]\]\s*/gm, '') // alternative checkbox spacing
-        .replace(/[#*`_~]/g, ''); // remove basic markdown chars
-      return text.slice(0, 150).trim() || 'Empty note';
+        .replace(/^---[\s\S]*?---/, '') 
+        .replace(/^[\s]*[-*][\s]*\[[ xX]\][\s]*/gm, '') 
+        .replace(/^[\s]*[-*][\s]*/gm, '') 
+        .replace(/[#*`_~]/g, '') 
+        .replace(/\n+/g, ' ') 
+        .trim();
+      return text.slice(0, 150) || 'Empty note';
     }
 
     // --- 3. CLOCK ---
@@ -1086,7 +1060,6 @@
       btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    // Mini-calendar click navigation
     document.getElementById('mini-cal-card').addEventListener('click', () => {
       switchTab('calendar');
     });
@@ -1131,11 +1104,20 @@
       return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'PUT', body: JSON.stringify(body) });
     }
 
-    async function ghDeleteFile(path, sha, message) {
-      return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'DELETE', body: JSON.stringify({ message, sha, branch: cfg.branch }) });
+    async function ghDeleteFile(path, message) {
+      try {
+        const fileData = await ghFetch(`contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(cfg.branch)}`);
+        return ghFetch(`contents/${encodeURIComponent(path)}`, { 
+          method: 'DELETE', 
+          body: JSON.stringify({ message, sha: fileData.sha, branch: cfg.branch }) 
+        });
+      } catch (err) {
+        if (String(err.message).includes('404')) return; // File already deleted
+        throw err;
+      }
     }
 
-    // --- 7. SYNCING ---
+    // --- 7. SYNCING (WITH RETRY & LOCK) ---
     async function syncAll() {
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
       localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
@@ -1155,10 +1137,9 @@
       try {
         setStatus('Syncing...');
         let remoteTasks = null;
-        let tasksSha = null;
         try {
           const tFile = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
-          tasksSha = tFile.sha;
+          tasksSha = tFile.sha; // Cache SHA
           remoteTasks = JSON.parse(b64DecodeUtf8(tFile.content));
         } catch (err) {
           if (!String(err.message).includes('404')) throw err;
@@ -1168,7 +1149,8 @@
           tasks = remoteTasks;
           localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
         } else {
-          await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', tasksSha);
+          const res = await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', tasksSha);
+          tasksSha = res.content.sha; // Cache new SHA
         }
 
         const dirItems = await ghFetch(`contents?ref=${encodeURIComponent(cfg.branch)}`);
@@ -1212,19 +1194,38 @@
       if (!document.getElementById('view-calendar').classList.contains('hidden')) renderCalendar();
       
       if (!cfg.owner || !cfg.repo || !cfg.token) return;
+      if (isTasksSyncing) return; // Prevent overlapping syncs
+      
+      isTasksSyncing = true;
       try {
         setStatus('Saving tasks...');
-        let sha = null;
-        try {
-          const existing = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
-          sha = existing.sha;
-        } catch {}
-        await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Update tasks.json', sha);
-        setStatus('Synced ✓');
+        
+        let success = false;
+        let retries = 0;
+        
+        while (!success && retries < 3) {
+          try {
+            const res = await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Update tasks.json', tasksSha);
+            tasksSha = res.content.sha; // Update cached SHA
+            success = true;
+            setStatus('Synced ✓');
+          } catch (err) {
+            if (String(err.message).includes('409')) {
+              // Conflict! Our SHA is outdated. Fetch fresh SHA and retry.
+              const existing = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
+              tasksSha = existing.sha;
+              retries++;
+            } else {
+              throw err; // Different error, break out
+            }
+          }
+        }
       } catch (err) {
         setStatus(`Save error: ${err.message}`);
+      } finally {
+        isTasksSyncing = false;
       }
-    }, 2000);
+    }, 1500); // Reduced debounce slightly for snappier feel
 
     // --- 8. DASHBOARD ---
     function renderDashboard() {
@@ -1726,7 +1727,7 @@
             lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
             textarea.value = lines.join('\n');
             updateEditorMode();
-            debouncedAutoSave(); // Trigger auto-save on checkbox click
+            debouncedAutoSave();
           });
         });
       }
@@ -1758,7 +1759,6 @@
       }
     });
 
-    // Checkbox insertion button
     document.getElementById('add-checkbox-btn').addEventListener('click', () => {
       const textarea = document.getElementById('note-editor');
       const start = textarea.selectionStart;
@@ -1836,7 +1836,6 @@
       updateEditorMode();
     }
 
-    // Force Save before leaving
     document.getElementById('back-to-notes-btn').addEventListener('click', async () => {
       await saveActiveNote(false); 
       showNotesGrid();
@@ -1850,7 +1849,6 @@
       let oldPath = activeNotePath;
       let newPath = oldPath;
       
-      // Only rename on explicit save to avoid auto-save file chaos
       if (!newPath || (!isAuto && slugifyFilename(titleInput) !== oldPath)) {
         if (!isAuto && oldPath && slugifyFilename(titleInput) !== oldPath) {
           newPath = slugifyFilename(titleInput);
@@ -1884,9 +1882,12 @@
           if (!isAuto) setStatus('Saving note...');
           const putRes = await ghPutFile(newPath, serializeNoteMarkdown(record), `Save ${newPath}`, record.sha);
           record.sha = putRes.content.sha;
-          if (oldPath && oldPath !== newPath && oldRecord?.sha) {
-            await ghDeleteFile(oldPath, oldRecord.sha, `Rename ${oldPath} to ${newPath}`);
+          
+          if (oldPath && oldPath !== newPath) {
+            try { await ghDeleteFile(oldPath, `Rename ${oldPath} to ${newPath}`); } 
+            catch(e) { console.error("Failed to delete old file during rename", e); }
           }
+          
           localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
           setStatus(isAuto ? 'Auto-saved ✓' : 'Synced ✓');
         } catch (err) {
@@ -1899,9 +1900,7 @@
       renderNotesGrid();
     }
 
-    // Auto-save logic (debounced)
     const debouncedAutoSave = debounce(async () => {
-      // Don't auto-save if it's a completely empty new note
       if (!activeNotePath && !document.getElementById('note-title-input').value.trim() && !document.getElementById('note-editor').value.trim()) {
         return;
       }
@@ -1917,10 +1916,10 @@
       if (!note) return;
       if (!confirm(`Delete note "${note.title}"?`)) return;
 
-      if (cfg.owner && cfg.repo && cfg.token && note.sha) {
+      if (cfg.owner && cfg.repo && cfg.token) {
         try {
           setStatus('Deleting note...');
-          await ghDeleteFile(path, note.sha, `Delete ${path}`);
+          await ghDeleteFile(path, `Delete ${path}`);
           setStatus('Synced ✓');
         } catch (err) {
           setStatus(`Delete error: ${err.message}`);
