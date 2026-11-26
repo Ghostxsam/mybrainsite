@@ -55,7 +55,6 @@
     body.light[data-palette="periwinkle"] { --accent: #5272db; --accent-soft: rgba(82, 114, 219, 0.15); }
     body[data-palette="bubblegum"] { --accent: #ff77b7; --accent-soft: rgba(255, 119, 183, 0.2); }
     body.light[data-palette="bubblegum"] { --accent: #d4438a; --accent-soft: rgba(212, 67, 138, 0.15); }
-    
     body[data-palette="rose"] { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.18); }
     body.light[data-palette="rose"] { --accent: #be123c; --accent-soft: rgba(190, 18, 60, 0.15); }
     body[data-palette="mint"] { --accent: #2dd4bf; --accent-soft: rgba(45, 212, 191, 0.18); }
@@ -76,147 +75,100 @@
 
     .container { width: 100%; max-width: 1320px; margin: 0 auto; }
 
+    /* Intro Screen */
+    .intro-screen {
+      position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .intro-screen h1 {
+      color: var(--accent); font-size: 3rem; letter-spacing: 2px;
+      animation: pulse 1.5s infinite alternate;
+    }
+    .intro-screen.fade-out { opacity: 0; visibility: hidden; }
+    @keyframes pulse { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.05); opacity: 1; } }
+
+    /* Global Animations */
+    .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 12px; margin-bottom: 14px;
     }
 
     .brand-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
     .brand h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.02em; }
     .status-line { font-size: 0.8rem; color: var(--muted); }
 
-    .header-right {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
+    .header-right { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 
     .top-clock {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-pill);
-      padding: 6px 12px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-pill); padding: 6px 12px;
+      font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 6px;
     }
-
     .top-clock strong { color: var(--accent); font-weight: 600; }
 
     button, input, select, textarea { font-family: inherit; color: var(--text); }
 
     .btn {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      padding: 8px 13px;
-      border-radius: var(--radius-pill);
-      font-size: 0.84rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
+      background: var(--surface-2); border: 1px solid var(--border);
+      padding: 8px 13px; border-radius: var(--radius-pill);
+      font-size: 0.84rem; font-weight: 500; cursor: pointer;
+      transition: all 0.2s ease;
     }
-    .btn:hover { background: var(--surface-3); }
+    .btn:hover { background: var(--surface-3); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
 
     .btn-sm { padding: 5px 10px; font-size: 0.75rem; }
-
-    .btn-accent {
-      background: var(--accent);
-      color: var(--accent-contrast);
-      border-color: transparent;
-      font-weight: 600;
-    }
-    .btn-accent:hover { opacity: 0.92; }
-
-    .btn-danger {
-      background: rgba(224, 108, 117, 0.14);
-      border-color: rgba(224, 108, 117, 0.35);
-      color: var(--urgent);
-    }
+    .btn-accent { background: var(--accent); color: var(--accent-contrast); border-color: transparent; font-weight: 600; }
+    .btn-accent:hover { opacity: 0.9; box-shadow: 0 4px 12px var(--accent-soft); }
+    .btn-danger { background: rgba(224, 108, 117, 0.14); border-color: rgba(224, 108, 117, 0.35); color: var(--urgent); }
 
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 18px;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 10px; margin-bottom: 18px;
     }
 
     .tabs {
-      display: inline-flex;
-      background: var(--surface);
-      padding: 4px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      gap: 4px;
+      display: inline-flex; background: var(--surface); padding: 4px;
+      border-radius: var(--radius-pill); border: 1px solid var(--border); gap: 4px;
     }
 
     .tab {
-      padding: 7px 16px;
-      border-radius: var(--radius-pill);
-      border: none;
-      background: transparent;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--muted);
+      padding: 7px 16px; border-radius: var(--radius-pill); border: none;
+      background: transparent; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; color: var(--muted); transition: all 0.2s ease;
     }
     .tab.active { background: var(--accent); color: var(--accent-contrast); }
 
-    .dash-main-grid {
-      display: grid;
-      grid-template-columns: 1.75fr 0.85fr;
-      gap: 18px;
-      align-items: start;
-    }
+    .dash-main-grid { display: grid; grid-template-columns: 1.75fr 0.85fr; gap: 18px; align-items: start; }
 
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 16px 18px;
-      margin-bottom: 16px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 16px 18px; margin-bottom: 16px;
     }
 
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 14px;
-    }
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
 
     .mini-stat {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 10px 12px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 10px 12px;
     }
 
     .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
     .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 2px; }
 
-    .minimal-task-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
+    .minimal-task-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
     .field {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 8px 11px;
-      font-size: 0.88rem;
-      outline: none;
-      color: var(--text);
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 8px 11px;
+      font-size: 0.88rem; outline: none; color: var(--text); transition: border-color 0.2s;
     }
     .field:focus { border-color: var(--accent); }
     .field-grow { flex: 1 1 210px; min-width: 160px; }
@@ -228,42 +180,27 @@
     .section-title { font-size: 1rem; font-weight: 650; }
 
     .pill {
-      font-size: 0.74rem;
-      padding: 3px 9px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-2);
-      color: var(--muted);
-      border: 1px solid var(--border);
+      font-size: 0.74rem; padding: 3px 9px; border-radius: var(--radius-pill);
+      background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
     }
 
     .task-list { display: flex; flex-direction: column; gap: 9px; }
 
     .task-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 11px 13px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 11px 13px;
+      animation: fadeIn 0.3s ease-out;
     }
 
     .task-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
     .task-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
 
     .check-btn {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      background: transparent;
-      cursor: pointer;
-      flex-shrink: 0;
-      display: grid;
-      place-items: center;
-      font-size: 0.75rem;
-      color: var(--accent-contrast);
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--accent); background: transparent;
+      cursor: pointer; flex-shrink: 0; display: grid; place-items: center;
+      font-size: 0.75rem; color: var(--accent-contrast); transition: all 0.2s;
     }
     .check-btn.done { background: var(--sage); border-color: var(--sage); }
 
@@ -272,334 +209,119 @@
 
     .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 
-    .badge-cat {
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      border-radius: var(--radius-pill);
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .badge-date {
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-3);
-      color: var(--muted);
-    }
-
-    .badge-due {
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      border-radius: var(--radius-pill);
-      background: rgba(229, 181, 103, 0.16);
-      color: var(--warn);
-      font-weight: 600;
-    }
+    .badge-cat { font-size: 0.72rem; padding: 2px 8px; border-radius: var(--radius-pill); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    .badge-date { font-size: 0.72rem; padding: 2px 8px; border-radius: var(--radius-pill); background: var(--surface-3); color: var(--muted); }
+    .badge-due { font-size: 0.72rem; padding: 2px 8px; border-radius: var(--radius-pill); background: rgba(229, 181, 103, 0.16); color: var(--warn); font-weight: 600; }
     .badge-due.soon { background: rgba(224, 108, 117, 0.18); color: var(--urgent); }
 
     .pinned-stack { display: flex; flex-direction: column; gap: 9px; }
 
     .pinned-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 11px 13px;
-      cursor: pointer;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 11px 13px; cursor: pointer;
+      transition: all 0.2s ease;
     }
-    .pinned-card:hover { border-color: var(--accent); }
+    .pinned-card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .pinned-card .note-card-title { font-weight: 700; font-size: 0.95rem; }
-    .pinned-card .note-preview { font-size: 0.82rem; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+    .pinned-card .note-preview { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
 
     .mini-cal-card { cursor: pointer; transition: border-color 0.2s; }
     .mini-cal-card:hover { border-color: var(--accent); }
 
-    .mini-cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 3px;
-      margin-top: 8px;
-    }
-
-    .mini-dow {
-      text-align: center;
-      font-size: 0.65rem;
-      color: var(--muted);
-      font-weight: 600;
-      padding-bottom: 2px;
-    }
-
-    .mini-day {
-      text-align: center;
-      padding: 4px 1px;
-      border-radius: 7px;
-      font-size: 0.72rem;
-      background: var(--surface-2);
-      border: 1px solid transparent;
-    }
+    .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-top: 8px; }
+    .mini-dow { text-align: center; font-size: 0.65rem; color: var(--muted); font-weight: 600; padding-bottom: 2px; }
+    .mini-day { text-align: center; padding: 4px 1px; border-radius: 7px; font-size: 0.72rem; background: var(--surface-2); border: 1px solid transparent; }
     .mini-day.empty { background: transparent; }
     .mini-day.today { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
-    .mini-day.has-task::after {
-      content: '';
-      display: block;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin: 1px auto 0;
-    }
+    .mini-day.has-task::after { content: ''; display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 1px auto 0; }
 
-    .cal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-    }
-
-    .cal-dow {
-      text-align: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--muted);
-      padding-bottom: 6px;
-    }
-
+    /* Full Calendar */
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+    .cal-dow { text-align: center; font-size: 0.78rem; font-weight: 600; color: var(--muted); padding-bottom: 6px; }
     .cal-cell {
-      min-height: 70px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 5px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      cursor: pointer;
-      position: relative;
+      min-height: 70px; background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 5px; display: flex;
+      flex-direction: column; gap: 3px; cursor: pointer; position: relative; transition: border-color 0.2s;
     }
     .cal-cell:not(.empty):hover { border-color: var(--accent); }
     .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; }
     .cal-cell.today { border-color: var(--accent); background: var(--accent-soft); }
-
     .cal-day-num { font-size: 0.8rem; font-weight: 700; }
-
-    .cal-chip {
-      font-size: 0.68rem;
-      padding: 2px 5px;
-      border-radius: 5px;
-      background: var(--surface-3);
-      border-left: 2px solid var(--accent);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .cal-chip { font-size: 0.68rem; padding: 2px 5px; border-radius: 5px; background: var(--surface-3); border-left: 2px solid var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cal-chip.done { opacity: 0.55; text-decoration: line-through; }
-
     .cal-more { font-size: 0.65rem; color: var(--muted); padding-left: 2px; }
 
-    .notes-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
+    /* Tracker Tab */
+    .tracker-setup { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: var(--surface-2); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border); }
+    .tracker-setup input { flex: 1 1 150px; }
+    .tracker-grid-container { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-2); }
+    .tracker-table { border-collapse: collapse; width: 100%; min-width: 600px; text-align: center; }
+    .tracker-table th, .tracker-table td { border: 1px solid var(--border); padding: 8px; }
+    .tracker-table th { background: var(--surface-3); font-size: 0.75rem; color: var(--muted); font-weight: 600; position: sticky; top: 0; }
+    .tracker-table td:first-child, .tracker-table th:first-child { text-align: left; font-weight: 600; position: sticky; left: 0; background: var(--surface); z-index: 10; border-right: 2px solid var(--border); }
+    .tracker-table th:first-child { background: var(--surface-3); z-index: 11; }
+    
+    .tracker-cell { width: 32px; height: 32px; border-radius: 6px; background: var(--surface); cursor: pointer; display: inline-flex; justify-content: center; align-items: center; transition: all 0.2s; }
+    .tracker-cell:hover { background: var(--surface-3); }
+    .tracker-cell.checked { background: var(--accent-soft); color: var(--accent); font-weight: bold; }
+    .tracker-delete { cursor: pointer; color: var(--urgent); font-weight: bold; margin-left: 10px; }
 
-    .notes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
-      gap: 14px;
-    }
-
+    /* Notes */
+    .notes-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+    .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 14px; }
     .note-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-      cursor: pointer;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 15px; display: flex;
+      flex-direction: column; justify-content: space-between; gap: 12px;
+      cursor: pointer; transition: all 0.2s ease; animation: fadeIn 0.3s ease-out;
     }
-    .note-card:hover { border-color: var(--accent); }
-
+    .note-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .note-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
     .note-card-title { font-weight: 700; font-size: 0.98rem; }
-
-    .pin-btn {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-pill);
-      padding: 4px 11px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      cursor: pointer;
-    }
-    .pin-btn.pinned {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .note-preview { font-size: 0.84rem; color: var(--muted); white-space: pre-line; line-height: 1.45; margin-top: 8px; }
-
-    .note-card-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-    }
+    .pin-btn { background: transparent; border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 4px 11px; font-size: 0.78rem; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+    .pin-btn:hover { background: var(--surface-3); }
+    .pin-btn.pinned { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    
+    /* FIXED NOTE PREVIEW */
+    .note-preview { font-size: 0.84rem; color: var(--muted); line-height: 1.45; margin-top: 8px; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+    .note-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
 
     .editor-box { display: flex; flex-direction: column; gap: 12px; }
     .editor-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
-
-    .note-title-input {
-      font-size: 1.15rem;
-      font-weight: 700;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-      width: 100%;
-    }
+    .note-title-input { font-size: 1.15rem; font-weight: 700; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px 14px; width: 100%; }
     .note-title-input:focus { border-color: var(--accent); outline: none; }
+    textarea.note-area { min-height: 250px; resize: vertical; line-height: 1.55; font-size: 0.94rem; width: 100%; }
 
-    textarea.note-area {
-      min-height: 250px;
-      resize: vertical;
-      line-height: 1.55;
-      font-size: 0.94rem;
-      width: 100%;
-    }
-
-    .keep-checklist-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .keep-checklist-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; display: none; flex-direction: column; gap: 10px; }
     .keep-checklist-card.open { display: flex; }
-
-    .keep-check-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.92rem;
-      cursor: pointer;
-    }
-    .keep-check-row input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-    .keep-check-row.checked span {
-      text-decoration: line-through;
-      color: var(--muted);
-    }
-
-    .add-check-item-input {
-      background: transparent;
-      border: none;
-      border-bottom: 1px dashed var(--border);
-      padding: 6px 0;
-      font-size: 0.92rem;
-      outline: none;
-      margin-top: 4px;
-    }
+    .keep-check-row { display: flex; align-items: center; gap: 10px; font-size: 0.92rem; cursor: pointer; }
+    .keep-check-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+    .keep-check-row.checked span { text-decoration: line-through; color: var(--muted); }
+    .add-check-item-input { background: transparent; border: none; border-bottom: 1px dashed var(--border); padding: 6px 0; font-size: 0.92rem; outline: none; margin-top: 4px; }
     .add-check-item-input:focus { border-bottom-color: var(--accent); }
 
-    .settings-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-width: 600px;
-    }
-
-    .setting-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--surface-2);
-      padding: 14px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-    }
-
+    /* Settings */
+    .settings-grid { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+    .setting-item { display: flex; align-items: center; justify-content: space-between; background: var(--surface-2); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border); }
     .setting-label { font-weight: 600; font-size: 0.95rem; }
     .setting-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
-
-    .palette-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .swatch {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
+    .palette-bar { display: flex; flex-wrap: wrap; gap: 8px; }
+    .swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.1s; }
     .swatch:hover { transform: scale(1.1); }
     .swatch.active { border-color: var(--text); transform: scale(1.1); }
 
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      display: none;
-      place-items: center;
-      padding: 16px;
-      z-index: 50;
-    }
+    /* Modals */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); display: none; place-items: center; padding: 16px; z-index: 50; backdrop-filter: blur(4px); }
     .modal-backdrop.open { display: grid; }
-
-    .modal {
-      width: 100%;
-      max-width: 440px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .cal-modal-tasks {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 10px;
-      max-height: 150px;
-      overflow-y: auto;
-    }
+    .modal { width: 100%; max-width: 440px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; display: flex; flex-direction: column; gap: 11px; max-height: 90vh; overflow-y: auto; animation: modalSlide 0.3s ease-out; }
+    @keyframes modalSlide { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    
+    .cal-modal-tasks { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; max-height: 150px; overflow-y: auto; }
 
     .hidden { display: none !important; }
 
-    @media (max-width: 980px) {
-      .dash-main-grid { grid-template-columns: 1fr; }
-    }
-
+    @media (max-width: 980px) { .dash-main-grid { grid-template-columns: 1fr; } }
     @media (max-width: 720px) {
       .stats-row { grid-template-columns: 1fr 1fr; }
       .field-cat, .field-quick, .field-date { width: 100%; }
@@ -610,7 +332,12 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- INTRO SCREEN -->
+  <div id="intro-screen" class="intro-screen">
+    <h1>Cozy Brain</h1>
+  </div>
+
+  <div class="container" id="main-content">
     <header>
       <div class="brand-row">
         <div class="brand"><h1>Cozy Brain</h1></div>
@@ -631,12 +358,14 @@
       <div class="tabs">
         <button class="tab active" data-tab="dashboard">Dashboard</button>
         <button class="tab" data-tab="calendar">Calendar</button>
+        <button class="tab" data-tab="tracker">Tracker</button>
         <button class="tab" data-tab="notes">Notes</button>
         <button class="tab" data-tab="settings">Settings</button>
       </div>
     </div>
 
-    <section id="view-dashboard">
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="fade-in">
       <div class="dash-main-grid">
         <div>
           <div class="stats-row">
@@ -720,7 +449,8 @@
       </div>
     </section>
 
-    <section id="view-calendar" class="hidden">
+    <!-- CALENDAR -->
+    <section id="view-calendar" class="hidden fade-in">
       <div class="card">
         <div class="cal-header">
           <button id="prev-month" class="btn">←</button>
@@ -731,7 +461,26 @@
       </div>
     </section>
 
-    <section id="view-notes" class="hidden">
+    <!-- TRACKER (EXCEL-LIKE CHECKBOXES) -->
+    <section id="view-tracker" class="hidden fade-in">
+      <div class="card">
+        <div class="section-title" style="margin-bottom:12px;">Habit Tracker</div>
+        <div class="tracker-setup">
+          <input id="tracker-name" class="field" type="text" placeholder="Habit name (e.g., Read)" />
+          <input id="tracker-start" class="field" type="date" title="From Date" />
+          <input id="tracker-end" class="field" type="date" title="To Date" />
+          <button id="add-tracker-btn" class="btn btn-accent">Create Tracker</button>
+        </div>
+        <div class="tracker-grid-container">
+          <table class="tracker-table" id="tracker-table">
+            <!-- Rendered via JS -->
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="view-notes" class="hidden fade-in">
       <div id="notes-grid-view" class="card">
         <div class="notes-top">
           <div class="section-title">Notes</div>
@@ -767,7 +516,8 @@
       </div>
     </section>
 
-    <section id="view-settings" class="hidden">
+    <!-- SETTINGS -->
+    <section id="view-settings" class="hidden fade-in">
       <div class="card">
         <div class="section-title" style="margin-bottom:16px;">App Settings</div>
         <div class="settings-grid">
@@ -814,6 +564,7 @@
     </section>
   </div>
 
+  <!-- MODALS -->
   <div id="cal-add-modal" class="modal-backdrop">
     <div class="modal">
       <div id="cal-modal-title" class="section-title">Tasks for Date</div>
@@ -873,13 +624,16 @@
     const CFG_KEY = 'gh_vault';
     const TASKS_CACHE = 'cozy_tasks_cache_v1';
     const NOTES_CACHE = 'cozy_notes_cache_v1';
+    const TRACKERS_CACHE = 'cozy_trackers_cache_v1';
     const SETTINGS_KEY = 'cozy_settings_v1';
 
     let cfg = loadCfg();
     let tasks = loadJson(TASKS_CACHE, []);
     let notesStore = loadJson(NOTES_CACHE, {});
-    let tasksSha = null; // Cached version ID for tasks.json
-    let isTasksSyncing = false; // Prevents concurrent saves
+    let trackers = loadJson(TRACKERS_CACHE, []);
+    let tasksSha = null;
+    let trackersSha = null;
+    let isTasksSyncing = false;
 
     let settings = loadJson(SETTINGS_KEY, { light: false, palette: 'terracotta', timeFormat: '12h' });
 
@@ -919,19 +673,13 @@
     }
 
     function escapeHtml(str = '') {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     function normalizeIsoDate(val = '') {
       const s = String(val || '').trim();
       const isoMatch = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
       if (isoMatch) return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
-      const indMatch = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-      if (indMatch) return `${indMatch[3]}-${indMatch[2]}-${indMatch[1]}`;
       return '';
     }
 
@@ -961,25 +709,20 @@
     function debounce(func, wait) {
       let timeout;
       return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-        };
+        const later = () => { clearTimeout(timeout); func(...args); };
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
       };
     }
 
+    // FIXED FORMAT PREVIEW: Keeps line breaks, replaces checkboxes with ☐
     function formatPreview(body) {
       if (!body) return 'Empty note';
-      let text = body
-        .replace(/^---[\s\S]*?---/, '') 
-        .replace(/^[\s]*[-*][\s]*\[[ xX]\][\s]*/gm, '') 
-        .replace(/^[\s]*[-*][\s]*/gm, '') 
-        .replace(/[#*`_~]/g, '') 
-        .replace(/\n+/g, ' ') 
-        .trim();
-      return text.slice(0, 150) || 'Empty note';
+      let text = body.replace(/^---[\s\S]*?---/, '');
+      text = text.replace(/^[\s]*[-*][\s]*\[[ xX]\][\s]*(.*)$/gm, '☐ $1');
+      text = text.replace(/^[\s]*[-*][\s]*(.*)$/gm, '• $1');
+      text = text.replace(/[#*`_~]/g, '');
+      return text.trim().slice(0, 200) || 'Empty note';
     }
 
     // --- 3. CLOCK ---
@@ -988,23 +731,8 @@
       const is24h = settings.timeFormat === '24h';
       const tEl = document.getElementById('clock-time');
       const dEl = document.getElementById('clock-date');
-      
-      if (tEl) {
-        tEl.textContent = d.toLocaleTimeString('en-IN', {
-          timeZone: 'Asia/Kolkata',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: !is24h
-        });
-      }
-      if (dEl) {
-        dEl.textContent = d.toLocaleDateString('en-IN', {
-          timeZone: 'Asia/Kolkata',
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric'
-        });
-      }
+      if (tEl) tEl.textContent = d.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: !is24h });
+      if (dEl) dEl.textContent = d.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric' });
     }
     setInterval(updateClock, 1000);
     updateClock();
@@ -1013,45 +741,29 @@
     function applySettings() {
       document.body.classList.toggle('light', Boolean(settings.light));
       document.body.setAttribute('data-palette', settings.palette || 'terracotta');
-      
       document.getElementById('theme-toggle').textContent = settings.light ? '🌙 Dark' : '☀️ Light';
       document.getElementById('setting-time-format').value = settings.timeFormat;
-      
-      document.querySelectorAll('.swatch').forEach(s => {
-        s.classList.toggle('active', s.dataset.p === settings.palette);
-      });
-      
+      document.querySelectorAll('.swatch').forEach(s => s.classList.toggle('active', s.dataset.p === settings.palette));
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
       updateClock();
     }
 
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-      settings.light = !settings.light;
-      applySettings();
-    });
-
-    document.getElementById('setting-time-format').addEventListener('change', (e) => {
-      settings.timeFormat = e.target.value;
-      applySettings();
-    });
-
+    document.getElementById('theme-toggle').addEventListener('click', () => { settings.light = !settings.light; applySettings(); });
+    document.getElementById('setting-time-format').addEventListener('change', (e) => { settings.timeFormat = e.target.value; applySettings(); });
     document.querySelectorAll('.swatch').forEach(swatch => {
-      swatch.addEventListener('click', () => {
-        settings.palette = swatch.dataset.p;
-        applySettings();
-      });
+      swatch.addEventListener('click', () => { settings.palette = swatch.dataset.p; applySettings(); });
     });
 
     // --- 5. TABS NAVIGATION ---
     function switchTab(tab) {
       document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
-      document.getElementById('view-dashboard').classList.toggle('hidden', tab !== 'dashboard');
-      document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
-      document.getElementById('view-notes').classList.toggle('hidden', tab !== 'notes');
-      document.getElementById('view-settings').classList.toggle('hidden', tab !== 'settings');
-      
+      document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+      const view = document.getElementById(`view-${tab}`);
+      if (view) { view.classList.remove('hidden'); view.classList.remove('fade-in'); void view.offsetWidth; view.classList.add('fade-in'); }
+
       if (tab === 'dashboard') renderDashboard();
       if (tab === 'calendar') renderCalendar();
+      if (tab === 'tracker') renderTrackers();
       if (tab === 'notes') showNotesGrid();
       if (tab === 'settings') applySettings();
     }
@@ -1059,10 +771,7 @@
     document.querySelectorAll('.tab').forEach(btn => {
       btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
-
-    document.getElementById('mini-cal-card').addEventListener('click', () => {
-      switchTab('calendar');
-    });
+    document.getElementById('mini-cal-card').addEventListener('click', () => switchTab('calendar'));
 
     // --- 6. GITHUB API LOGIC ---
     async function ghFetch(endpoint, options = {}) {
@@ -1070,24 +779,15 @@
       const url = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/${endpoint}`;
       const res = await fetch(url, {
         ...options,
-        headers: {
-          Authorization: `Bearer ${cfg.token}`,
-          Accept: 'application/vnd.github+json',
-          'Content-Type': 'application/json',
-          ...(options.headers || {})
-        }
+        headers: { Authorization: `Bearer ${cfg.token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json', ...(options.headers || {}) }
       });
-      if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(`GitHub ${res.status}: ${txt.slice(0, 120)}`);
-      }
+      if (!res.ok) { const txt = await res.text(); throw new Error(`GitHub ${res.status}: ${txt.slice(0, 120)}`); }
       return res.json();
     }
 
     function b64EncodeUtf8(str) {
       const bytes = new TextEncoder().encode(str);
-      let bin = '';
-      bytes.forEach(b => { bin += String.fromCharCode(b); });
+      let bin = ''; bytes.forEach(b => { bin += String.fromCharCode(b); });
       return btoa(bin);
     }
 
@@ -1107,81 +807,64 @@
     async function ghDeleteFile(path, message) {
       try {
         const fileData = await ghFetch(`contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(cfg.branch)}`);
-        return ghFetch(`contents/${encodeURIComponent(path)}`, { 
-          method: 'DELETE', 
-          body: JSON.stringify({ message, sha: fileData.sha, branch: cfg.branch }) 
-        });
+        return ghFetch(`contents/${encodeURIComponent(path)}`, { method: 'DELETE', body: JSON.stringify({ message, sha: fileData.sha, branch: cfg.branch }) });
       } catch (err) {
-        if (String(err.message).includes('404')) return; // File already deleted
+        if (String(err.message).includes('404')) return;
         throw err;
       }
     }
 
-    // --- 7. SYNCING (WITH RETRY & LOCK) ---
+    // --- 7. SYNCING ---
     async function syncAll() {
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
       localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
+      localStorage.setItem(TRACKERS_CACHE, JSON.stringify(trackers));
       
-      renderDashboard();
-      renderCalendar();
-      if (!document.getElementById('view-notes').classList.contains('hidden') &&
-          !document.getElementById('notes-grid-view').classList.contains('hidden')) {
-        renderNotesGrid();
-      }
+      renderDashboard(); renderCalendar(); renderTrackers();
+      if (!document.getElementById('view-notes').classList.contains('hidden') && !document.getElementById('notes-grid-view').classList.contains('hidden')) renderNotesGrid();
 
-      if (!cfg.owner || !cfg.repo || !cfg.token) {
-        setStatus('Local cache');
-        return;
-      }
+      if (!cfg.owner || !cfg.repo || !cfg.token) { setStatus('Local cache'); return; }
 
       try {
         setStatus('Syncing...');
-        let remoteTasks = null;
+        // Tasks
         try {
           const tFile = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
-          tasksSha = tFile.sha; // Cache SHA
-          remoteTasks = JSON.parse(b64DecodeUtf8(tFile.content));
+          tasksSha = tFile.sha;
+          tasks = JSON.parse(b64DecodeUtf8(tFile.content));
         } catch (err) {
           if (!String(err.message).includes('404')) throw err;
+          const res = await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', null);
+          tasksSha = res.content.sha;
         }
 
-        if (Array.isArray(remoteTasks)) {
-          tasks = remoteTasks;
-          localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
-        } else {
-          const res = await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', tasksSha);
-          tasksSha = res.content.sha; // Cache new SHA
+        // Trackers
+        try {
+          const trFile = await ghFetch(`contents/trackers.json?ref=${encodeURIComponent(cfg.branch)}`);
+          trackersSha = trFile.sha;
+          trackers = JSON.parse(b64DecodeUtf8(trFile.content));
+        } catch (err) {
+          if (!String(err.message).includes('404')) throw err;
+          const res = await ghPutFile('trackers.json', JSON.stringify(trackers, null, 2), 'Initialize trackers.json', null);
+          trackersSha = res.content.sha;
         }
 
+        // Notes
         const dirItems = await ghFetch(`contents?ref=${encodeURIComponent(cfg.branch)}`);
         const mdFiles = Array.isArray(dirItems) ? dirItems.filter(f => f.type === 'file' && /\.md$/i.test(f.name)) : [];
-        
         const fetchPromises = mdFiles.map(async (item) => {
           const fileData = await ghFetch(`contents/${encodeURIComponent(item.path)}?ref=${encodeURIComponent(cfg.branch)}`);
           const raw = b64DecodeUtf8(fileData.content);
           const parsed = parseNoteMarkdown(item.name, raw);
-          return {
-            path: item.path,
-            data: {
-              name: item.name,
-              title: parsed.title,
-              pinned: parsed.pinned,
-              body: parsed.body,
-              sha: fileData.sha
-            }
-          };
+          return { path: item.path, data: { name: item.name, title: parsed.title, pinned: parsed.pinned, body: parsed.body, sha: fileData.sha } };
         });
 
         const results = await Promise.all(fetchPromises);
-        const nextNotes = {};
-        results.forEach(res => { nextNotes[res.path] = res.data; });
-
-        notesStore = nextNotes;
+        notesStore = {};
+        results.forEach(res => { notesStore[res.path] = res.data; });
         localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
         
-        renderDashboard();
-        renderCalendar();
-        renderNotesGrid();
+        renderDashboard(); renderCalendar(); renderTrackers(); renderNotesGrid();
         setStatus('Synced ✓');
       } catch (err) {
         setStatus(`Sync error: ${err.message}`);
@@ -1190,51 +873,126 @@
 
     const debouncedSyncTasks = debounce(async () => {
       localStorage.setItem(TASKS_CACHE, JSON.stringify(tasks));
-      renderDashboard();
-      if (!document.getElementById('view-calendar').classList.contains('hidden')) renderCalendar();
-      
-      if (!cfg.owner || !cfg.repo || !cfg.token) return;
-      if (isTasksSyncing) return; // Prevent overlapping syncs
-      
+      renderDashboard(); if (!document.getElementById('view-calendar').classList.contains('hidden')) renderCalendar();
+      if (!cfg.owner || !cfg.repo || !cfg.token || isTasksSyncing) return;
       isTasksSyncing = true;
       try {
         setStatus('Saving tasks...');
-        
-        let success = false;
-        let retries = 0;
-        
+        let success = false; let retries = 0;
         while (!success && retries < 3) {
           try {
             const res = await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Update tasks.json', tasksSha);
-            tasksSha = res.content.sha; // Update cached SHA
-            success = true;
-            setStatus('Synced ✓');
+            tasksSha = res.content.sha; success = true; setStatus('Synced ✓');
           } catch (err) {
             if (String(err.message).includes('409')) {
-              // Conflict! Our SHA is outdated. Fetch fresh SHA and retry.
               const existing = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
-              tasksSha = existing.sha;
-              retries++;
-            } else {
-              throw err; // Different error, break out
-            }
+              tasksSha = existing.sha; retries++;
+            } else { throw err; }
           }
         }
-      } catch (err) {
-        setStatus(`Save error: ${err.message}`);
-      } finally {
-        isTasksSyncing = false;
-      }
-    }, 1500); // Reduced debounce slightly for snappier feel
+      } catch (err) { setStatus(`Save error: ${err.message}`); } finally { isTasksSyncing = false; }
+    }, 1500);
 
-    // --- 8. DASHBOARD ---
+    // --- 8. TRACKER LOGIC ---
+    document.getElementById('add-tracker-btn').addEventListener('click', () => {
+      const name = document.getElementById('tracker-name').value.trim();
+      const start = document.getElementById('tracker-start').value;
+      const end = document.getElementById('tracker-end').value;
+      if (!name || !start || !end) return;
+
+      trackers.push({ id: Date.now().toString(), name, start, end, checked: {} });
+      document.getElementById('tracker-name').value = '';
+      renderTrackers();
+      debouncedSyncTrackers();
+    });
+
+    function renderTrackers() {
+      const table = document.getElementById('tracker-table');
+      if (!table) return;
+
+      if (trackers.length === 0) {
+        table.innerHTML = '<tr><td style="color:var(--muted); padding:20px; text-align:center;">No trackers yet. Create one above!</td></tr>';
+        return;
+      }
+
+      // Find max date range to render columns
+      let minDate = new Date(Math.min(...trackers.map(t => new Date(t.start))));
+      let maxDate = new Date(Math.max(...trackers.map(t => new Date(t.end))));
+      minDate.setDate(minDate.getDate() - 1); // padding
+      maxDate.setDate(maxDate.getDate() + 1);
+
+      const dates = [];
+      let curr = new Date(minDate);
+      while (curr <= maxDate) {
+        dates.push(new Date(curr));
+        curr.setDate(curr.getDate() + 1);
+      }
+
+      let html = '<thead><tr><th>Habit</th>';
+      dates.forEach(d => {
+        html += `<th title="${formatIndianDate(d.toISOString())}">${d.getDate()}<br><span style="font-size:0.6rem;">${['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()]}</span></th>`;
+      });
+      html += '</tr></thead><tbody>';
+
+      trackers.forEach(tr => {
+        html += `<tr><td>${escapeHtml(tr.name)}<span class="tracker-delete" onclick="deleteTracker('${tr.id}')">✕</span></td>`;
+        dates.forEach(d => {
+          const iso = d.toISOString().split('T')[0];
+          const isWithinRange = iso >= tr.start && iso <= tr.end;
+          const isChecked = tr.checked[iso];
+          
+          if (isWithinRange) {
+            html += `<td><div class="tracker-cell ${isChecked ? 'checked' : ''}" onclick="toggleTracker('${tr.id}', '${iso}')">${isChecked ? '✓' : ''}</div></td>`;
+          } else {
+            html += `<td style="opacity:0.2; background:var(--bg)">-</td>`;
+          }
+        });
+        html += '</tr>';
+      });
+      html += '</tbody>';
+      table.innerHTML = html;
+    }
+
+    window.toggleTracker = function(id, iso) {
+      const tr = trackers.find(t => t.id === id);
+      if (!tr) return;
+      tr.checked[iso] = !tr.checked[iso];
+      renderTrackers();
+      debouncedSyncTrackers();
+    };
+
+    window.deleteTracker = function(id) {
+      if (!confirm('Delete this tracker?')) return;
+      trackers = trackers.filter(t => t.id !== id);
+      renderTrackers();
+      debouncedSyncTrackers();
+    };
+
+    const debouncedSyncTrackers = debounce(async () => {
+      localStorage.setItem(TRACKERS_CACHE, JSON.stringify(trackers));
+      if (!cfg.owner || !cfg.repo || !cfg.token) return;
+      try {
+        setStatus('Saving trackers...');
+        let success = false; let retries = 0;
+        while (!success && retries < 3) {
+          try {
+            const res = await ghPutFile('trackers.json', JSON.stringify(trackers, null, 2), 'Update trackers.json', trackersSha);
+            trackersSha = res.content.sha; success = true; setStatus('Synced ✓');
+          } catch (err) {
+            if (String(err.message).includes('409')) {
+              const existing = await ghFetch(`contents/trackers.json?ref=${encodeURIComponent(cfg.branch)}`);
+              trackersSha = existing.sha; retries++;
+            } else { throw err; }
+          }
+        }
+      } catch (err) { setStatus(`Tracker save error: ${err.message}`); }
+    }, 1500);
+
+    // --- 9. DASHBOARD ---
     function renderDashboard() {
       const openTasks = tasks.filter(t => !t.done);
       const doneTasks = tasks.filter(t => t.done);
-      const dueSoon = openTasks.filter(t => {
-        const diff = daysUntil(t.due);
-        return diff !== null && diff <= 3;
-      });
+      const dueSoon = openTasks.filter(t => { const diff = daysUntil(t.due); return diff !== null && diff <= 3; });
 
       document.getElementById('stat-left').textContent = openTasks.length;
       document.getElementById('stat-due').textContent = dueSoon.length;
@@ -1242,18 +1000,14 @@
       
       const catFilter = document.getElementById('filter-cat');
       const cats = [...new Set(tasks.map(t => t.category).filter(Boolean))];
-      catFilter.innerHTML = `<option value="">All Categories</option>` + 
-        cats.map(c => `<option value="${escapeHtml(c)}" ${currentFilterCat === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
+      catFilter.innerHTML = `<option value="">All Categories</option>` + cats.map(c => `<option value="${escapeHtml(c)}" ${currentFilterCat === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
 
       const filteredOpen = openTasks.filter(t => !currentFilterCat || t.category === currentFilterCat);
       document.getElementById('rem-count').textContent = `${filteredOpen.length} left`;
 
       renderMiniCalendar();
 
-      const pinnedNotes = Object.entries(notesStore)
-        .filter(([, n]) => n.pinned)
-        .map(([path, n]) => ({ path, ...n }));
-
+      const pinnedNotes = Object.entries(notesStore).filter(([, n]) => n.pinned).map(([path, n]) => ({ path, ...n }));
       const pinnedCard = document.getElementById('dash-pinned-card');
       const pinnedGrid = document.getElementById('dash-pinned-grid');
       document.getElementById('pinned-count').textContent = `${pinnedNotes.length}`;
@@ -1267,51 +1021,28 @@
           </div>
         `).join('');
         pinnedGrid.querySelectorAll('.pinned-card').forEach(el => {
-          el.addEventListener('click', () => {
-            switchTab('notes');
-            openNoteEditor(el.dataset.openNote);
-          });
+          el.addEventListener('click', () => { switchTab('notes'); openNoteEditor(el.dataset.openNote); });
         });
-      } else {
-        pinnedCard.classList.add('hidden');
-      }
+      } else { pinnedCard.classList.add('hidden'); }
 
       const remList = document.getElementById('rem-list');
-      remList.innerHTML = filteredOpen.length
-        ? filteredOpen.map(renderTaskRow).join('')
-        : '<p style="color:var(--muted);font-size:0.88rem;">No tasks found.</p>';
+      remList.innerHTML = filteredOpen.length ? filteredOpen.map(renderTaskRow).join('') : '<p style="color:var(--muted);font-size:0.88rem;">No tasks found.</p>';
 
       const doneList = document.getElementById('done-list');
-      doneList.innerHTML = doneTasks.length
-        ? doneTasks.map(renderTaskRow).join('')
-        : '<p style="color:var(--muted);font-size:0.88rem;">No completed tasks.</p>';
+      doneList.innerHTML = doneTasks.length ? doneTasks.map(renderTaskRow).join('') : '<p style="color:var(--muted);font-size:0.88rem;">No completed tasks.</p>';
 
       document.querySelectorAll('[data-toggle-task]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const target = tasks.find(t => t.id === btn.dataset.toggleTask);
-          if (target) {
-            target.done = !target.done;
-            debouncedSyncTasks();
-          }
-        });
+        btn.addEventListener('click', () => { const target = tasks.find(t => t.id === btn.dataset.toggleTask); if (target) { target.done = !target.done; debouncedSyncTasks(); } });
       });
-
       document.querySelectorAll('[data-edit-task]').forEach(btn => {
         btn.addEventListener('click', () => openEditTaskModal(btn.dataset.editTask));
       });
-
       document.querySelectorAll('[data-del-task]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          tasks = tasks.filter(t => t.id !== btn.dataset.delTask);
-          debouncedSyncTasks();
-        });
+        btn.addEventListener('click', () => { tasks = tasks.filter(t => t.id !== btn.dataset.delTask); debouncedSyncTasks(); });
       });
     }
 
-    document.getElementById('filter-cat').addEventListener('change', (e) => {
-      currentFilterCat = e.target.value;
-      renderDashboard();
-    });
+    document.getElementById('filter-cat').addEventListener('change', (e) => { currentFilterCat = e.target.value; renderDashboard(); });
 
     function renderTaskRow(t) {
       const iso = normalizeIsoDate(t.due);
@@ -1343,20 +1074,15 @@
       `;
     }
 
-    // --- 9. MINI CALENDAR ---
+    // --- 10. MINI CALENDAR ---
     function renderMiniCalendar() {
-      const cur = new Date();
-      const y = cur.getFullYear();
-      const m = cur.getMonth();
-      const todayDay = cur.getDate();
+      const cur = new Date(); const y = cur.getFullYear(); const m = cur.getMonth(); const todayDay = cur.getDate();
       const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      const label = document.getElementById('mini-cal-label');
-      const grid = document.getElementById('mini-cal-grid');
+      const label = document.getElementById('mini-cal-label'); const grid = document.getElementById('mini-cal-grid');
       if (!label || !grid) return;
 
       label.textContent = `${months[m]} ${y}`;
-      const firstDay = new Date(y, m, 1).getDay();
-      const totalDays = new Date(y, m + 1, 0).getDate();
+      const firstDay = new Date(y, m, 1).getDay(); const totalDays = new Date(y, m + 1, 0).getDate();
       const dows = ['S','M','T','W','T','F','S'];
 
       let html = dows.map(d => `<div class="mini-dow">${d}</div>`).join('');
@@ -1371,60 +1097,47 @@
       grid.innerHTML = html;
     }
 
-    // --- 10. FULL CALENDAR ---
+    // --- 11. FULL CALENDAR ---
     const calAddModal = document.getElementById('cal-add-modal');
 
     function renderCalendar() {
       const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      const labelEl = document.getElementById('cal-month-label');
-      const gridEl = document.getElementById('cal-grid');
+      const labelEl = document.getElementById('cal-month-label'); const gridEl = document.getElementById('cal-grid');
       if (!labelEl || !gridEl) return;
 
       labelEl.textContent = `${monthNames[calMonth]} ${calYear}`;
-      const firstDay = new Date(calYear, calMonth, 1).getDay();
-      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-      const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const todayRef = new Date();
+      const firstDay = new Date(calYear, calMonth, 1).getDay(); const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+      const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; const todayRef = new Date();
 
       let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
       for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
 
       for (let day = 1; day <= daysInMonth; day++) {
-        const mm = String(calMonth + 1).padStart(2, '0');
-        const dd = String(day).padStart(2, '0');
+        const mm = String(calMonth + 1).padStart(2, '0'); const dd = String(day).padStart(2, '0');
         const iso = `${calYear}-${mm}-${dd}`;
         const isToday = calYear === todayRef.getFullYear() && calMonth === todayRef.getMonth() && day === todayRef.getDate();
         const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
 
         const maxChips = 3;
-        const chips = dayTasks.slice(0, maxChips).map(t =>
-          `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</div>`
-        ).join('');
+        const chips = dayTasks.slice(0, maxChips).map(t => `<div class="cal-chip ${t.done ? 'done' : ''}" title="${escapeHtml(t.title)}">${escapeHtml(t.title)}</div>`).join('');
         const extra = dayTasks.length - maxChips;
         const more = extra > 0 ? `<div class="cal-more">+${extra} more</div>` : '';
 
         html += `
           <div class="cal-cell ${isToday ? 'today' : ''}" data-cal-iso="${iso}">
             <div class="cal-day-num"><span>${day}</span></div>
-            ${chips}
-            ${more}
+            ${chips} ${more}
           </div>
         `;
       }
       gridEl.innerHTML = html;
-
-      gridEl.querySelectorAll('.cal-cell[data-cal-iso]').forEach(cell => {
-        cell.addEventListener('click', () => {
-          openCalModal(cell.dataset.calIso);
-        });
-      });
+      gridEl.querySelectorAll('.cal-cell[data-cal-iso]').forEach(cell => { cell.addEventListener('click', () => openCalModal(cell.dataset.calIso)); });
     }
 
     function openCalModal(iso) {
       selectedCalIso = iso;
       document.getElementById('cal-modal-title').textContent = `Tasks for ${formatIndianDate(iso)}`;
-      document.getElementById('cal-task-title').value = '';
-      document.getElementById('cal-task-cat').value = '';
+      document.getElementById('cal-task-title').value = ''; document.getElementById('cal-task-cat').value = '';
       
       const dayTasks = tasks.filter(t => normalizeIsoDate(t.due) === iso);
       const taskContainer = document.getElementById('cal-modal-tasks');
@@ -1438,9 +1151,7 @@
             </div>
           </div>
         `).join('');
-      } else {
-        taskContainer.innerHTML = '<div style="font-size:0.8rem; color:var(--muted); padding:4px;">No tasks for this date.</div>';
-      }
+      } else { taskContainer.innerHTML = '<div style="font-size:0.8rem; color:var(--muted); padding:4px;">No tasks for this date.</div>'; }
 
       calAddModal.classList.add('open');
       document.getElementById('cal-task-title').focus();
@@ -1448,82 +1159,36 @@
 
     window.toggleCalTask = function(id) {
       const target = tasks.find(t => t.id === id);
-      if (target) {
-        target.done = !target.done;
-        openCalModal(selectedCalIso); 
-        debouncedSyncTasks(); 
-      }
+      if (target) { target.done = !target.done; openCalModal(selectedCalIso); debouncedSyncTasks(); }
     };
 
-    document.getElementById('cal-cancel-btn').addEventListener('click', () => {
-      selectedCalIso = '';
-      calAddModal.classList.remove('open');
-    });
-
+    document.getElementById('cal-cancel-btn').addEventListener('click', () => { selectedCalIso = ''; calAddModal.classList.remove('open'); });
     document.getElementById('cal-save-btn').addEventListener('click', () => {
-      const title = document.getElementById('cal-task-title').value.trim();
-      const cat = document.getElementById('cal-task-cat').value.trim();
+      const title = document.getElementById('cal-task-title').value.trim(); const cat = document.getElementById('cal-task-cat').value.trim();
       if (!title || !selectedCalIso) return;
-
-      tasks.unshift({
-        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        title,
-        category: cat,
-        due: selectedCalIso,
-        done: false
-      });
-
-      selectedCalIso = '';
-      calAddModal.classList.remove('open');
-      debouncedSyncTasks();
+      tasks.unshift({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, title, category: cat, due: selectedCalIso, done: false });
+      selectedCalIso = ''; calAddModal.classList.remove('open'); debouncedSyncTasks();
     });
 
-    document.getElementById('prev-month').addEventListener('click', () => {
-      calMonth--;
-      if (calMonth < 0) { calMonth = 11; calYear--; }
-      renderCalendar();
-    });
+    document.getElementById('prev-month').addEventListener('click', () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); });
+    document.getElementById('next-month').addEventListener('click', () => { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); });
 
-    document.getElementById('next-month').addEventListener('click', () => {
-      calMonth++;
-      if (calMonth > 11) { calMonth = 0; calYear++; }
-      renderCalendar();
-    });
-
-    // --- 11. TASK ADD & EDIT ---
+    // --- 12. TASK ADD & EDIT ---
     document.getElementById('task-form').addEventListener('submit', e => {
       e.preventDefault();
-      const titleEl = document.getElementById('task-title');
-      const catEl = document.getElementById('task-cat');
-      const dateEl = document.getElementById('task-date');
-      const quickEl = document.getElementById('task-quick-date');
-      const title = titleEl.value.trim();
-      if (!title) return;
-
+      const titleEl = document.getElementById('task-title'); const catEl = document.getElementById('task-cat');
+      const dateEl = document.getElementById('task-date'); const quickEl = document.getElementById('task-quick-date');
+      const title = titleEl.value.trim(); if (!title) return;
       const chosenDate = normalizeIsoDate(dateEl.value) || (quickEl.value !== '' ? offsetIsoDate(Number(quickEl.value)) : '');
-
-      tasks.unshift({
-        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        title,
-        category: catEl.value.trim(),
-        due: chosenDate,
-        done: false
-      });
-
-      titleEl.value = '';
-      quickEl.value = '';
-      debouncedSyncTasks();
+      tasks.unshift({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, title, category: catEl.value.trim(), due: chosenDate, done: false });
+      titleEl.value = ''; quickEl.value = ''; debouncedSyncTasks();
     });
 
-    document.getElementById('clear-done-btn').addEventListener('click', () => {
-      tasks = tasks.filter(t => !t.done);
-      debouncedSyncTasks();
-    });
+    document.getElementById('clear-done-btn').addEventListener('click', () => { tasks = tasks.filter(t => !t.done); debouncedSyncTasks(); });
 
     const editTaskModal = document.getElementById('edit-task-modal');
     function openEditTaskModal(id) {
-      const target = tasks.find(t => t.id === id);
-      if (!target) return;
+      const target = tasks.find(t => t.id === id); if (!target) return;
       editingTaskId = id;
       document.getElementById('edit-task-title').value = target.title || '';
       document.getElementById('edit-task-cat').value = target.category || '';
@@ -1533,53 +1198,27 @@
       document.getElementById('edit-task-title').focus();
     }
 
-    document.getElementById('cancel-edit-task-btn').addEventListener('click', () => {
-      editingTaskId = null;
-      editTaskModal.classList.remove('open');
-    });
-
+    document.getElementById('cancel-edit-task-btn').addEventListener('click', () => { editingTaskId = null; editTaskModal.classList.remove('open'); });
     document.getElementById('save-edit-task-btn').addEventListener('click', () => {
       if (!editingTaskId) return;
-      const target = tasks.find(t => t.id === editingTaskId);
-      if (!target) return;
-      const newTitle = document.getElementById('edit-task-title').value.trim();
-      if (!newTitle) return;
-
-      target.title = newTitle;
-      target.category = document.getElementById('edit-task-cat').value.trim();
+      const target = tasks.find(t => t.id === editingTaskId); if (!target) return;
+      const newTitle = document.getElementById('edit-task-title').value.trim(); if (!newTitle) return;
+      target.title = newTitle; target.category = document.getElementById('edit-task-cat').value.trim();
       target.due = normalizeIsoDate(document.getElementById('edit-task-date').value);
-
-      editingTaskId = null;
-      editTaskModal.classList.remove('open');
-      debouncedSyncTasks();
+      editingTaskId = null; editTaskModal.classList.remove('open'); debouncedSyncTasks();
     });
 
-    document.getElementById('edit-task-quick-date').addEventListener('change', e => {
-      if (e.target.value !== '') {
-        document.getElementById('edit-task-date').value = offsetIsoDate(Number(e.target.value));
-      }
-    });
+    document.getElementById('edit-task-quick-date').addEventListener('change', e => { if (e.target.value !== '') document.getElementById('edit-task-date').value = offsetIsoDate(Number(e.target.value)); });
+    document.getElementById('task-quick-date').addEventListener('change', e => { if (e.target.value !== '') document.getElementById('task-date').value = offsetIsoDate(Number(e.target.value)); });
 
-    document.getElementById('task-quick-date').addEventListener('change', e => {
-      if (e.target.value !== '') {
-        document.getElementById('task-date').value = offsetIsoDate(Number(e.target.value));
-      }
-    });
-
-    // --- 12. NOTES ---
+    // --- 13. NOTES ---
     function parseNoteMarkdown(filename, rawText) {
-      const baseTitle = filename.replace(/\.md$/i, '');
-      let pinned = false;
-      let title = baseTitle;
-      let body = rawText || '';
-
+      const baseTitle = filename.replace(/\.md$/i, ''); let pinned = false; let title = baseTitle; let body = rawText || '';
       const fmMatch = body.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
       if (fmMatch) {
         const fm = fmMatch[1];
-        const pinMatch = fm.match(/^pinned:\s*(true|false)\s*$/mi);
-        if (pinMatch) pinned = pinMatch[1].toLowerCase() === 'true';
-        const titleMatch = fm.match(/^title:\s*(.+)\s*$/mi);
-        if (titleMatch) title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
+        const pinMatch = fm.match(/^pinned:\s*(true|false)\s*$/mi); if (pinMatch) pinned = pinMatch[1].toLowerCase() === 'true';
+        const titleMatch = fm.match(/^title:\s*(.+)\s*$/mi); if (titleMatch) title = titleMatch[1].trim().replace(/^["']|["']$/g, '');
         body = body.slice(fmMatch[0].length);
       }
       return { title: title || baseTitle, pinned, body };
@@ -1591,11 +1230,7 @@
     }
 
     function slugifyFilename(title) {
-      const cleaned = (title || 'untitled')
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9._-]+/g, '-')
-        .replace(/^-+|-+$/g, '');
+      const cleaned = (title || 'untitled').trim().toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
       return `${cleaned || 'untitled'}.md`;
     }
 
@@ -1607,34 +1242,24 @@
     }
 
     async function persistPinChange(path, note) {
-      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-      renderNotesGrid();
-      renderDashboard();
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore)); renderNotesGrid(); renderDashboard();
       if (cfg.owner && cfg.repo && cfg.token) {
         try {
           setStatus(note.pinned ? 'Pinning note...' : 'Unpinning note...');
           const res = await ghPutFile(path, serializeNoteMarkdown(note), `Pin=${note.pinned} for ${path}`, note.sha);
-          note.sha = res.content.sha;
-          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-          setStatus('Synced ✓');
-        } catch (err) {
-          setStatus(`Pin sync error: ${err.message}`);
-        }
+          note.sha = res.content.sha; localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore)); setStatus('Synced ✓');
+        } catch (err) { setStatus(`Pin sync error: ${err.message}`); }
       }
     }
 
     function renderNotesGrid() {
       const q = (document.getElementById('note-search').value || '').trim().toLowerCase();
-      const entries = Object.entries(notesStore)
-        .map(([path, n]) => ({ path, ...n }))
+      const entries = Object.entries(notesStore).map(([path, n]) => ({ path, ...n }))
         .filter(n => !q || n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q))
         .sort((a, b) => Number(b.pinned) - Number(a.pinned) || a.title.localeCompare(b.title));
 
       const grid = document.getElementById('notes-grid');
-      if (!entries.length) {
-        grid.innerHTML = '<p style="color:var(--muted);font-size:0.88rem;">No notes yet. Click "+ New Note".</p>';
-        return;
-      }
+      if (!entries.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:0.88rem;">No notes yet. Click "+ New Note".</p>'; return; }
 
       grid.innerHTML = entries.map(n => `
         <div class="note-card" data-open-path="${escapeHtml(n.path)}">
@@ -1652,35 +1277,23 @@
         </div>
       `).join('');
 
-      grid.querySelectorAll('.note-card').forEach(card => {
-        card.addEventListener('click', () => openNoteEditor(card.dataset.openPath));
-      });
-
+      grid.querySelectorAll('.note-card').forEach(card => { card.addEventListener('click', () => openNoteEditor(card.dataset.openPath)); });
       grid.querySelectorAll('[data-pin-path]').forEach(btn => {
         btn.addEventListener('click', async e => {
-          e.stopPropagation();
-          const p = btn.dataset.pinPath;
-          const note = notesStore[p];
-          if (!note) return;
-          note.pinned = !note.pinned;
-          await persistPinChange(p, note);
+          e.stopPropagation(); const p = btn.dataset.pinPath; const note = notesStore[p]; if (!note) return;
+          note.pinned = !note.pinned; await persistPinChange(p, note);
         });
       });
-
       grid.querySelectorAll('[data-del-note]').forEach(btn => {
-        btn.addEventListener('click', async e => {
-          e.stopPropagation();
-          await deleteNoteByPath(btn.dataset.delNote);
-        });
+        btn.addEventListener('click', async e => { e.stopPropagation(); await deleteNoteByPath(btn.dataset.delNote); });
       });
     }
 
     document.getElementById('note-search').addEventListener('input', renderNotesGrid);
 
-    // --- 13. CHECKLIST & EDITOR LOGIC ---
+    // --- 14. CHECKLIST & EDITOR LOGIC ---
     function getNoteCheckboxItems() {
-      const text = document.getElementById('note-editor').value || '';
-      const out = [];
+      const text = document.getElementById('note-editor').value || ''; const out = [];
       text.split('\n').forEach((line, idx) => {
         const m = line.match(/^\s*-\s*\[([ xX])\]\s*(.*)$/);
         if (m) out.push({ idx, checked: m[1].toLowerCase() === 'x', text: m[2] });
@@ -1689,29 +1302,18 @@
     }
 
     function updateEditorMode() {
-      const textarea = document.getElementById('note-editor');
-      const checklistCard = document.getElementById('keep-checklist-card');
-      const toggleBtn = document.getElementById('toggle-editor-mode-btn');
-      const items = getNoteCheckboxItems();
+      const textarea = document.getElementById('note-editor'); const checklistCard = document.getElementById('keep-checklist-card');
+      const toggleBtn = document.getElementById('toggle-editor-mode-btn'); const items = getNoteCheckboxItems();
 
       if (items.length === 0) {
-        isRawTextMode = true;
-        textarea.classList.remove('hidden');
-        checklistCard.classList.remove('open');
-        toggleBtn.classList.add('hidden');
-        return;
+        isRawTextMode = true; textarea.classList.remove('hidden'); checklistCard.classList.remove('open'); toggleBtn.classList.add('hidden'); return;
       }
 
-      toggleBtn.classList.remove('hidden');
-      toggleBtn.textContent = isRawTextMode ? 'View Checklist' : 'Edit Raw Text';
+      toggleBtn.classList.remove('hidden'); toggleBtn.textContent = isRawTextMode ? 'View Checklist' : 'Edit Raw Text';
       
-      if (isRawTextMode) {
-        textarea.classList.remove('hidden');
-        checklistCard.classList.remove('open');
-      } else {
-        textarea.classList.add('hidden');
-        checklistCard.classList.add('open');
-        
+      if (isRawTextMode) { textarea.classList.remove('hidden'); checklistCard.classList.remove('open'); } 
+      else {
+        textarea.classList.add('hidden'); checklistCard.classList.add('open');
         const listEl = document.getElementById('keep-items-list');
         listEl.innerHTML = items.map(it => `
           <label class="keep-check-row ${it.checked ? 'checked' : ''}">
@@ -1722,253 +1324,155 @@
 
         listEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
           cb.addEventListener('change', () => {
-            const lines = textarea.value.split('\n');
-            const idx = Number(cb.dataset.lineIdx);
+            const lines = textarea.value.split('\n'); const idx = Number(cb.dataset.lineIdx);
             lines[idx] = lines[idx].replace(/^\s*-\s*\[[ xX]\]/, cb.checked ? '- [x]' : '- [ ]');
-            textarea.value = lines.join('\n');
-            updateEditorMode();
-            debouncedAutoSave();
+            textarea.value = lines.join('\n'); updateEditorMode(); debouncedAutoSave();
           });
         });
       }
     }
 
-    document.getElementById('toggle-editor-mode-btn').addEventListener('click', () => {
-      isRawTextMode = !isRawTextMode;
-      updateEditorMode();
-    });
-
-    document.getElementById('note-editor').addEventListener('input', () => {
-      if (!isRawTextMode) updateEditorMode(); 
-      debouncedAutoSave();
-    });
-
-    document.getElementById('note-title-input').addEventListener('input', () => {
-      debouncedAutoSave();
-    });
+    document.getElementById('toggle-editor-mode-btn').addEventListener('click', () => { isRawTextMode = !isRawTextMode; updateEditorMode(); });
+    document.getElementById('note-editor').addEventListener('input', () => { if (!isRawTextMode) updateEditorMode(); debouncedAutoSave(); });
+    document.getElementById('note-title-input').addEventListener('input', () => { debouncedAutoSave(); });
 
     document.getElementById('new-check-item').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        const val = e.target.value.trim();
-        if (!val) return;
+        const val = e.target.value.trim(); if (!val) return;
         const textarea = document.getElementById('note-editor');
-        textarea.value += `\n- [ ] ${val}`;
-        e.target.value = '';
-        updateEditorMode();
-        debouncedAutoSave();
+        textarea.value += `\n- [ ] ${val}`; e.target.value = ''; updateEditorMode(); debouncedAutoSave();
       }
     });
 
     document.getElementById('add-checkbox-btn').addEventListener('click', () => {
-      const textarea = document.getElementById('note-editor');
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const text = textarea.value;
-
+      const textarea = document.getElementById('note-editor'); const start = textarea.selectionStart; const end = textarea.selectionEnd; const text = textarea.value;
       if (start === end) {
-        const before = text.substring(0, start);
-        const after = text.substring(start);
+        const before = text.substring(0, start); const after = text.substring(start);
         const prefix = (before.length > 0 && !before.endsWith('\n')) ? '\n- [ ] ' : '- [ ] ';
-        textarea.value = before + prefix + after;
-        textarea.selectionStart = textarea.selectionEnd = start + prefix.length;
+        textarea.value = before + prefix + after; textarea.selectionStart = textarea.selectionEnd = start + prefix.length;
       } else {
-        const selectedText = text.substring(start, end);
-        const lines = selectedText.split('\n');
-        const formatted = lines.map(line => {
-           if (/^- \[[ xX]\] /.test(line)) return line.replace(/^- \[[ xX]\] /, '- [ ] ');
-           return `- [ ] ${line}`;
-        }).join('\n');
+        const selectedText = text.substring(start, end); const lines = selectedText.split('\n');
+        const formatted = lines.map(line => /^- \[[ xX]\] /.test(line) ? line.replace(/^- \[[ xX]\] /, '- [ ] ') : `- [ ] ${line}`).join('\n');
         textarea.value = text.substring(0, start) + formatted + text.substring(end);
-        textarea.selectionStart = start;
-        textarea.selectionEnd = start + formatted.length;
+        textarea.selectionStart = start; textarea.selectionEnd = start + formatted.length;
       }
-      
-      textarea.focus();
-      updateEditorMode();
-      debouncedAutoSave();
+      textarea.focus(); updateEditorMode(); debouncedAutoSave();
     });
 
     function setEditorPinState(isPinned) {
-      const btn = document.getElementById('editor-pin-btn');
-      btn.dataset.pinned = isPinned ? '1' : '0';
-      btn.textContent = isPinned ? '★ Pinned' : 'Pin';
-      btn.classList.toggle('pinned', Boolean(isPinned));
+      const btn = document.getElementById('editor-pin-btn'); btn.dataset.pinned = isPinned ? '1' : '0';
+      btn.textContent = isPinned ? '★ Pinned' : 'Pin'; btn.classList.toggle('pinned', Boolean(isPinned));
     }
 
     document.getElementById('editor-pin-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('editor-pin-btn');
-      const nextPinned = btn.dataset.pinned !== '1';
-      setEditorPinState(nextPinned);
-
+      const btn = document.getElementById('editor-pin-btn'); const nextPinned = btn.dataset.pinned !== '1'; setEditorPinState(nextPinned);
       if (activeNotePath && notesStore[activeNotePath]) {
         notesStore[activeNotePath].pinned = nextPinned;
-        await persistPinChange(activeNotePath, notesStore[activeNotePath]);
-        debouncedAutoSave();
-      } else {
-        renderDashboard();
-      }
+        await persistPinChange(activeNotePath, notesStore[activeNotePath]); debouncedAutoSave();
+      } else { renderDashboard(); }
     });
 
     document.getElementById('new-note-btn').addEventListener('click', () => {
-      activeNotePath = null;
-      isRawTextMode = false;
-      document.getElementById('notes-grid-view').classList.add('hidden');
-      document.getElementById('notes-editor-view').classList.remove('hidden');
-      document.getElementById('note-title-input').value = '';
-      document.getElementById('note-editor').value = '';
-      setEditorPinState(false);
-      document.getElementById('editor-delete-btn').classList.add('hidden');
-      updateEditorMode();
+      activeNotePath = null; isRawTextMode = false;
+      document.getElementById('notes-grid-view').classList.add('hidden'); document.getElementById('notes-editor-view').classList.remove('hidden');
+      document.getElementById('note-title-input').value = ''; document.getElementById('note-editor').value = '';
+      setEditorPinState(false); document.getElementById('editor-delete-btn').classList.add('hidden'); updateEditorMode();
       document.getElementById('note-title-input').focus();
     });
 
     function openNoteEditor(path) {
-      const note = notesStore[path];
-      if (!note) return;
-      activeNotePath = path;
-      isRawTextMode = false;
-      document.getElementById('notes-grid-view').classList.add('hidden');
-      document.getElementById('notes-editor-view').classList.remove('hidden');
-      document.getElementById('note-title-input').value = note.title;
-      document.getElementById('note-editor').value = note.body;
-      setEditorPinState(Boolean(note.pinned));
-      document.getElementById('editor-delete-btn').classList.remove('hidden');
-      updateEditorMode();
+      const note = notesStore[path]; if (!note) return;
+      activeNotePath = path; isRawTextMode = false;
+      document.getElementById('notes-grid-view').classList.add('hidden'); document.getElementById('notes-editor-view').classList.remove('hidden');
+      document.getElementById('note-title-input').value = note.title; document.getElementById('note-editor').value = note.body;
+      setEditorPinState(Boolean(note.pinned)); document.getElementById('editor-delete-btn').classList.remove('hidden'); updateEditorMode();
     }
 
-    document.getElementById('back-to-notes-btn').addEventListener('click', async () => {
-      await saveActiveNote(false); 
-      showNotesGrid();
-    });
+    document.getElementById('back-to-notes-btn').addEventListener('click', async () => { await saveActiveNote(false); showNotesGrid(); });
 
     async function saveActiveNote(isAuto = false) {
       const titleInput = document.getElementById('note-title-input').value.trim() || 'Untitled';
       const bodyVal = document.getElementById('note-editor').value;
       const pinnedVal = document.getElementById('editor-pin-btn').dataset.pinned === '1';
 
-      let oldPath = activeNotePath;
-      let newPath = oldPath;
+      let oldPath = activeNotePath; let newPath = oldPath;
       
       if (!newPath || (!isAuto && slugifyFilename(titleInput) !== oldPath)) {
-        if (!isAuto && oldPath && slugifyFilename(titleInput) !== oldPath) {
-          newPath = slugifyFilename(titleInput);
-        } else if (!oldPath) {
-          newPath = slugifyFilename(titleInput);
-        }
+        if (!isAuto && oldPath && slugifyFilename(titleInput) !== oldPath) { newPath = slugifyFilename(titleInput); }
+        else if (!oldPath) { newPath = slugifyFilename(titleInput); }
       }
-      
       if (!newPath) newPath = slugifyFilename(titleInput);
 
       const oldRecord = oldPath ? notesStore[oldPath] : null;
-      const record = {
-        name: newPath,
-        title: titleInput,
-        pinned: pinnedVal,
-        body: bodyVal,
-        sha: oldPath === newPath && oldRecord ? oldRecord.sha : null
-      };
+      const record = { name: newPath, title: titleInput, pinned: pinnedVal, body: bodyVal, sha: oldPath === newPath && oldRecord ? oldRecord.sha : null };
 
-      notesStore[newPath] = record;
-      if (oldPath && oldPath !== newPath) delete notesStore[oldPath];
-      
-      activeNotePath = newPath;
-      document.getElementById('editor-delete-btn').classList.remove('hidden');
-      
-      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-      renderDashboard();
+      notesStore[newPath] = record; if (oldPath && oldPath !== newPath) delete notesStore[oldPath];
+      activeNotePath = newPath; document.getElementById('editor-delete-btn').classList.remove('hidden');
+      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore)); renderDashboard();
 
       if (cfg.owner && cfg.repo && cfg.token) {
         try {
           if (!isAuto) setStatus('Saving note...');
           const putRes = await ghPutFile(newPath, serializeNoteMarkdown(record), `Save ${newPath}`, record.sha);
           record.sha = putRes.content.sha;
-          
-          if (oldPath && oldPath !== newPath) {
-            try { await ghDeleteFile(oldPath, `Rename ${oldPath} to ${newPath}`); } 
-            catch(e) { console.error("Failed to delete old file during rename", e); }
-          }
-          
-          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-          setStatus(isAuto ? 'Auto-saved ✓' : 'Synced ✓');
-        } catch (err) {
-          setStatus(`Note save error: ${err.message}`);
-        }
-      } else {
-        setStatus(isAuto ? 'Auto-saved locally' : 'Saved locally');
-      }
+          if (oldPath && oldPath !== newPath) { try { await ghDeleteFile(oldPath, `Rename ${oldPath} to ${newPath}`); } catch(e) {} }
+          localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore)); setStatus(isAuto ? 'Auto-saved ✓' : 'Synced ✓');
+        } catch (err) { setStatus(`Note save error: ${err.message}`); }
+      } else { setStatus(isAuto ? 'Auto-saved locally' : 'Saved locally'); }
       
       renderNotesGrid();
     }
 
     const debouncedAutoSave = debounce(async () => {
-      if (!activeNotePath && !document.getElementById('note-title-input').value.trim() && !document.getElementById('note-editor').value.trim()) {
-        return;
-      }
+      if (!activeNotePath && !document.getElementById('note-title-input').value.trim() && !document.getElementById('note-editor').value.trim()) return;
       await saveActiveNote(true);
     }, 1500);
 
-    document.getElementById('save-note-btn').addEventListener('click', async () => {
-      await saveActiveNote(false);
-    });
+    document.getElementById('save-note-btn').addEventListener('click', async () => { await saveActiveNote(false); });
 
     async function deleteNoteByPath(path) {
-      const note = notesStore[path];
-      if (!note) return;
-      if (!confirm(`Delete note "${note.title}"?`)) return;
-
+      const note = notesStore[path]; if (!note) return; if (!confirm(`Delete note "${note.title}"?`)) return;
       if (cfg.owner && cfg.repo && cfg.token) {
-        try {
-          setStatus('Deleting note...');
-          await ghDeleteFile(path, `Delete ${path}`);
-          setStatus('Synced ✓');
-        } catch (err) {
-          setStatus(`Delete error: ${err.message}`);
-          return;
-        }
+        try { setStatus('Deleting note...'); await ghDeleteFile(path, `Delete ${path}`); setStatus('Synced ✓'); } 
+        catch (err) { setStatus(`Delete error: ${err.message}`); return; }
       }
-
-      delete notesStore[path];
-      localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore));
-      renderDashboard();
-      showNotesGrid();
+      delete notesStore[path]; localStorage.setItem(NOTES_CACHE, JSON.stringify(notesStore)); renderDashboard(); showNotesGrid();
     }
 
-    document.getElementById('editor-delete-btn').addEventListener('click', async () => {
-      if (activeNotePath) await deleteNoteByPath(activeNotePath);
-    });
+    document.getElementById('editor-delete-btn').addEventListener('click', async () => { if (activeNotePath) await deleteNoteByPath(activeNotePath); });
 
-    // --- 14. GITHUB CONFIG ---
+    // --- 15. GITHUB CONFIG ---
     const cfgModal = document.getElementById('config-modal');
     document.getElementById('config-btn').addEventListener('click', () => {
-      document.getElementById('cfg-owner').value = cfg.owner;
-      document.getElementById('cfg-repo').value = cfg.repo;
-      document.getElementById('cfg-branch').value = cfg.branch;
-      document.getElementById('cfg-token').value = cfg.token;
+      document.getElementById('cfg-owner').value = cfg.owner; document.getElementById('cfg-repo').value = cfg.repo;
+      document.getElementById('cfg-branch').value = cfg.branch; document.getElementById('cfg-token').value = cfg.token;
       cfgModal.classList.add('open');
     });
 
     document.getElementById('close-cfg-btn').addEventListener('click', () => cfgModal.classList.remove('open'));
-
     document.getElementById('save-cfg-btn').addEventListener('click', async () => {
       cfg = {
-        owner: document.getElementById('cfg-owner').value.trim(),
-        repo: document.getElementById('cfg-repo').value.trim() || 'mybrain',
-        branch: document.getElementById('cfg-branch').value.trim() || 'main',
-        token: document.getElementById('cfg-token').value.trim()
+        owner: document.getElementById('cfg-owner').value.trim(), repo: document.getElementById('cfg-repo').value.trim() || 'mybrain',
+        branch: document.getElementById('cfg-branch').value.trim() || 'main', token: document.getElementById('cfg-token').value.trim()
       };
-      localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
-      cfgModal.classList.remove('open');
-      await syncAll();
+      localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); cfgModal.classList.remove('open'); await syncAll();
     });
 
     document.getElementById('sync-btn').addEventListener('click', syncAll);
 
-    // --- 15. BOOT ---
+    // --- 16. BOOT & INTRO ---
     function init() {
       applySettings();
       renderDashboard();
       renderCalendar();
+      renderTrackers();
       syncAll();
+      
+      // Fade out intro screen after 1.5 seconds
+      setTimeout(() => {
+        const intro = document.getElementById('intro-screen');
+        if (intro) intro.classList.add('fade-out');
+      }, 1500);
     }
     init();
   </script>
