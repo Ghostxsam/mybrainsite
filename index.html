@@ -252,20 +252,22 @@
     .cal-chip.done { opacity: 0.55; text-decoration: line-through; }
     .cal-more { font-size: 0.65rem; color: var(--muted); padding-left: 2px; }
 
-    /* Tracker Tab */
+    /* TRACKER */
     .tracker-setup { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: var(--surface-2); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border); }
-    .tracker-setup input { flex: 1 1 150px; }
-    .tracker-grid-container { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-2); }
-    .tracker-table { border-collapse: collapse; width: 100%; min-width: 600px; text-align: center; }
-    .tracker-table th, .tracker-table td { border: 1px solid var(--border); padding: 8px; }
-    .tracker-table th { background: var(--surface-3); font-size: 0.75rem; color: var(--muted); font-weight: 600; position: sticky; top: 0; }
-    .tracker-table td:first-child, .tracker-table th:first-child { text-align: left; font-weight: 600; position: sticky; left: 0; background: var(--surface); z-index: 10; border-right: 2px solid var(--border); }
-    .tracker-table th:first-child { background: var(--surface-3); z-index: 11; }
+    .tracker-setup input { flex: 1 1 120px; min-width: 110px; }
+    .tracker-list { display: flex; flex-direction: column; gap: 16px; }
+    .tracker-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; animation: fadeIn 0.3s ease-out; }
+    .tracker-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .tracker-title { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .tracker-days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 6px; }
     
-    .tracker-cell { width: 32px; height: 32px; border-radius: 6px; background: var(--surface); cursor: pointer; display: inline-flex; justify-content: center; align-items: center; transition: all 0.2s; }
-    .tracker-cell:hover { background: var(--surface-3); }
-    .tracker-cell.checked { background: var(--accent-soft); color: var(--accent); font-weight: bold; }
-    .tracker-delete { cursor: pointer; color: var(--urgent); font-weight: bold; margin-left: 10px; }
+    .tracker-day {
+      aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.75rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.15s ease;
+    }
+    .tracker-day:hover { background: var(--surface-3); color: var(--text); }
+    .tracker-day.checked { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 700; }
 
     /* Notes */
     .notes-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
@@ -283,7 +285,6 @@
     .pin-btn:hover { background: var(--surface-3); }
     .pin-btn.pinned { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
     
-    /* FIXED NOTE PREVIEW */
     .note-preview { font-size: 0.84rem; color: var(--muted); line-height: 1.45; margin-top: 8px; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
     .note-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
 
@@ -461,21 +462,19 @@
       </div>
     </section>
 
-    <!-- TRACKER (EXCEL-LIKE CHECKBOXES) -->
+    <!-- TRACKER -->
     <section id="view-tracker" class="hidden fade-in">
       <div class="card">
         <div class="section-title" style="margin-bottom:12px;">Habit Tracker</div>
         <div class="tracker-setup">
           <input id="tracker-name" class="field" type="text" placeholder="Habit name (e.g., Read)" />
-          <input id="tracker-start" class="field" type="date" title="From Date" />
-          <input id="tracker-end" class="field" type="date" title="To Date" />
-          <button id="add-tracker-btn" class="btn btn-accent">Create Tracker</button>
+          <input id="tracker-start" class="field" type="date" title="From Date (optional)" />
+          <input id="tracker-end" class="field" type="date" title="To Date (optional)" />
+          <input id="tracker-days" class="field" type="number" placeholder="Or Days (e.g. 30)" style="width: 130px;" min="1" />
+          <button id="add-tracker-btn" class="btn btn-accent">Create</button>
         </div>
-        <div class="tracker-grid-container">
-          <table class="tracker-table" id="tracker-table">
-            <!-- Rendered via JS -->
-          </table>
-        </div>
+        
+        <div id="tracker-container" class="tracker-list"></div>
       </div>
     </section>
 
@@ -628,9 +627,16 @@
     const SETTINGS_KEY = 'cozy_settings_v1';
 
     let cfg = loadCfg();
+    
     let tasks = loadJson(TASKS_CACHE, []);
+    if (!Array.isArray(tasks)) tasks = [];
+    
     let notesStore = loadJson(NOTES_CACHE, {});
+    if (typeof notesStore !== 'object' || notesStore === null) notesStore = {};
+    
     let trackers = loadJson(TRACKERS_CACHE, []);
+    if (!Array.isArray(trackers)) trackers = [];
+
     let tasksSha = null;
     let trackersSha = null;
     let isTasksSyncing = false;
@@ -715,13 +721,23 @@
       };
     }
 
-    // FIXED FORMAT PREVIEW: Keeps line breaks, replaces checkboxes with ☐
+    // FIXED PREVIEW: Detects checked vs unchecked
     function formatPreview(body) {
       if (!body) return 'Empty note';
       let text = body.replace(/^---[\s\S]*?---/, '');
-      text = text.replace(/^[\s]*[-*][\s]*\[[ xX]\][\s]*(.*)$/gm, '☐ $1');
+      
+      // Match checkboxes and replace with ☑ (checked) or ☐ (unchecked)
+      text = text.replace(/^[\s]*[-*][\s]*\[([ xX])\][\s]*(.*)$/gm, (match, state, content) => {
+        const isChecked = state.toLowerCase() === 'x';
+        return (isChecked ? '☑ ' : '☐ ') + content;
+      });
+      
+      // Handle regular bullets
       text = text.replace(/^[\s]*[-*][\s]*(.*)$/gm, '• $1');
+      
+      // Remove other markdown chars
       text = text.replace(/[#*`_~]/g, '');
+      
       return text.trim().slice(0, 200) || 'Empty note';
     }
 
@@ -832,6 +848,7 @@
           const tFile = await ghFetch(`contents/tasks.json?ref=${encodeURIComponent(cfg.branch)}`);
           tasksSha = tFile.sha;
           tasks = JSON.parse(b64DecodeUtf8(tFile.content));
+          if (!Array.isArray(tasks)) tasks = [];
         } catch (err) {
           if (!String(err.message).includes('404')) throw err;
           const res = await ghPutFile('tasks.json', JSON.stringify(tasks, null, 2), 'Initialize tasks.json', null);
@@ -843,6 +860,7 @@
           const trFile = await ghFetch(`contents/trackers.json?ref=${encodeURIComponent(cfg.branch)}`);
           trackersSha = trFile.sha;
           trackers = JSON.parse(b64DecodeUtf8(trFile.content));
+          if (!Array.isArray(trackers)) trackers = [];
         } catch (err) {
           if (!String(err.message).includes('404')) throw err;
           const res = await ghPutFile('trackers.json', JSON.stringify(trackers, null, 2), 'Initialize trackers.json', null);
@@ -896,61 +914,106 @@
     // --- 8. TRACKER LOGIC ---
     document.getElementById('add-tracker-btn').addEventListener('click', () => {
       const name = document.getElementById('tracker-name').value.trim();
-      const start = document.getElementById('tracker-start').value;
-      const end = document.getElementById('tracker-end').value;
-      if (!name || !start || !end) return;
+      let start = document.getElementById('tracker-start').value;
+      let end = document.getElementById('tracker-end').value;
+      const daysInput = document.getElementById('tracker-days').value;
+      let days = parseInt(daysInput);
+
+      if (!name) { alert('Please enter a habit name.'); return; }
+
+      // Default start to today if empty
+      if (!start) start = offsetIsoDate(0);
+
+      // Calculate end date if missing
+      if (!end) {
+        const startDate = new Date(start + 'T00:00:00');
+        if (!isNaN(days) && days > 0) {
+          const endDate = new Date(startDate);
+          endDate.setDate(endDate.getDate() + days - 1);
+          end = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}`;
+        } else {
+          const endDate = new Date(startDate);
+          endDate.setDate(endDate.getDate() + 29);
+          end = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}`;
+        }
+      }
+
+      if (end < start) { alert('End date cannot be before start date.'); return; }
 
       trackers.push({ id: Date.now().toString(), name, start, end, checked: {} });
+      
       document.getElementById('tracker-name').value = '';
+      document.getElementById('tracker-start').value = '';
+      document.getElementById('tracker-end').value = '';
+      document.getElementById('tracker-days').value = '';
+      
       renderTrackers();
       debouncedSyncTrackers();
     });
 
     function renderTrackers() {
-      const table = document.getElementById('tracker-table');
-      if (!table) return;
+      const container = document.getElementById('tracker-container');
+      if (!container) return;
 
       if (trackers.length === 0) {
-        table.innerHTML = '<tr><td style="color:var(--muted); padding:20px; text-align:center;">No trackers yet. Create one above!</td></tr>';
+        container.innerHTML = '<div class="card" style="text-align:center; color:var(--muted);">No trackers yet. Create one above!</div>';
         return;
       }
 
-      // Find max date range to render columns
-      let minDate = new Date(Math.min(...trackers.map(t => new Date(t.start))));
-      let maxDate = new Date(Math.max(...trackers.map(t => new Date(t.end))));
-      minDate.setDate(minDate.getDate() - 1); // padding
-      maxDate.setDate(maxDate.getDate() + 1);
-
-      const dates = [];
-      let curr = new Date(minDate);
-      while (curr <= maxDate) {
-        dates.push(new Date(curr));
-        curr.setDate(curr.getDate() + 1);
-      }
-
-      let html = '<thead><tr><th>Habit</th>';
-      dates.forEach(d => {
-        html += `<th title="${formatIndianDate(d.toISOString())}">${d.getDate()}<br><span style="font-size:0.6rem;">${['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()]}</span></th>`;
-      });
-      html += '</tr></thead><tbody>';
+      let html = '';
+      const todayStr = offsetIsoDate(0);
 
       trackers.forEach(tr => {
-        html += `<tr><td>${escapeHtml(tr.name)}<span class="tracker-delete" onclick="deleteTracker('${tr.id}')">✕</span></td>`;
-        dates.forEach(d => {
-          const iso = d.toISOString().split('T')[0];
-          const isWithinRange = iso >= tr.start && iso <= tr.end;
+        if (!tr.start || !tr.end) return;
+        
+        const startDate = new Date(tr.start + 'T00:00:00');
+        const endDate = new Date(tr.end + 'T00:00:00');
+        const today = new Date(todayStr + 'T00:00:00');
+
+        let daysLeftText = '';
+        const diffTime = endDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays > 0) {
+          daysLeftText = `<span class="pill" style="border-color:var(--accent); color:var(--accent);">${diffDays} days left</span>`;
+        } else if (diffDays === 0) {
+          daysLeftText = `<span class="pill" style="border-color:var(--warn); color:var(--warn);">Ends today</span>`;
+        } else {
+          daysLeftText = `<span class="pill" style="border-color:var(--muted); color:var(--muted);">Ended</span>`;
+        }
+
+        let daysHtml = '';
+        let currentDate = new Date(startDate);
+        let totalDays = 0;
+        let checkedDays = 0;
+
+        while (currentDate <= endDate) {
+          const iso = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
           const isChecked = tr.checked[iso];
+          if (isChecked) checkedDays++;
+          totalDays++;
+
+          daysHtml += `<div class="tracker-day ${isChecked ? 'checked' : ''}" onclick="toggleTracker('${tr.id}', '${iso}')" title="${formatIndianDate(iso)}">${currentDate.getDate()}</div>`;
           
-          if (isWithinRange) {
-            html += `<td><div class="tracker-cell ${isChecked ? 'checked' : ''}" onclick="toggleTracker('${tr.id}', '${iso}')">${isChecked ? '✓' : ''}</div></td>`;
-          } else {
-            html += `<td style="opacity:0.2; background:var(--bg)">-</td>`;
-          }
-        });
-        html += '</tr>';
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        html += `
+          <div class="tracker-card">
+            <div class="tracker-header">
+              <div class="tracker-title">${escapeHtml(tr.name)} ${daysLeftText}</div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:0.75rem; color:var(--muted); font-weight:600;">${checkedDays}/${totalDays} Done</span>
+                <button class="btn btn-sm btn-danger" onclick="deleteTracker('${tr.id}')">✕</button>
+              </div>
+            </div>
+            <div class="tracker-days-grid">
+              ${daysHtml}
+            </div>
+          </div>
+        `;
       });
-      html += '</tbody>';
-      table.innerHTML = html;
+      container.innerHTML = html;
     }
 
     window.toggleTracker = function(id, iso) {
@@ -1462,17 +1525,21 @@
 
     // --- 16. BOOT & INTRO ---
     function init() {
-      applySettings();
-      renderDashboard();
-      renderCalendar();
-      renderTrackers();
-      syncAll();
-      
-      // Fade out intro screen after 1.5 seconds
-      setTimeout(() => {
-        const intro = document.getElementById('intro-screen');
-        if (intro) intro.classList.add('fade-out');
-      }, 1500);
+      try {
+        applySettings();
+        renderDashboard();
+        renderCalendar();
+        renderTrackers();
+        syncAll();
+      } catch (err) {
+        console.error("Boot error:", err);
+        setStatus("Error loading data. Check console.");
+      } finally {
+        setTimeout(() => {
+          const intro = document.getElementById('intro-screen');
+          if (intro) intro.classList.add('fade-out');
+        }, 1500);
+      }
     }
     init();
   </script>
